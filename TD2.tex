@@ -1,0 +1,436 @@
+\documentclass[solutions]{exercices}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{2}{Les nombres réels - Valeur absolue et partie entière}
+
+\begin{exercice}[\di]
+	Soit l'assertion : $\forall \varepsilon > 0 \quad \exists \alpha > 0 \quad \forall x \in \R \quad (|x - 7/5| < \alpha \implies |5x - 7| < \varepsilon)$
+	\begin{enumerate}
+		\item Démontrer cette assertion.
+		\item Donner sa négation.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item \textbf{Démonstration :} \\
+		      Soit $\varepsilon > 0$ un réel quelconque. Nous cherchons un réel $\alpha > 0$ (qui dépendra a priori de $\varepsilon$) tel que la condition soit vérifiée.
+
+		      L'objectif est de relier l'expression $|5x - 7|$ à $|x - 7/5|$. On peut factoriser par 5 :
+		      \[ |5x - 7| = |5(x - 7/5)| = 5|x - 7/5| \]
+		      Nous voulons que $|5x - 7| < \varepsilon$, ce qui est équivalent à $5|x - 7/5| < \varepsilon$, ou encore :
+		      \[ |x - 7/5| < \frac{\varepsilon}{5} \]
+		      L'implication de l'énoncé est $|x - 7/5| < \alpha \implies |5x - 7| < \varepsilon$. En voyant le calcul ci-dessus, on constate qu'il suffit de choisir $\alpha$ de manière à ce que si $|x - 7/5| < \alpha$, alors $|x - 7/5| < \varepsilon/5$.
+
+		      Posons $\alpha = \frac{\varepsilon}{5}$. Comme $\varepsilon > 0$, on a bien $\alpha > 0$.
+
+		      Montrons que ce choix fonctionne. Supposons que $|x - 7/5| < \alpha$. Alors :
+		      \[ |x - 7/5| < \frac{\varepsilon}{5} \]
+		      Multiplions par 5 (qui est positif) :
+		      \[ 5|x - 7/5| < \varepsilon \]
+		      Ce qui donne :
+		      \[ |5x - 7| < \varepsilon \]
+		      L'implication est donc démontrée pour notre choix de $\alpha$. Comme nous avons trouvé un $\alpha$ convenable pour un $\varepsilon$ quelconque, l'assertion est vraie.
+
+		\item \textbf{Négation :} \\
+		      Pour nier une proposition avec des quantificateurs, on inverse chaque quantificateur ($\forall$ devient $\exists$, et $\exists$ devient $\forall$) et on nie la proposition à la fin.
+
+		      L'assertion est : $\forall \varepsilon > 0, P(\varepsilon)$, où $P(\varepsilon)$ est $\exists \alpha > 0, Q(\alpha)$, etc.
+		      La négation de $\forall A, B$ est $\exists A, \neg B$.
+		      La négation de $\exists A, B$ est $\forall A, \neg B$.
+		      La négation de $U \implies V$ est $U \text{ et } (\neg V)$.
+
+		      Appliquons ces règles pas à pas :
+		      \begin{itemize}
+			      \item Assertion : $\forall \varepsilon > 0 \quad \exists \alpha > 0 \quad \forall x \in \R \quad (|x - 7/5| < \alpha \implies |5x - 7| < \varepsilon)$
+			      \item Négation : $\exists \varepsilon > 0 \quad \forall \alpha > 0 \quad \exists x \in \R \quad \neg(|x - 7/5| < \alpha \implies |5x - 7| < \varepsilon)$
+		      \end{itemize}
+		      La négation de l'implication est : $(|x - 7/5| < \alpha \text{ et } |5x - 7| \geq \varepsilon)$.
+
+		      La négation complète est donc :
+		      \[ \exists \varepsilon > 0 \quad \forall \alpha > 0 \quad \exists x \in \R \quad (|x - 7/5| < \alpha \text{ et } |5x - 7| \geq \varepsilon) \]
+	\end{enumerate}
+\end{solution}
+
+
+\begin{exercice}
+	Montrer que : $\frac{\ln 2}{\ln 3} \notin \Q$.
+\end{exercice}
+
+\begin{solution}
+	Nous allons raisonner par l'absurde. Supposons que $\frac{\ln 2}{\ln 3}$ est un nombre rationnel.
+	Par définition d'un nombre rationnel, il existe alors deux entiers relatifs $p$ et $q$, avec $q \neq 0$, tels que :
+	\[ \frac{\ln 2}{\ln 3} = \frac{p}{q} \]
+	On peut réarranger cette équation :
+	\[ q \ln 2 = p \ln 3 \]
+	En utilisant les propriétés du logarithme ($a \ln b = \ln b^a$), on obtient :
+	\[ \ln(2^q) = \ln(3^p) \]
+	La fonction logarithme népérien étant injective (si $\ln a = \ln b$, alors $a=b$), on peut en déduire :
+	\[ 2^q = 3^p \]
+	Analysons cette égalité. Les logarithmes de 2 et 3 sont positifs, donc $p$ et $q$ doivent être de même signe. On peut supposer sans perte de généralité que $p, q \in \N^*$ (si $p,q$ étaient négatifs, on prendrait leurs opposés).
+
+	L'entier $2^q$ est pair (car $q \geq 1$).
+	L'entier $3^p$ est impair (car toute puissance d'un nombre impair est impaire).
+
+	Un nombre ne peut pas être à la fois pair et impair. Nous avons donc une contradiction.
+	L'hypothèse de départ (``$\frac{\ln 2}{\ln 3}$ est rationnel") est donc fausse.
+	Conclusion : $\frac{\ln 2}{\ln 3} \notin \Q$.
+\end{solution}
+
+
+\begin{exercice}
+	\textit{Autour de la valeur absolue}. Soit $\varepsilon > 0$.
+	\begin{enumerate}
+		\item[1.] (\di) Déterminer tous les entiers $n$ tels que
+		      \begin{enumerate}
+			      \item[(a)] $|\frac{n+1}{n} - 1| \leq 10^{-3}$
+			      \item[(b)] $|\frac{n+1}{n} - 1| \leq \varepsilon$
+		      \end{enumerate}
+		\item[2.] (\di) Résoudre dans $\R$ les inégalités suivantes et représenter l'ensemble des solutions :
+		      \begin{enumerate}
+			      \item[(a)] $|x-2| \leq 2$
+			      \item[(b)] $\frac{1}{2} < |x-1| < 1$
+			      \item[(c)] $|\frac{2x}{x+1} - 2| \leq \varepsilon$
+		      \end{enumerate}
+		\item[3.] Résoudre dans $\R$ les inégalités suivantes et représenter l'ensemble des solutions :
+		      \begin{enumerate}
+			      \item[(a)] $|x| < |x-1|$
+			      \item[(b)] $x|x| > x$
+			      \item[(c)] $|x^2 - x| \leq 2|x|$
+		      \end{enumerate}
+		\item[4.] Soient $x, y$ deux réels. Après avoir rappelé les deux inégalités triangulaires, démontrer que :
+		      \begin{enumerate}
+			      \item[(a)] $|x| \geq ||x+y| - |y||$
+			      \item[(b)] $|x| + |y| \leq |x+y| + |x-y|$
+		      \end{enumerate}
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item[1.] Simplifions d'abord l'expression : $|\frac{n+1}{n} - 1| = |\frac{n+1-n}{n}| = |\frac{1}{n}|$. Comme $n$ est un entier (naturel, d'après le contexte), on a $\frac{1}{n} > 0$, donc $|\frac{1}{n}| = \frac{1}{n}$.
+		      \begin{enumerate}
+			      \item[(a)] On doit résoudre $\frac{1}{n} \leq 10^{-3}$, soit $\frac{1}{n} \leq \frac{1}{1000}$. Comme $n$ est positif, on peut inverser en changeant le sens de l'inégalité : $n \geq 1000$. L'ensemble des solutions est $\{n \in \Z \mid n \geq 1000\}$.
+			      \item[(b)] On doit résoudre $\frac{1}{n} \leq \varepsilon$. De la même manière, on obtient $n \geq \frac{1}{\varepsilon}$. L'ensemble des solutions est $\{n \in \Z \mid n \geq 1/\varepsilon\}$.
+		      \end{enumerate}
+		\item[2.]
+		      \begin{enumerate}
+			      \item[(a)] $|x-2| \leq 2$ signifie que la distance de $x$ à 2 est inférieure ou égale à 2. Cela se traduit par $-2 \leq x-2 \leq 2$. En ajoutant 2 à chaque membre, on obtient $0 \leq x \leq 4$. L'ensemble solution est $S = [0, 4]$.
+			      \item[(b)] $\frac{1}{2} < |x-1| < 1$. On sépare deux cas :
+			            \begin{itemize}
+				            \item Cas 1 : $x-1 > 0 \iff x > 1$. L'inégalité devient $\frac{1}{2} < x-1 < 1$. On ajoute 1 : $\frac{3}{2} < x < 2$.
+				            \item Cas 2 : $x-1 < 0 \iff x < 1$. L'inégalité devient $\frac{1}{2} < -(x-1) < 1$, soit $\frac{1}{2} < 1-x < 1$. On soustrait 1 : $-\frac{1}{2} < -x < 0$. On multiplie par -1 : $0 < x < \frac{1}{2}$.
+			            \end{itemize}
+			            L'ensemble solution est la réunion des solutions des deux cas : $S = ]0, 1/2[ \cup ]3/2, 2[$.
+			      \item[(c)] $|\frac{2x}{x+1} - 2| \leq \varepsilon$. L'inégalité n'est définie que pour $x \neq -1$.
+			            Simplifions l'expression : $|\frac{2x - 2(x+1)}{x+1}| = |\frac{-2}{x+1}| = \frac{2}{|x+1|}$.
+			            On doit résoudre $\frac{2}{|x+1|} \leq \varepsilon$. Comme $|x+1| > 0$ et $\varepsilon > 0$, on a $|x+1| \geq \frac{2}{\varepsilon}$.
+			            Cela signifie $x+1 \geq \frac{2}{\varepsilon}$ ou $x+1 \leq -\frac{2}{\varepsilon}$.
+			            Soit $x \geq -1 + \frac{2}{\varepsilon}$ ou $x \leq -1 - \frac{2}{\varepsilon}$.
+			            L'ensemble solution est $S = ]-\infty, -1-2/\varepsilon] \cup [-1+2/\varepsilon, +\infty[$.
+		      \end{enumerate}
+		\item[3.]
+		      \begin{enumerate}
+			      \item[(a)] $|x| < |x-1|$. Géométriquement, cela signifie que la distance de $x$ à 0 est strictement inférieure à sa distance à 1. Le point à égale distance de 0 et 1 est $1/2$. Donc, les solutions sont les $x$ strictement plus proches de 0 que de 1, soit $x < 1/2$. $S = ]-\infty, 1/2[$.
+			            Par le calcul : les deux membres étant positifs, on peut élever au carré : $x^2 < (x-1)^2 \implies x^2 < x^2 - 2x + 1 \implies 0 < -2x + 1 \implies 2x < 1 \implies x < 1/2$.
+			      \item[(b)] $x|x| > x$. On distingue les cas :
+			            \begin{itemize}
+				            \item Si $x > 0$ : $x(x) > x \implies x^2 > x \implies x^2 - x > 0 \implies x(x-1) > 0$. Comme $x>0$, il faut $x-1>0$, soit $x>1$.
+				            \item Si $x < 0$ : $x(-x) > x \implies -x^2 > x \implies -x^2-x > 0 \implies x^2+x < 0 \implies x(x+1) < 0$. Comme $x<0$, il faut $x+1 > 0$, soit $x > -1$. Donc $-1 < x < 0$.
+				            \item Si $x=0$ : $0 > 0$, ce qui est faux.
+			            \end{itemize}
+			            L'ensemble solution est $S = ]-1, 0[ \cup ]1, +\infty[$.
+			      \item[(c)] $|x^2 - x| \leq 2|x| \iff |x(x-1)| \leq 2|x| \iff |x||x-1| \leq 2|x|$.
+			            \begin{itemize}
+				            \item Si $x=0$, l'inégalité $0 \leq 0$ est vraie. Donc $x=0$ est solution.
+				            \item Si $x \neq 0$, on peut diviser par $|x| > 0$ : $|x-1| \leq 2$.
+				                  Ceci est équivalent à $-2 \leq x-1 \leq 2$, soit $-1 \leq x \leq 3$.
+			            \end{itemize}
+			            En combinant les deux cas (la solution pour $x \neq 0$ et la solution $x=0$), l'ensemble solution est $S = [-1, 3]$.
+		      \end{enumerate}
+		\item[4.] \textbf{Rappel :} L'inégalité triangulaire de base est $|a+b| \leq |a|+|b|$. Une seconde forme (parfois appelée inégalité triangulaire inversée) est $||a|-|b|| \leq |a-b|$.
+		      \begin{enumerate}
+			      \item[(a)] On veut montrer $|x| \geq ||x+y| - |y||$. Cela revient à montrer $||y| - |x+y|| \leq |x|$.
+			            C'est l'inégalité triangulaire inversée $||a|-|b|| \leq |a-b|$ avec $a=y$ et $b=-(x+y)$.
+			            En effet, $|a-b| = |y - (-(x+y))| = |y+x+y| = |x+2y|$, ce qui n'est pas ce que l'on veut.
+
+			            Essayons une autre approche. Appliquons l'inégalité triangulaire à $(x+y) + (-y)$ :
+			            \[ |x| = |(x+y) + (-y)| \leq |x+y| + |-y| = |x+y| + |y| \]
+			            Donc, $|x| - |y| \leq |x+y|$. (i)
+
+			            De même, en appliquant l'inégalité triangulaire à $y = x + (y-x)$, non, à $y = (y+x)+(-x)$:
+			            \[ |y| = |(y+x) + (-x)| \leq |y+x| + |-x| = |x+y| + |x| \]
+			            Donc, $|y| - |x| \leq |x+y|$. (ii)
+
+			            Les inégalités (i) et (ii) peuvent se combiner en une seule :
+			            \[ -|x| \leq |x+y| - |y| \leq |x| \]
+			            Ce qui est exactement la définition de $||x+y| - |y|| \leq |x|$.
+			      \item[(b)] On veut montrer $|x| + |y| \leq |x+y| + |x-y|$.
+			            Posons $u = x+y$ et $v = x-y$. On peut exprimer $x$ et $y$ en fonction de $u$ et $v$ :
+			            $x = \frac{u+v}{2}$ et $y = \frac{u-v}{2}$.
+
+			            Appliquons l'inégalité triangulaire à ces expressions :
+			            \[ |x| = \left|\frac{u+v}{2}\right| = \frac{1}{2}|u+v| \leq \frac{1}{2}(|u|+|v|) \]
+			            \[ |y| = \left|\frac{u-v}{2}\right| = \frac{1}{2}|u-v| \leq \frac{1}{2}(|u|+|-v|) = \frac{1}{2}(|u|+|v|) \]
+			            En additionnant ces deux inégalités :
+			            \[ |x| + |y| \leq \frac{1}{2}(|u|+|v|) + \frac{1}{2}(|u|+|v|) = |u|+|v| \]
+			            En remplaçant $u$ et $v$ par leurs expressions en $x$ et $y$ :
+			            \[ |x|+|y| \leq |x+y| + |x-y| \]
+			            Ce qui est le résultat désiré.
+		      \end{enumerate}
+	\end{enumerate}
+\end{solution}
+
+
+\begin{exercice}[\di]
+	Autour de la partie entière.
+	Pour tout $x \in \R$ on note $E(x)$ sa partie entière et $\{x\} = x - E(x)$ sa partie fractionnaire.
+	\begin{enumerate}
+		\item Tracer les graphes des fonctions $x \mapsto E(x)$ et $x \mapsto \{x\}$.
+		\item Montrer les relations suivantes :
+		      \begin{enumerate}
+			      \item[(a)] $E(x+n) = E(x) + n, \quad \forall n \in \Z$
+			      \item[(b)] $E(x) + E(y) \leq E(x+y) \leq E(x) + E(y) + 1$
+			      \item[(c)] $E\left(\frac{E(nx)}{n}\right) = E(x), \quad \forall n \in \N^*$
+		      \end{enumerate}
+		\item Calculer $E(x) + E(-x)$ pour tout $x \in \R$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item \textbf{Graphes :}
+		      La fonction partie entière $E(x)$ est une fonction en escalier, constante sur les intervalles de la forme $[n, n+1[$ où $n \in \Z$.
+		      La fonction partie fractionnaire $\{x\}$ est une fonction périodique de période 1, linéaire de pente 1 sur chaque intervalle $[n, n+1[$.
+
+		      % Pour une compilation locale, on pourrait utiliser TikZ pour dessiner les graphes.
+		      % \begin{tikzpicture} ... \end{tikzpicture}
+		      % Ici, nous décrivons simplement leur allure.
+
+		      \textbf{Graphe de $E(x)$ :}
+		      \begin{itemize}
+			      \item Pour $x \in [-2, -1[$, $E(x) = -2$.
+			      \item Pour $x \in [-1, 0[$, $E(x) = -1$.
+			      \item Pour $x \in [0, 1[$, $E(x) = 0$.
+			      \item Pour $x \in [1, 2[$, $E(x) = 1$.
+		      \end{itemize}
+
+		      \textbf{Graphe de $\{x\} = x-E(x)$ :}
+		      \begin{itemize}
+			      \item Pour $x \in [-1, 0[$, $\{x\} = x - (-1) = x+1$.
+			      \item Pour $x \in [0, 1[$, $\{x\} = x - 0 = x$.
+			      \item Pour $x \in [1, 2[$, $\{x\} = x - 1 = x-1$.
+		      \end{itemize}
+		      Le graphe est une succession de segments de droite (pente 1), partant de 0 (inclus) et allant jusqu'à 1 (exclu) sur l'axe des ordonnées.
+
+		\item \textbf{Démonstrations :}
+		      \begin{enumerate}
+			      \item[(a)] Par définition de la partie entière, on a $E(x) \leq x < E(x)+1$. En ajoutant l'entier $n$ à chaque membre, on obtient :
+			            \[ E(x)+n \leq x+n < E(x)+n+1 \]
+			            Posons $k = E(x)+n$. Comme $E(x)$ est un entier et $n$ est un entier, $k$ est un entier. L'encadrement ci-dessus est $k \leq x+n < k+1$. Par définition de la partie entière, cela signifie que $E(x+n) = k$.
+			            Donc, $E(x+n) = E(x)+n$.
+			      \item[(b)] On sait que $E(x) \leq x$ et $E(y) \leq y$. En sommant ces deux inégalités, on a $E(x)+E(y) \leq x+y$.
+			            Le terme de gauche, $E(x)+E(y)$, est un entier. Le terme de droite est $x+y$. La partie entière de $x+y$ est le plus grand entier inférieur ou égal à $x+y$. Donc, on a nécessairement :
+			            \[ E(x)+E(y) \leq E(x+y) \]
+			            Pour la deuxième partie de l'inégalité, on part de $x < E(x)+1$ et $y < E(y)+1$. En sommant :
+			            \[ x+y < E(x)+1 + E(y)+1 = E(x)+E(y)+2 \]
+			            On sait que $E(x+y) \leq x+y$. Donc :
+			            \[ E(x+y) < E(x)+E(y)+2 \]
+			            Puisque $E(x+y)$ et $E(x)+E(y)+2$ sont des entiers, l'inégalité stricte implique une inégalité large avec 1 de moins pour le majorant :
+			            \[ E(x+y) \leq E(x)+E(y)+1 \]
+			      \item[(c)] Posons $m = E(x)$. Par définition, $m \leq x < m+1$.
+			            Comme $n \in \N^*$, on peut multiplier par $n$ : $nm \leq nx < n(m+1)$.
+			            Prenons la partie entière : $E(nm) \leq E(nx) \leq E(n(m+1))$. Comme $nm$ est un entier, $E(nm)=nm$.
+			            Donc $nm \leq E(nx)$.
+			            De l'autre côté, $E(nx) < n(m+1) = nm+n$.
+			            On a donc l'encadrement pour l'entier $E(nx)$ : $nm \leq E(nx) < nm+n$.
+			            Divisons par $n > 0$ :
+			            \[ m \leq \frac{E(nx)}{n} < m+1 \]
+			            Par définition de la partie entière, la partie entière de $\frac{E(nx)}{n}$ est $m$.
+			            Donc $E\left(\frac{E(nx)}{n}\right) = m = E(x)$.
+		      \end{enumerate}
+		\item \textbf{Calcul de $E(x)+E(-x)$ :}
+		      \begin{itemize}
+			      \item Cas 1 : $x$ est un entier ($x \in \Z$).
+			            Alors $E(x)=x$ et $E(-x)=-x$.
+			            Donc $E(x)+E(-x) = x + (-x) = 0$.
+			      \item Cas 2 : $x$ n'est pas un entier ($x \notin \Z$).
+			            Soit $n=E(x)$. Par définition, on a $n < x < n+1$.
+			            Multiplions par -1 : $-n-1 < -x < -n$.
+			            Puisque $-n-1$ et $-n$ sont des entiers consécutifs, la partie entière de $-x$ est $-n-1$.
+			            $E(-x) = -n-1$.
+			            Alors $E(x)+E(-x) = n + (-n-1) = -1$.
+		      \end{itemize}
+		      En résumé :
+		      \[ E(x)+E(-x) = \begin{cases} 0 & \text{si } x \in \Z \\ -1 & \text{si } x \notin \Z \end{cases} \]
+	\end{enumerate}
+\end{solution}
+
+
+\begin{exercice}
+	Le maximum de deux nombres $x, y$ (c'est-à-dire le plus grand des deux) est noté $\max(x, y)$. De même on notera $\min(x, y)$ le plus petit des deux nombres $x, y$. Démontrer que :
+	\[ \max(x, y) = \frac{x + y + |x - y|}{2} \quad \text{et} \quad \min(x, y) = \frac{x + y - |x - y|}{2} \]
+	Trouver une formule pour $\max(x, y, z)$.
+\end{exercice}
+
+\begin{solution}
+	On procède par disjonction de cas.
+	\begin{itemize}
+		\item Cas 1 : $x \geq y$.
+		      Dans ce cas, $\max(x,y)=x$ et $\min(x,y)=y$.
+		      De plus, comme $x-y \geq 0$, on a $|x-y|=x-y$.
+		      Vérifions les formules :
+		      \[ \frac{x+y+|x-y|}{2} = \frac{x+y+(x-y)}{2} = \frac{2x}{2} = x = \max(x,y) \]
+		      \[ \frac{x+y-|x-y|}{2} = \frac{x+y-(x-y)}{2} = \frac{2y}{2} = y = \min(x,y) \]
+		      Les formules sont correctes dans ce cas.
+		\item Cas 2 : $x < y$.
+		      Dans ce cas, $\max(x,y)=y$ et $\min(x,y)=x$.
+		      De plus, comme $x-y < 0$, on a $|x-y|=-(x-y)=y-x$.
+		      Vérifions les formules :
+		      \[ \frac{x+y+|x-y|}{2} = \frac{x+y+(y-x)}{2} = \frac{2y}{2} = y = \max(x,y) \]
+		      \[ \frac{x+y-|x-y|}{2} = \frac{x+y-(y-x)}{2} = \frac{2x}{2} = x = \min(x,y) \]
+		      Les formules sont également correctes dans ce cas.
+	\end{itemize}
+	Comme les formules sont valides dans tous les cas, elles sont démontrées.
+
+	Pour $\max(x,y,z)$, on peut utiliser la propriété d'associativité du maximum : $\max(x,y,z) = \max(\max(x,y), z)$.
+	On utilise la formule démontrée ci-dessus :
+	\[ \max(x,y,z) = \max\left(\frac{x+y+|x-y|}{2}, z\right) \]
+	Appliquons la formule une seconde fois avec $a = \frac{x+y+|x-y|}{2}$ et $b = z$.
+	\begin{align*}
+		\max(a,b)   & = \frac{a+b+|a-b|}{2}                                                      \\
+		\max(x,y,z) & = \frac{\frac{x+y+|x-y|}{2} + z + \left|\frac{x+y+|x-y|}{2} - z\right|}{2} \\
+		            & = \frac{x+y+2z+|x-y| + |x+y+|x-y|-2z|}{4}
+	\end{align*}
+	Cette formule est juste mais peu pratique. Une expression plus simple est de laisser la formule sous sa forme imbriquée :
+	\[ \max(x,y,z) = \frac{\max(x,y)+z+|\max(x,y)-z|}{2} \]
+	où $\max(x,y)$ peut lui-même être remplacé par sa formule.
+\end{solution}
+
+
+\begin{exercice}[\st]
+	Montrer que, $\forall n \in \N^*, \forall x \in \R :$
+	\[ \sum_{k=0}^{n-1} E\left(x + \frac{k}{n}\right) = E(nx) \quad \text{(Identité d'Hermite)} \]
+\end{exercice}
+
+\begin{solution}
+	Soit la fonction $f(x) = \sum_{k=0}^{n-1} E(x + \frac{k}{n}) - E(nx)$. Nous voulons montrer que $f(x)=0$ pour tout $x$.
+	\begin{enumerate}
+		\item Montrons que $f$ est périodique de période $1/n$.
+		      \begin{align*}
+			      f(x+1/n) & = \sum_{k=0}^{n-1} E\left(x + \frac{1}{n} + \frac{k}{n}\right) - E\left(n(x+\frac{1}{n})\right) \\
+			               & = \sum_{k=0}^{n-1} E\left(x + \frac{k+1}{n}\right) - E(nx+1)
+		      \end{align*}
+		      On sait que $E(y+1) = E(y)+1$, donc $E(nx+1)=E(nx)+1$.
+		      Pour la somme, faisons un changement d'indice $j=k+1$.
+		      \[ \sum_{k=0}^{n-1} E\left(x + \frac{k+1}{n}\right) = \sum_{j=1}^{n} E\left(x + \frac{j}{n}\right) \]
+		      Cette somme est presque la même que la somme de départ. On peut l'écrire :
+		      \begin{align*}
+			      \sum_{j=1}^{n} E\left(x + \frac{j}{n}\right) & = \left(\sum_{j=0}^{n-1} E\left(x + \frac{j}{n}\right)\right) - E(x) + E\left(x+\frac{n}{n}\right) \\
+			                                                   & = \left(\sum_{j=0}^{n-1} E\left(x + \frac{j}{n}\right)\right) - E(x) + E(x+1)                      \\
+			                                                   & = \left(\sum_{j=0}^{n-1} E\left(x + \frac{j}{n}\right)\right) - E(x) + (E(x)+1)                    \\
+			                                                   & = \left(\sum_{j=0}^{n-1} E\left(x + \frac{j}{n}\right)\right) + 1
+		      \end{align*}
+		      En réinjectant dans l'expression de $f(x+1/n)$ :
+		      \[ f(x+1/n) = \left(\left(\sum_{k=0}^{n-1} E\left(x + \frac{k}{n}\right)\right) + 1\right) - (E(nx)+1) = \sum_{k=0}^{n-1} E\left(x + \frac{k}{n}\right) - E(nx) = f(x) \]
+		      La fonction $f$ est donc périodique de période $1/n$.
+
+		\item Il suffit alors de prouver l'identité pour $x$ dans un intervalle de longueur $1/n$, par exemple $x \in [0, 1/n)$.
+		      Si $x \in [0, 1/n)$, alors pour tout $k \in \{0, 1, \dots, n-1\}$, on a :
+		      \[ 0 \leq x < \frac{1}{n} \implies \frac{k}{n} \leq x+\frac{k}{n} < \frac{1}{n}+\frac{k}{n} = \frac{k+1}{n} \]
+		      Comme $k \leq n-1$, on a $k+1 \leq n$, donc $\frac{k+1}{n} \leq 1$.
+		      On a donc $0 \leq x + k/n < 1$, ce qui implique $E(x+k/n) = 0$ pour tout $k \in \{0, \dots, n-1\}$.
+		      La somme vaut donc : $\sum_{k=0}^{n-1} 0 = 0$.
+
+		      Pour le terme de droite, si $x \in [0, 1/n)$, alors $0 \leq nx < 1$.
+		      Donc, $E(nx)=0$.
+		      Pour $x \in [0, 1/n)$, on a bien $f(x) = 0 - 0 = 0$.
+
+		\item Conclusion : Comme la fonction est périodique de période $1/n$ et qu'elle est nulle sur $[0, 1/n)$, elle est nulle pour tout $x \in \R$.
+	\end{enumerate}
+\end{solution}
+
+
+\begin{exercice}[\st]
+	Démontrer que pour tous réels $x$ et $y$, on a
+	\[ 1 + |xy - 1| \leq (1 + |x - 1|)(1 + |y - 1|) \]
+\end{exercice}
+
+\begin{solution}
+	Posons $a = x-1$ et $b=y-1$. Alors $x=a+1$ et $y=b+1$.
+	L'inégalité se réécrit en fonction de $a$ et $b$.
+	Le membre de droite devient :
+	\[ (1+|a|)(1+|b|) = 1 + |a| + |b| + |a||b| = 1 + |a| + |b| + |ab| \]
+	Le membre de gauche devient :
+	\[ 1 + |(a+1)(b+1)-1| = 1 + |ab+a+b+1-1| = 1+|a+b+ab| \]
+	Nous devons donc démontrer que :
+	\[ 1+|a+b+ab| \leq 1+|a|+|b|+|ab| \]
+	Ce qui est équivalent à :
+	\[ |a+b+ab| \leq |a|+|b|+|ab| \]
+	Ceci est une application directe de l'inégalité triangulaire. En effet, en posant $u=a, v=b, w=ab$, on a $|u+v+w| \leq |u|+|v|+|w|$.
+	L'inégalité est donc vraie pour tous $a, b \in \R$, et donc pour tous $x, y \in \R$.
+\end{solution}
+
+
+\begin{exercice}[\st] (Principe des tiroirs de Dirichlet)
+	\begin{enumerate}
+		\item Soient $x \in \R$, et $n \in \N^*$. Montrer qu'il existe $(p, q) \in \Z \times \N^*$, $q \leq n$, tel que
+		      \[ |qx - p| \leq \frac{1}{n} \]
+		\item (Application) On considère l'ensemble $A = \{\cos(p)|p\in \N^*\}$. Montrer que $\sup A = 1$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item Considérons les $n+1$ nombres réels suivants :
+		      \[ y_k = \{kx\} = kx - E(kx) \quad \text{pour } k \in \{0, 1, \dots, n\} \]
+		      Chacun de ces nombres appartient à l'intervalle $[0, 1)$.
+
+		      Partitionnons l'intervalle $[0,1[$ en $n$ ``tiroirs" (sous-intervalles) de même longueur $1/n$ :
+		      \[ I_j = \left[\frac{j}{n}, \frac{j+1}{n}\right) \quad \text{pour } j \in \{0, 1, \dots, n-1\} \]
+		      Nous avons $n+1$ nombres (les ``pigeons", $y_k$) et $n$ tiroirs (les $I_j$). D'après le principe des tiroirs de Dirichlet, au moins un tiroir contient au moins deux de ces nombres.
+
+		      Il existe donc deux entiers distincts $i, j$ dans $\{0, 1, \dots, n\}$, disons $0 \leq i < j \leq n$, tels que $y_i$ et $y_j$ appartiennent au même intervalle $I_k$.
+		      Cela signifie que $|y_j - y_i| < 1/n$.
+
+		      Exprimons $y_j - y_i$ :
+		      \[ y_j - y_i = (jx - E(jx)) - (ix - E(ix)) = (j-i)x - (E(jx)-E(ix)) \]
+		      Posons $q = j-i$ et $p = E(jx)-E(ix)$.
+		      \begin{itemize}
+			      \item Comme $0 \leq i < j \leq n$, on a $1 \leq j-i \leq n$, donc $q \in \N^*$ et $q \leq n$.
+			      \item Comme $E(jx)$ et $E(ix)$ sont des entiers, $p$ est un entier ($p \in \Z$).
+		      \end{itemize}
+		      Nous avons donc trouvé un couple $(p,q)$ qui vérifie les conditions, et tel que :
+		      \[ |qx - p| = |y_j - y_i| < \frac{1}{n} \]
+		      Puisque $|qx - p| < 1/n$, il est a fortiori vrai que $|qx - p| \leq 1/n$.
+
+		\item Nous voulons montrer que $\sup A = 1$ pour $A = \{\cos(p)|p\in \N^*\}$.
+		      \begin{itemize}
+			      \item D'abord, pour tout $p \in \N^*$, $\cos(p) \leq 1$. Donc 1 est un majorant de $A$.
+			      \item Il reste à montrer que 1 est le plus petit des majorants. Pour cela, on utilise la caractérisation de la borne supérieure :
+			            Pour tout $\varepsilon > 0$, il doit exister un élément $a \in A$ tel que $a > 1-\varepsilon$.
+			            Soit $\varepsilon > 0$. Nous cherchons un entier $p \in \N^*$ tel que $\cos(p) > 1-\varepsilon$.
+		      \end{itemize}
+		      On sait que la fonction cosinus est continue et que $\cos(x)$ est proche de 1 lorsque $x$ est proche d'un multiple entier de $2\pi$. Nous cherchons donc un entier $p$ qui soit ``proche" d'un $2k\pi$ pour un certain entier $k$.
+
+		      Utilisons le résultat de la première question avec $x = 2\pi$. Pour tout $n \in \N^*$, il existe $(p,q) \in \Z \times \N^*$ avec $q \leq n$ tel que
+		      \[ |q(2\pi) - p| \leq \frac{1}{n} \quad \text{soit} \quad |2q\pi - p| \leq \frac{1}{n} \]
+		      Comme $2\pi>0$, on peut s'assurer que $p$ et $q$ sont positifs. On a donc trouvé un entier $p \in \N^*$ tel que la distance entre $p$ et $2q\pi$ est très petite.
+
+		      Utilisons l'indication : $|\cos(x)-\cos(y)| \leq |x-y|$.
+		      \[ |\cos(p) - \cos(2q\pi)| \leq |p - 2q\pi| \]
+		      Comme $\cos(2q\pi) = 1$ (car $q$ est un entier), on a :
+		      \[ |\cos(p) - 1| \leq |p - 2q\pi| \leq \frac{1}{n} \]
+		      Puisque $\cos(p) \leq 1$, on a $|\cos(p)-1| = 1-\cos(p)$. Donc :
+		      \[ 1-\cos(p) \leq \frac{1}{n} \implies \cos(p) \geq 1 - \frac{1}{n} \]
+		      Maintenant, pour notre $\varepsilon > 0$ donné, nous pouvons choisir un entier $n$ suffisamment grand pour que $1/n < \varepsilon$. Il suffit de prendre n'importe quel $n > 1/\varepsilon$.
+		      Pour un tel $n$, le résultat de la partie 1 nous garantit l'existence d'un entier $p$ tel que $\cos(p) \geq 1-1/n$.
+		      On a donc trouvé un élément de $A$, $\cos(p)$, tel que :
+		      \[ \cos(p) > 1 - \varepsilon \]
+		      Ceci étant vrai pour tout $\varepsilon > 0$, on a bien démontré que $\sup A = 1$.
+	\end{enumerate}
+\end{solution}
+
+\end{document}
