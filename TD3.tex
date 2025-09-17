@@ -1,0 +1,172 @@
+\documentclass[solutions]{exercices}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{3}{Borne Supérieure etc...}
+
+\begin{exercice}
+Donner, lorsqu'ils existent et sans justification, un minorant, un majorant, la borne supérieure, la borne inférieure, le maximum, le minimum des ensembles suivants :
+\begin{multicols}{2}
+	\begin{itemize}
+		\item $A_1 = \{e^x \mid x \in \mathbb{R}\}$
+		\item $A_2 = \{\frac{1}{2}, 0, 1, -1\}$
+		\item $A_3 = ]0, 1[ \cup \{2, 4\}$
+		\item $A_4 = [0, 1] \cap \mathbb{Q}$
+		\item $A_5 = ]0, 1[ \cap \mathbb{Q}$
+		\item $A_6 = [4, 5] \setminus \mathbb{Q}$
+	\end{itemize}
+\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	\begin{itemize}
+		\item \textbf{Pour $A_1 = ]0, +\infty[$:}
+		      Minorants: $(-\infty, 0]$. Majorants: aucun. $\inf A_1 = 0$. $\sup A_1$ n'existe pas. Minimum: n'existe pas. Maximum: n'existe pas.
+		\item \textbf{Pour $A_2$:} L'ensemble contient $\{-1, 0, 1, 1/2, 1/3, \dots\}$.
+		      Minorants: $(-\infty, -1]$. Majorants: $[1, +\infty)$. $\inf A_2 = -1$. $\sup A_2 = 1$. $\min A_2 = -1$. $\max A_2 = 1$.
+		\item \textbf{Pour $A_3$:}
+		      Minorants: $(-\infty, 0]$. Majorants: $[4, +\infty)$. $\inf A_3 = 0$. $\sup A_3 = 4$. Minimum: n'existe pas. $\max A_3 = 4$.
+		\item \textbf{Pour $A_4$:}
+		      Minorants: $(-\infty, 0]$. Majorants: $[1, +\infty)$. $\inf A_4 = 0$. $\sup A_4 = 1$. $\min A_4 = 0$. $\max A_4 = 1$.
+		\item \textbf{Pour $A_5$:}
+		      Minorants: $(-\infty, 0]$. Majorants: $[1, +\infty)$. $\inf A_5 = 0$. $\sup A_5 = 1$. Minimum: n'existe pas. Maximum: n'existe pas.
+		\item \textbf{Pour $A_6$:} L'ensemble des irrationnels dans $[4,5]$.
+		      Minorants: $(-\infty, 4]$. Majorants: $[5, +\infty)$. $\inf A_6 = 4$. $\sup A_6 = 5$. Minimum: n'existe pas. Maximum: n'existe pas.
+	\end{itemize}
+\end{solution}
+
+\begin{exercice}[\di]
+Soit $A \subset \mathbb{R}$, une partie non vide.
+\begin{enumerate}
+	\item Écrire la définition de $A$ est majorée.
+	\item Écrire la définition de $A$ n'est pas majorée.
+	\item Montrer que $A$ n'est pas majorée si et seulement si il existe une suite $(u_n)_{n \ge 0}$ d'éléments de $A$ tel que $\lim_{n \to +\infty} u_n = +\infty$.
+	\item Application : Montrer que $A = \bigcup_{n \in \mathbb{N}^*} ]n, n+\frac{1}{n}[$ n'est pas majorée.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item \textbf{$A$ est majorée} s'il existe un réel $M$ tel que pour tout $x \in A$, on a $x \le M$. Formellement : $\exists M \in \mathbb{R}, \forall x \in A, x \le M$.
+		\item \textbf{$A$ n'est pas majorée} est la négation de la proposition précédente. Pour tout réel $M$, $M$ n'est pas un majorant de $A$. Formellement : $\forall M \in \mathbb{R}, \exists x \in A, x > M$.
+		\item \textbf{Démonstration de l'équivalence :}
+		      \begin{itemize}
+			      \item[($\implies$)] Supposons que $A$ n'est pas majorée. Pour chaque entier $n \in \mathbb{N}$, $n$ n'est pas un majorant de $A$. Il existe donc un élément de $A$, que nous nommons $u_n$, tel que $u_n > n$. La suite $(u_n)$ ainsi construite est une suite d'éléments de $A$. Comme $u_n > n$ pour tout $n$, par comparaison, $\lim_{n \to +\infty} u_n = +\infty$.
+			      \item[($\impliedby$)] Réciproquement, supposons qu'il existe une suite $(u_n)$ d'éléments de $A$ telle que $\lim_{n \to +\infty} u_n = +\infty$. Soit $M$ un réel quelconque. Par définition de la limite infinie, il existe un rang $N$ tel que pour tout $n > N$, on a $u_n > M$. Donc il existe un élément de $A$ (par ex. $u_{N+1}$) qui est strictement supérieur à $M$. $M$ n'est donc pas un majorant de $A$. Comme $M$ était arbitraire, $A$ n'est pas majorée.
+		      \end{itemize}
+		\item \textbf{Application :} Pour chaque entier $k \in \mathbb{N}^*$, posons $u_k = k + \frac{1}{2k}$. Par construction, $u_k \in ]k, k+\frac{1}{k}[$, donc $u_k \in A$. La suite $(u_k)$ est une suite d'éléments de $A$. De plus, $u_k > k$, donc $\lim_{k \to +\infty} u_k = +\infty$. D'après la question 3, $A$ n'est pas majorée.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+Donner, lorsqu'ils existent et en justifiant soigneusement, un minorant, un majorant, la borne supérieure, la borne inférieure, le maximum, le minimum des ensembles suivants :
+\begin{multicols}{2}
+	\begin{itemize}
+		\item $B_1 = \{e^x \mid x \in \mathbb{R}\}$
+		\item $B_2 = \{\frac{1}{x} \mid x \in \mathbb{R}^*\}$
+		\item $B_3 = \{\frac{1}{x+1} \mid x \in \mathbb{R}_+\}$
+		\item $B_4 = \{(-1)^n + \frac{1}{n+1} \mid n \in \mathbb{N}\}$
+		\item $B_5 = \{2ne^{-n} \mid n \in \mathbb{N}\}$
+		\item $B_6 = \{x^2+y^2 \mid x, y \in \mathbb{R}, xy=1\}$
+	\end{itemize}
+\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	\begin{itemize}
+		\item \textbf{Pour $B_1 = ]0, +\infty[$:} $\inf B_1 = 0$ (pas de min). L'ensemble n'est pas majoré.
+		\item \textbf{Pour $B_2 = \mathbb{R}^*$:} Ni minoré, ni majoré.
+		\item \textbf{Pour $B_3 = ]0, 1]$:} Pour $x \in [0, +\infty[$, $x+1 \in [1, +\infty[$, donc $1/(x+1) \in ]0, 1]$. $\inf B_3 = 0$ (pas de min). $\sup B_3 = \max B_3 = 1$ (atteint en $x=0$).
+		\item \textbf{Pour $B_4$:} Les termes pairs $1+\frac{1}{2k+1}$ décroissent de $2$ (pour $k=0$) vers $1$. Les termes impairs $-1+\frac{1}{2k+2}$ croissent de $-1/2$ (pour $k=0$) vers $-1$. Le plus grand élément est $2$ (pour $n=0$). L'infimum est $-1$. $\sup B_4 = \max B_4 = 2$. $\inf B_4 = -1$ (pas de min).
+		\item \textbf{Pour $B_5$:} La fonction $f(x)=2xe^{-x}$ est croissante sur $[0,1]$ et décroissante ensuite, avec $f(0)=0$ et $f(1)=2/e$. Le min de la suite est $0$ (pour $n=0$). Le max est $2/e$ (pour $n=1$). $\inf B_5 = \min B_5 = 0$. $\sup B_5 = \max B_5 = 2/e$.
+		\item \textbf{Pour $B_6$:} $y=1/x$. On étudie $f(x)=x^2+1/x^2$ sur $\mathbb{R}^*$. $f(x) = (x-1/x)^2 + 2 \ge 2$. Le minimum est 2, atteint pour $x=1$ ou $x=-1$. L'ensemble est $[2, +\infty[$. $\inf B_6 = \min B_6 = 2$. L'ensemble n'est pas majoré.
+	\end{itemize}
+\end{solution}
+
+\begin{exercice}
+Soient $A$ et $B$ deux parties non vides et majorées de $\mathbb{R}$. Montrer que :
+\begin{enumerate}
+	\item $A \subset B \implies \sup A \le \sup B$.
+	\item Montrer que $A \cup B$ est majorée. Déterminer $\sup(A \cup B)$.
+	\item Montrer que $A \cap B$ est majorée (si non vide). Que peut-on dire de $\sup(A \cap B)$ ?
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+	\item Soit $x \in A$. Comme $A \subset B$, on a $x \in B$. Par définition, $x \le \sup B$. Donc $\sup B$ est un majorant de $A$. Comme $\sup A$ est le plus petit des majorants de $A$, on a $\sup A \le \sup B$.
+	\item Soit $M = \max(\sup A, \sup B)$. Pour tout $x \in A \cup B$, on a $x \le \sup A \le M$ ou $x \le \sup B \le M$, donc $x \le M$. $A \cup B$ est majorée. On a $\sup(A \cup B) \le M$. De plus, $\sup A \le \sup(A \cup B)$ et $\sup B \le \sup(A \cup B)$, donc $M \le \sup(A \cup B)$. On conclut $\sup(A \cup B) = \max(\sup A, \sup B)$.
+	\item Si $A \cap B$ est non vide, pour tout $x \in A \cap B$, on a $x \in A$ et $x \in B$. Donc $x \le \sup A$ et $x \le \sup B$. Par conséquent, $x \le \min(\sup A, \sup B)$. Donc $A \cap B$ est majorée, et $\sup(A \cap B) \le \min(\sup A, \sup B)$. L'égalité n'est pas garantie.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+Soient $A$ et $B$ deux parties non vides et bornées de $\mathbb{R}$. On note $A+B = \{a+b \mid (a,b) \in A \times B\}$.
+\begin{enumerate}
+	\item Montrer que $\sup A + \sup B$ est un majorant de $A+B$.
+	\item Montrer que $\sup(A+B) = \sup A + \sup B$.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+	\item Soit $x \in A+B$. Il existe $a \in A$ et $b \in B$ tel que $x=a+b$. Par définition, $a \le \sup A$ et $b \le \sup B$. En sommant, $x = a+b \le \sup A + \sup B$. Donc $\sup A + \sup B$ est un majorant de $A+B$.
+	\item De 1., on a $\sup(A+B) \le \sup A + \sup B$. Pour l'inégalité inverse, soit $\varepsilon > 0$. Il existe $a \in A$ tel que $a > \sup A - \varepsilon/2$ et $b \in B$ tel que $b > \sup B - \varepsilon/2$. Alors $a+b \in A+B$ et $a+b > \sup A + \sup B - \varepsilon$. Ceci montre que $\sup A + \sup B$ est le plus petit des majorants. Donc $\sup(A+B) = \sup A + \sup B$.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+Soit $A$ une partie non vide et bornée de $\mathbb{R}$. Montrer que :
+\[ \sup\{|x - y|: (x, y) \in A^2\} = \sup A - \inf A \]
+\end{exercice}
+
+\begin{solution}
+Soit $M = \sup A$ et $m = \inf A$. Pour tout $(x,y) \in A^2$, on a $m \le x \le M$ et $m \le y \le M$.
+On en déduit $-M \le -y \le -m$. En sommant avec l'encadrement de $x$, on obtient $m-M \le x-y \le M-m$, ce qui implique $|x-y| \le M-m$. Donc $\sup\{|x-y|\} \le M-m$.
+Inversement, pour tout $\varepsilon > 0$, il existe $x_0 \in A$ tel que $x_0 > M-\varepsilon/2$ et $y_0 \in A$ tel que $y_0 < m+\varepsilon/2$. Alors $|x_0 - y_0| \ge x_0-y_0 > (M-\varepsilon/2)-(m+\varepsilon/2) = M-m-\varepsilon$. Ceci étant vrai pour tout $\varepsilon>0$, on a $\sup\{|x-y|\} \ge M-m$. L'égalité est donc prouvée.
+\end{solution}
+
+\begin{exercice}
+Soient l'ensemble $A = \mathbb{Q} \cap ]0, 1[$ et les applications $f: A \to \mathbb{R}$ et $g: A \to \mathbb{R}$ définies par
+\[ f(\frac{p}{q}) = \frac{q-p}{q+p} \quad \text{et} \quad g(\frac{p}{q}) = \frac{q}{q+p}, \quad \forall p,q \in \mathbb{N}^*, p < q. \]
+Déterminer $\sup f(A)$, $\inf f(A)$, $\sup g(A)$ et $\inf g(A)$.
+\end{exercice}
+
+\begin{solution}
+Soit $x = p/q \in A$. On a $0 < x < 1$. On peut réécrire les fonctions en divisant numérateur et dénominateur par $q$:
+\[ f(x) = \frac{1 - p/q}{1 + p/q} = \frac{1-x}{1+x} \quad \text{et} \quad g(x) = \frac{1}{1+p/q} = \frac{1}{1+x} \]
+Nous cherchons les bornes des images de $A = \mathbb{Q} \cap ]0,1[$ par ces fonctions.
+\begin{itemize}
+    \item Pour $f(x) = \frac{1-x}{1+x}$: La fonction est continue et strictement décroissante sur $[0,1]$. Son image sur l'intervalle réel $]0,1[$ est $]f(1), f(0)[ = ]0, 1[$. Comme $A$ est dense dans $]0,1[$, l'image $f(A)$ est dense dans $]0,1[$. Par conséquent, $\inf f(A) = 0$ et $\sup f(A) = 1$.
+    \item Pour $g(x) = \frac{1}{1+x}$: La fonction est continue et strictement décroissante sur $[0,1]$. Son image sur l'intervalle réel $]0,1[$ est $]g(1), g(0)[ = ]1/2, 1[$. Comme $A$ est dense dans $]0,1[$, l'image $g(A)$ est dense dans $]1/2, 1[$. Par conséquent, $\inf g(A) = 1/2$ et $\sup g(A) = 1$.
+\end{itemize}
+Aucune de ces bornes n'est atteinte, donc il n'y a ni maximum ni minimum.
+\end{solution}
+
+\begin{exercice}[\st]
+(Un théorème de point fixe) Soient $I = [0,1]$ et $f$ une fonction croissante de $I$ dans $I$. Notons $A = \{x \in I \mid f(x) \ge x\}$. On veut montrer qu'il existe $y \in I$ tel que $f(y) = y$.
+\begin{enumerate}
+    \item Montrer que $\sup A$ existe.
+    \item Montrer que $A$ est majoré par $f(\sup A)$ et que $\sup A \in A$.
+    \item Montrer que $f(\sup A) \in A$ et conclure.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item $A$ est une partie de $I=[0,1]$. L'ensemble $A$ n'est pas vide car $0 \in I$ et $f(0) \in [0,1]$, donc $f(0) \ge 0$, ce qui signifie que $0 \in A$. De plus, $A$ est majorée par $1$ car $A \subset [0,1]$. Étant une partie non vide et majorée de $\mathbb{R}$, $A$ admet une borne supérieure. Soit $y = \sup A$.
+    \item Soit $x \in A$. On a $x \le y$ et $f(x) \ge x$. Comme $f$ est croissante, $x \le y \implies f(x) \le f(y)$.
+    On a donc la chaîne d'inégalités: $x \le f(x) \le f(y)$.
+    Ceci étant vrai pour tout $x \in A$, on a montré que $f(y)$ est un majorant de $A$.
+    Puisque $y=\sup A$ est le plus petit des majorants de $A$, on doit avoir $y \le f(y)$.
+    Comme $y \in [0,1]$ (car $0\in A$ et $1$ est un majorant de $A$) et $f(y) \in [0,1]$, la condition $y \le f(y)$ signifie que $y \in A$.
+    \item Soit $y=\sup A$. De la question 2, on sait que $y \in A$, et donc $y \le f(y)$.
+    Posons $z = f(y)$. Comme $f$ est croissante, $y \le z \implies f(y) \le f(z)$, ce qui s'écrit $z \le f(z)$.
+    Puisque $y \in I$, on a $z=f(y) \in I$. La condition $z \le f(z)$ avec $z \in I$ signifie que $z \in A$.
+    Mais $y = \sup A$ est un majorant de $A$. Comme $z \in A$, on doit avoir $z \le y$.
+    Nous avons montré $y \le z$ et $z \le y$. On en déduit que $y=z$, c'est-à-dire $y=f(y)$. Nous avons trouvé un point fixe.
+\end{enumerate}
+\end{solution}
+
+\end{document}
