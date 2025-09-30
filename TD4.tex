@@ -1,0 +1,203 @@
+\documentclass[]{exercices}
+
+\usepackage[shortlabels]{enumitem}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{4}{Limites de suites : définition et propriétés}
+
+\begin{exercice}[\di]
+	À partir de la définition de limite d'une suite, démontrer les propriétés suivantes :
+	\begin{multicols}{2}
+		\begin{enumerate}
+			\item $\lim\limits_{n\to +\infty}\sqrt{n}=+\infty$
+			\item $\lim\limits_{n\to +\infty}\dfrac{n}{n+1}=1$
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item \textbf{Démonstration de $\lim\limits_{n\to +\infty}\sqrt{n}=+\infty$} \\
+		      Il faut montrer que : $\forall A > 0, \exists N \in \mathbb{N}, \forall n \in \mathbb{N}, (n \ge N \implies \sqrt{n} \ge A)$.
+
+		      Soit $A > 0$. On cherche un rang $N$ à partir duquel $\sqrt{n} \ge A$.
+		      L'inégalité $\sqrt{n} \ge A$ est équivalente à $n \ge A^2$ (car la fonction carré est croissante sur $\mathbb{R}_+$).
+
+		      Il suffit donc de choisir un entier $N$ qui soit plus grand que $A^2$.
+		      Posons $N = \lfloor A^2 \rfloor + 1$.
+		      Pour tout entier $n \ge N$, on a $n \ge \lfloor A^2 \rfloor + 1 > A^2$.
+		      En prenant la racine carrée (qui est croissante), on obtient $\sqrt{n} > A$.
+		      Ceci prouve bien que la limite est $+\infty$.
+
+		\item \textbf{Démonstration de $\lim\limits_{n\to +\infty}\dfrac{n}{n+1}=1$} \\
+		      Il faut montrer que : $\forall \varepsilon > 0, \exists N \in \mathbb{N}, \forall n \in \mathbb{N}, (n \ge N \implies |\frac{n}{n+1}-1| < \varepsilon)$.
+
+		      Soit $\varepsilon > 0$. Simplifions d'abord l'expression :
+		      \[ \left|\frac{n}{n+1}-1\right| = \left|\frac{n-(n+1)}{n+1}\right| = \left|\frac{-1}{n+1}\right| = \frac{1}{n+1} \]
+		      On cherche donc un rang $N$ à partir duquel $\frac{1}{n+1} < \varepsilon$.
+		      Cette inégalité est équivalente à $n+1 > \frac{1}{\varepsilon}$, soit $n > \frac{1}{\varepsilon} - 1$.
+
+		      Posons $N = \max(0, \lfloor \frac{1}{\varepsilon} - 1 \rfloor + 1)$.
+		      Pour tout entier $n \ge N$, on a $n > \frac{1}{\varepsilon} - 1$.
+		      Cela implique $n+1 > \frac{1}{\varepsilon}$, et donc $\frac{1}{n+1} < \varepsilon$.
+		      On a bien montré que $|\frac{n}{n+1}-1| < \varepsilon$. La limite est donc 1.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+	Soit $(u_n)$ une suite qui converge vers $\ell\in\mathbb{R}$.\\
+	Montrer que si $\ell>0$, alors à partir d'un certain rang, $u_n>0$.
+	La réciproque est-elle vraie ?
+\end{exercice}
+
+\begin{solution}
+	\textbf{Démonstration :} \\
+	On sait que $\lim_{n\to\infty} u_n = \ell$. Par définition de la limite, pour tout $\varepsilon > 0$, il existe un rang $N$ tel que pour tout $n \ge N$, on a $|u_n - \ell| < \varepsilon$.
+
+	Puisque $\ell > 0$, on peut choisir une valeur de $\varepsilon$ qui soit "petite" par rapport à $\ell$ pour s'assurer que l'intervalle $]\ell-\varepsilon, \ell+\varepsilon[$ ne contient pas 0. Un bon choix est $\varepsilon = \frac{\ell}{2}$. Comme $\ell>0$, on a bien $\varepsilon > 0$.
+
+	Pour ce choix de $\varepsilon$, il existe un rang $N \in \mathbb{N}$ tel que pour tout $n \ge N$ :
+	\[ |u_n - \ell| < \frac{\ell}{2} \]
+	Ce qui est équivalent à :
+	\[ -\frac{\ell}{2} < u_n - \ell < \frac{\ell}{2} \]
+	En ajoutant $\ell$ à chaque membre de l'inégalité, on obtient :
+	\[ \ell - \frac{\ell}{2} < u_n < \ell + \frac{\ell}{2} \]
+	\[ \frac{\ell}{2} < u_n < \frac{3\ell}{2} \]
+	En particulier, pour tout $n \ge N$, on a $u_n > \frac{\ell}{2}$. Comme $\ell>0$, $\frac{\ell}{2} > 0$, donc $u_n > 0$.
+
+	\textbf{Réciproque :} \\
+	La réciproque est : ``Si une suite $(u_n)$ est telle que $u_n > 0$ à partir d'un certain rang, alors sa limite $\ell$ (si elle existe) est strictement positive ($\ell>0$)''.
+
+	Cette réciproque est \emph{fausse}.
+	Le passage à la limite conserve les inégalités larges, mais pas les inégalités strictes.
+
+	\emph{Contre-exemple} : Soit la suite $u_n = \frac{1}{n+1}$ pour $n \in \mathbb{N}$.
+	Pour tout $n \in \mathbb{N}$, on a bien $u_n > 0$.
+	Cependant, la suite converge et sa limite est $\ell = \lim_{n\to\infty} \frac{1}{n+1} = 0$. La limite n'est pas strictement positive.
+\end{solution}
+
+\begin{exercice}[\di]
+	On se propose de démontrer le résultat du cours sur la limite de l'inverse :
+	Si $(u_n)$ est une suite qui converge vers $\ell\neq0$, alors $u_n$ est non nulle à partir d'un certain rang et on a $\lim_{n\to\infty} \frac{1}{u_n} = \frac{1}{\ell}$.
+	\begin{enumerate}
+		\item Montrer que, si $u_n\neq 0$ alors 
+			\[|\frac1{u_n}-\frac1\ell|=\dfrac{|u_n-\ell|}{|u_n||\ell|}.\]
+		\item Montrer qu'il existe un entier $N_1$ tel que pour tout entier $n$,
+			\[n\ge N_1\implies \frac{|\ell|}{2}\le|u_n|\le \frac{3|\ell|}{2}.\]
+		\item En déduire que pour $n\ge N_1, u_n\ne 0$ et 
+			\[\frac{1}{|u_n||\ell|}\le \frac{2}{|\ell|^2}.\]
+		\item Soit $\eps>0$. Appliquer la définition de $\lim u_n=\ell$ à $\eps^\prime=\dfrac{|\ell|^2\eps}{2}$ et conclure.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item C'est un calcul direct de mise au même dénominateur :
+		      \[ \left|\frac{1}{u_n} - \frac{1}{\ell}\right| = \left|\frac{\ell - u_n}{u_n \ell}\right| = \frac{|\ell - u_n|}{|u_n \ell|} = \frac{|u_n - \ell|}{|u_n||\ell|} \]
+		\item Comme $\lim u_n = \ell$ et $\ell \ne 0$, on a $|\ell|>0$. On peut appliquer la définition de la limite avec le choix $\varepsilon = \frac{|\ell|}{2} > 0$.
+		      Il existe donc un rang $N_1$ tel que pour tout $n \ge N_1$, on a $|u_n - \ell| < \frac{|\ell|}{2}$.
+		      D'après l'inégalité triangulaire inversée, $||u_n|-|\ell|| \le |u_n - \ell|$.
+		      On a donc pour $n \ge N_1$ :
+		      \[ ||u_n|-|\ell|| < \frac{|\ell|}{2} \]
+		      Ce qui est équivalent à :
+		      \[ -\frac{|\ell|}{2} < |u_n|-|\ell| < \frac{|\ell|}{2} \]
+		      \[ |\ell| - \frac{|\ell|}{2} < |u_n| < |\ell| + \frac{|\ell|}{2} \]
+		      \[ \frac{|\ell|}{2} < |u_n| < \frac{3|\ell|}{2} \]
+		\item Pour $n \ge N_1$, on a $|u_n| > \frac{|\ell|}{2}$. Comme $\ell \ne 0$, on a $\frac{|\ell|}{2} > 0$, donc $|u_n|$ est strictement positif. Ceci implique que $u_n \ne 0$.
+		      De l'inégalité $\frac{|\ell|}{2} < |u_n|$, en passant à l'inverse (la fonction inverse est décroissante sur $\mathbb{R}_+^*$), on obtient $\frac{1}{|u_n|} < \frac{2}{|\ell|}$.
+		      En multipliant par $\frac{1}{|\ell|} > 0$, on a :
+		      \[ \frac{1}{|u_n||\ell|} < \frac{2}{|\ell|^2} \]
+		\item Soit $\varepsilon > 0$. On veut montrer que $|\frac{1}{u_n} - \frac{1}{\ell}|$ peut être rendu plus petit que $\varepsilon$.
+		      Comme $\lim u_n = \ell$, par définition, pour tout $\varepsilon' > 0$, il existe un rang $N_2$ tel que pour $n \ge N_2$, $|u_n - \ell| < \varepsilon'$.
+		      On choisit $\varepsilon' = \frac{|\ell|^2 \varepsilon}{2} > 0$. Il existe donc un rang $N_2$ tel que pour $n \ge N_2$, $|u_n - \ell| < \frac{|\ell|^2 \varepsilon}{2}$.
+
+		      Posons $N = \max(N_1, N_2)$. Pour tout $n \ge N$, les conditions des questions 2 et 4 sont vérifiées simultanément. On peut alors écrire :
+		      \[ \left|\frac{1}{u_n} - \frac{1}{\ell}\right| = |u_n - \ell| \cdot \frac{1}{|u_n||\ell|} \le |u_n - \ell| \cdot \frac{2}{|\ell|^2} \]
+		      En utilisant la condition sur $|u_n - \ell|$ :
+		      \[ \left|\frac{1}{u_n} - \frac{1}{\ell}\right| < \left(\frac{|\ell|^2 \varepsilon}{2}\right) \cdot \frac{2}{|\ell|^2} = \varepsilon \]
+		      On a donc montré que pour tout $\varepsilon > 0$, il existe un rang $N$ tel que pour $n \ge N$, $|\frac{1}{u_n} - \frac{1}{\ell}| < \varepsilon$.
+		      Ceci est la définition de $\lim_{n\to\infty} \frac{1}{u_n} = \frac{1}{\ell}$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	Vrai ou faux : $(u_n)$ désigne une suite réelle et $\ell$ un nombre réel.
+	\begin{enumerate}
+		\item Il existe une suite $(u_n)$ qui n'est ni croissante ni décroissante.
+		\item Si $\lim |u_n|=\ell$ alors $(u_n)$ converge vers $\ell$ ou vers $-\ell$.
+		\item Si $(u_n)$ est croissante alors $\lim u_n=+\infty$.
+		\item Le produit de deux suites croissantes est une suite croissante.
+		\item Si $(u_n)$ n'est pas majorée alors elle est minorée.
+		\item Si $\lim (u_{n+1}-u_{n})=0$ alors $(u_n)$ converge.
+		\item Si pour tout $n\in\mathbb{N}$, $u_n>0$ et $\lim u_n=0$ alors $(u_n)$ est décroissante à partir d'un certain rang.
+		\item Si $\lim u_n=+\infty$ alors $(u_n)$ est croissante à partir d'un certain rang.
+		\item Si $(u_n)$ est croissante et majorée alors elle est convergente.
+		\item Si $(u_n)$ n'est pas majorée alors elle diverge vers $+\infty$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item \textbf{Vrai.} La suite $u_n = (-1)^n$ n'est ni croissante ($u_1 < u_0$) ni décroissante ($u_1 < u_2$).
+		\item \textbf{Faux.} Contre-exemple : $u_n = (-1)^n$. On a $|u_n|=1$ pour tout $n$, donc $\lim |u_n| = 1$. Cependant, $(u_n)$ diverge.
+		\item \textbf{Faux.} Une suite croissante peut être majorée et converger vers une limite finie. Exemple : $u_n = 1 - \frac{1}{n+1}$ est croissante et converge vers 1.
+		\item \textbf{Faux.} Le produit de deux suites croissantes à termes négatifs peut être décroissant. Exemple : $u_n = v_n = -\frac{1}{n+1}$ sont croissantes. Leur produit $w_n = \frac{1}{(n+1)^2}$ est décroissant.
+		\item \textbf{Faux.} Une suite peut n'être ni majorée ni minorée. Exemple : $u_n = (-1)^n n$.
+		\item \textbf{Faux.} La condition $\lim(u_{n+1}-u_n)=0$ est nécessaire pour la convergence mais pas suffisante. Exemple : la suite $u_n = \sqrt{n}$ (ou $u_n = \ln(n)$) diverge, pourtant $u_{n+1}-u_n = \sqrt{n+1}-\sqrt{n} = \frac{1}{\sqrt{n+1}+\sqrt{n}} \to 0$.
+		\item \textbf{Faux.} La suite peut tendre vers 0 de manière non-monotone. Exemple : $u_n = \frac{2+(-1)^n}{n+1}$. On a $u_{2k} = \frac{3}{2k+1}$ et $u_{2k+1}=\frac{1}{2k+2}$. On a $u_{2k+1} < u_{2k}$ mais $u_{2k+2} < u_{2k+1}$ n'est pas toujours vrai (ex: $u_3=1/4, u_4=3/5$). La suite n'est pas décroissante.
+		\item \textbf{Faux.} Une suite peut tendre vers $+\infty$ en oscillant. Exemple : $u_n = n + 2(-1)^n$. On a $u_{2k}=2k+2$ et $u_{2k+1}=2k+1-2=2k-1$. On a $u_{2k+1} < u_{2k}$, donc la suite n'est pas croissante, même à partir d'un certain rang.
+		\item \textbf{Vrai.} C'est le théorème de la convergence monotone (ou théorème de la limite monotone).
+		\item \textbf{Faux.} Une suite non majorée n'est pas forcément croissante. Elle peut osciller et ne pas avoir de limite. Exemple : $u_n = n(1+(-1)^n)$. Cette suite vaut $2n$ si $n$ est pair et $0$ si $n$ est impair. Elle n'est pas majorée mais ne diverge pas vers $+\infty$ (elle a une sous-suite qui vaut 0).
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\st] \emph{Moyenne de Césaro (I)}
+	\begin{enumerate}
+		\item Soit $(u_n)_{n\in \mathbb{N}^*}$ une suite qui converge vers une limite $\ell$. Montrer que la suite $(v_n)_{n\in \mathbb{N}^*}$ définie par $v_n=\frac{1}{n}\sum_{k=1}^n u_k$ converge vers $\ell$.
+		\item Soit $(x_n)$ une suite telle que $\lim (x_{n+1}-x_n)=\ell$. Montrer que la suite $(\frac{x_n}{n})$ converge vers $\ell$.
+		\item En déduire que si $(x_n)$ est une suite de réels strictement positifs telle que $(\frac{x_{n+1}}{x_n})$ converge vers $\ell$, alors la suite $(\sqrt[n]{x_n})$ converge vers $\ell$.
+		\item Déterminer les limites des suites définies par :
+		      \begin{multicols}{3}
+			      \begin{enumerate}[a)]
+				      \item $u_n=\sqrt[n]{n}$
+				      \item $u_n=\sqrt[n]{\binom{n}{k}}$ ($k$ fixé)
+				      \item $u_n=\frac{\sqrt[n]{n!}}{n}$
+			      \end{enumerate}
+		      \end{multicols}
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item \textbf{Théorème de Césaro :} Soit $\varepsilon > 0$. Comme $u_n \to \ell$, il existe un rang $N_0$ tel que pour tout $k > N_0$, $|u_k - \ell| < \varepsilon/2$. On écrit $v_n - \ell$ :
+		      \[ v_n - \ell = \frac{1}{n}\sum_{k=1}^n u_k - \ell = \frac{1}{n}\sum_{k=1}^n (u_k - \ell) \]
+		      On coupe la somme en deux parties :
+		      \[ |v_n - \ell| = \left| \frac{1}{n}\sum_{k=1}^{N_0} (u_k - \ell) + \frac{1}{n}\sum_{k=N_0+1}^{n} (u_k - \ell) \right| \le \frac{1}{n}\sum_{k=1}^{N_0} |u_k - \ell| + \frac{1}{n}\sum_{k=N_0+1}^{n} |u_k - \ell| \]
+		      Le premier terme est une constante $C = \sum_{k=1}^{N_0} |u_k - \ell|$, donc ce terme est $C/n$. Il tend vers 0. Il existe un rang $N_1$ tel que pour $n>N_1$, $C/n < \varepsilon/2$.
+		      Pour le second terme, pour $n>N_0$, chaque $|u_k-\ell|$ est plus petit que $\varepsilon/2$. Il y a $n-N_0$ termes.
+		      \[ \frac{1}{n}\sum_{k=N_0+1}^{n} |u_k - \ell| < \frac{1}{n}(n-N_0)\frac{\varepsilon}{2} < \frac{n}{n}\frac{\varepsilon}{2} = \frac{\varepsilon}{2} \]
+		      Soit $N = \max(N_0, N_1)$. Pour $n > N$, on a $|v_n - \ell| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon$. Donc $v_n \to \ell$.
+		\item \textbf{Application de Césaro :} Posons $u_1 = x_1$ et $u_n = x_n - x_{n-1}$ for $n \ge 2$.
+		      On a $\lim u_n = \ell$.
+		      La somme partielle est $\sum_{k=1}^n u_k = x_1 + (x_2-x_1) + \dots + (x_n-x_{n-1}) = x_n$.
+		      D'après le théorème de Césaro, la moyenne $\frac{1}{n}\sum_{k=1}^n u_k = \frac{x_n}{n}$ converge vers la même limite $\ell$.
+		\item \textbf{Césaro géométrique :} Soit $y_n = \ln(x_n)$. La suite $\frac{x_{n+1}}{x_n} \to \ell$. En passant au logarithme (qui est une fonction continue), $\ln(\frac{x_{n+1}}{x_n}) = y_{n+1} - y_n \to \ln(\ell)$.
+		      D'après la question 2, la suite $\frac{y_n}{n} = \frac{\ln(x_n)}{n}$ converge vers $\ln(\ell)$.
+		      On a $\frac{\ln(x_n)}{n} = \ln(x_n^{1/n}) = \ln(\sqrt[n]{x_n})$.
+		      Comme $\ln(\sqrt[n]{x_n}) \to \ln(\ell)$, en passant à l'exponentielle (fonction continue), on obtient $\sqrt[n]{x_n} \to \ell$.
+		\item \textbf{Limites :}
+		      \begin{enumerate}[a)]
+			      \item $u_n = \sqrt[n]{n}$. On pose $x_n=n$. On a $\frac{x_{n+1}}{x_n} = \frac{n+1}{n} = 1+\frac{1}{n} \to 1$. D'après la question 3, $\sqrt[n]{n} \to 1$.
+			      \item $u_n=\sqrt[n]{\binom{n}{k}}$. On pose $x_n = \binom{n}{k} = \frac{n(n-1)\dots(n-k+1)}{k!}$.
+			            \[ \frac{x_{n+1}}{x_n} = \frac{\binom{n+1}{k}}{\binom{n}{k}} = \frac{(n+1)!}{k!(n+1-k)!} \frac{k!(n-k)!}{n!} = \frac{n+1}{n+1-k} \to 1 \]
+			            Donc, $\sqrt[n]{\binom{n}{k}} \to 1$.
+			      \item $u_n=\frac{\sqrt[n]{n!}}{n} = \sqrt[n]{\frac{n!}{n^n}}$. On pose $x_n = \frac{n!}{n^n}$.
+			            \[ \frac{x_{n+1}}{x_n} = \frac{(n+1)!}{(n+1)^{n+1}} \frac{n^n}{n!} = \frac{n+1}{(n+1)^{n+1}} n^n = \frac{n^n}{(n+1)^n} = \left(\frac{n}{n+1}\right)^n = \frac{1}{(1+1/n)^n} \to \frac{1}{e} \]
+			            D'après la question 3, $\sqrt[n]{x_n} = \frac{\sqrt[n]{n!}}{n} \to \frac{1}{e}$.
+		      \end{enumerate}
+	\end{enumerate}
+\end{solution}
+
+\end{document}
