@@ -1,0 +1,143 @@
+\documentclass[solutions]{exercices}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{5}{Calculs de limites}
+
+\begin{exercice}[\di]
+	Étudier la convergence des suites suivantes (définies pour $n$ assez grand) et calculer leur limite lorsqu'elle existe :
+	\begin{multicols}{3}
+		\setlength{\columnsep}{-2.5cm}
+		\begin{enumerate}
+			\item $\displaystyle u_n = \frac{n^2-25}{2n^2+1}$
+			\item $\displaystyle u_n =\frac{1}{n}\cos( n)$
+			\item $\displaystyle u_n =\dfrac{2^n+3^n}{2^n-3^n}$
+			\item $\displaystyle u_n=\frac{(-1)^n}{n^2+1}$
+			\item $\displaystyle u_n=\frac{1}{n+(-1)^n\sqrt{n}}$
+			\item $u_n=\sqrt{n^2 + n + 1}-\sqrt n$
+			\item $u_n=\dfrac{n\sin (n)}{n^2 + 1}$
+			\item $u_n=\dfrac{\ln(2n+1)}{\ln(n)}$
+			\item $u_n=\dfrac{1}{n^2}\sum\limits_{k=1}^n\lfloor kx \rfloor$
+			\item $u_n=\dfrac{\lfloor(n+\frac12)^2\rfloor}{\lfloor(n-\frac12)^2\rfloor}$
+			\item $u_n=\displaystyle{}n\sum_{k = 1}^{2n + 1}\frac 1{n^2 + k}$
+			\item $u_n=\displaystyle{}\left(1+\frac1n\right)^{n^2}$
+			\item $u_n=\displaystyle{}\frac{1}{n}\sum_{k=0}^n \cos(kx)$
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item On factorise par le terme de plus haut degré : $u_n = \frac{n^2(1 - 25/n^2)}{n^2(2 + 1/n^2)} = \frac{1 - 25/n^2}{2 + 1/n^2}$. Par opérations sur les limites, $\lim_{n\to\infty} u_n = \frac{1-0}{2+0} = \frac{1}{2}$.
+		\item On utilise le théorème d'encadrement (ou des gendarmes). Pour tout $n \in \mathbb{N}^*$, on a $-1 \le \cos(n) \le 1$. Donc, $-\frac{1}{n} \le \frac{\cos(n)}{n} \le \frac{1}{n}$. Comme $\lim_{n\to\infty} -\frac{1}{n} = \lim_{n\to\infty} \frac{1}{n} = 0$, on conclut que $\lim_{n\to\infty} u_n = 0$.
+		\item On factorise par le terme dominant, $3^n$ : $u_n = \frac{3^n((\frac{2}{3})^n + 1)}{3^n((\frac{2}{3})^n - 1)} = \frac{(\frac{2}{3})^n + 1}{(\frac{2}{3})^n - 1}$. Comme $|\frac{2}{3}| < 1$, $\lim_{n\to\infty} (\frac{2}{3})^n = 0$. Donc, $\lim_{n\to\infty} u_n = \frac{0+1}{0-1} = -1$.
+		\item Par encadrement : $-\frac{1}{n^2+1} \le \frac{(-1)^n}{n^2+1} \le \frac{1}{n^2+1}$. Les deux bornes tendent vers 0, donc $\lim_{n\to\infty} u_n = 0$.
+		\item Par encadrement : pour $n \ge 2$, on a $n-\sqrt{n} \le n+(-1)^n\sqrt{n} \le n+\sqrt{n}$. En passant à l'inverse, $\frac{1}{n+\sqrt{n}} \le u_n \le \frac{1}{n-\sqrt{n}}$. Les deux bornes tendent vers 0, donc $\lim_{n\to\infty} u_n = 0$.
+		\item On factorise par le terme dominant, $\sqrt{n^2}=n$ : $u_n = \sqrt{n^2(1+\frac{1}{n}+\frac{1}{n^2})} - \sqrt{n} = n\sqrt{1+\frac{1}{n}+\frac{1}{n^2}} - \sqrt{n}$. Le premier terme se comporte comme $n$ et le second comme $\sqrt{n}$. La limite est $+\infty$.
+		\item Par encadrement : $-\frac{n}{n^2+1} \le \frac{n\sin(n)}{n^2+1} \le \frac{n}{n^2+1}$. Comme $\frac{n}{n^2+1} \to 0$, on conclut $\lim_{n\to\infty} u_n = 0$.
+		\item On utilise les propriétés du logarithme : $u_n = \frac{\ln(n(2+1/n))}{\ln(n)} = \frac{\ln(n) + \ln(2+1/n)}{\ln(n)} = 1 + \frac{\ln(2+1/n)}{\ln(n)}$. Comme $\ln(2+1/n) \to \ln(2)$ et $\ln(n) \to +\infty$, le quotient tend vers 0. Donc, $\lim_{n\to\infty} u_n = 1$.
+		\item Par définition de la partie entière, $kx-1 < \lfloor kx \rfloor \le kx$. En sommant de $k=1$ à $n$ : $\sum(kx-1) < \sum \lfloor kx \rfloor \le \sum kx$.
+		      $x\frac{n(n+1)}{2} - n < \sum \lfloor kx \rfloor \le x\frac{n(n+1)}{2}$. On divise par $n^2$ :
+		      $x\frac{n(n+1)}{2n^2} - \frac{1}{n} < u_n \le x\frac{n(n+1)}{2n^2}$. Les deux bornes tendent vers $\frac{x}{2}$, donc $\lim_{n\to\infty} u_n = \frac{x}{2}$.
+		\item On a $\lfloor(n+\frac12)^2\rfloor = \lfloor n^2+n+\frac14 \rfloor = n^2+n$ et $\lfloor(n-\frac12)^2\rfloor = \lfloor n^2-n+\frac14 \rfloor = n^2-n$.
+		      $u_n = \frac{n^2+n}{n^2-n} = \frac{n(n+1)}{n(n-1)} = \frac{n+1}{n-1} = \frac{1+1/n}{1-1/n} \to 1$.
+		\item On encadre la somme. Pour $k \in [1, 2n+1]$, on a $n^2+1 \le n^2+k \le n^2+2n+1$.
+		      Donc $\frac{1}{n^2+2n+1} \le \frac{1}{n^2+k} \le \frac{1}{n^2+1}$.
+		      En sommant $(2n+1)$ termes identiques : $\frac{2n+1}{n^2+2n+1} \le \sum_{k=1}^{2n+1} \frac{1}{n^2+k} \le \frac{2n+1}{n^2+1}$.
+		      En multipliant par $n$ : $\frac{2n^2+n}{(n+1)^2} \le u_n \le \frac{2n^2+n}{n^2+1}$. Les deux bornes tendent vers 2, donc $\lim_{n\to\infty} u_n = 2$.
+		\item On passe à la forme exponentielle : $u_n = \exp\left(n^2 \ln(1+\frac{1}{n})\right)$.
+		      On sait que $\ln(1+x) = x - x^2/2 + o(x^2)$ quand $x \to 0$. Pour $x=1/n$ :
+		      $n^2 \ln(1+\frac{1}{n}) = n^2(\frac{1}{n} - \frac{1}{2n^2} + o(\frac{1}{n^2})) = n - \frac{1}{2} + o(1)$.
+		      L'exposant tend vers $+\infty$. Donc $\lim_{n\to\infty} u_n = +\infty$.
+		\item Si $x$ est un multiple de $2\pi$, $\cos(kx)=1$ pour tout $k$. La somme vaut $n+1$. $u_n = \frac{n+1}{n} \to 1$.
+		      Si $x$ n'est pas un multiple de $2\pi$, la somme des $\cos(kx)$ est la partie réelle d'une somme géométrique. Cette somme est bornée par une constante $C(x)$ qui ne dépend pas de $n$.
+		      On a alors $|u_n| = |\frac{1}{n} \sum \cos(kx)| \le \frac{C(x)}{n}$. Par encadrement, $\lim_{n\to\infty} u_n = 0$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	Soient $(u_n)_{n \in \mathbb{N}}$ et $(v_n)_{n \in \mathbb{N}}$ deux suites vérifiant :
+	\[ 0 \le u_n \le 1, \quad 0 \le v_n \le 1, \quad u_n v_n \xrightarrow[n\to\infty]{} 1. \]
+	Démontrer que $(u_n)_{n \in \mathbb{N}}$ et $(v_n)_{n \in \mathbb{N}}$ convergent vers 1.
+\end{exercice}
+
+\begin{solution}
+	On a $0 \le u_n \le 1$. Comme $v_n \ge 0$, on peut multiplier par $v_n$ sans changer le sens des inégalités :
+	\[ 0 \cdot v_n \le u_n v_n \le 1 \cdot v_n \]
+	\[ 0 \le u_n v_n \le v_n \]
+	On sait aussi que $v_n \le 1$. On a donc l'encadrement complet :
+	\[ u_n v_n \le v_n \le 1 \]
+	Par hypothèse, $\lim_{n\to\infty} u_n v_n = 1$.
+	D'après le théorème d'encadrement (des gendarmes), comme $v_n$ est coincée entre une suite qui tend vers 1 et la constante 1, on conclut que $\lim_{n\to\infty} v_n = 1$.
+	Le raisonnement est parfaitement symétrique pour la suite $(u_n)$ en partant de l'inégalité $0 \le v_n \le 1$. On montre de la même manière que $\lim_{n\to\infty} u_n = 1$.
+\end{solution}
+
+\begin{exercice}
+	\begin{enumerate}
+		\item Démontrer, sans utiliser la fonction $\ln$, que $\sqrt[n]n \xrightarrow[n\to\infty]{} 1$.
+		\item (\st) Chercher $\lim_{n\to\infty} \sqrt[n]{n!}$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item Posons $u_n = \sqrt[n]{n} - 1$. Comme $n \ge 1$, on a $\sqrt[n]{n} \ge 1$, donc $u_n \ge 0$.
+		      On a $n = (1+u_n)^n$. Par la formule du binôme de Newton, pour $n \ge 2$ :
+		      \[ n = (1+u_n)^n = \sum_{k=0}^n \binom{n}{k} u_n^k = 1 + nu_n + \binom{n}{2}u_n^2 + \dots + u_n^n \]
+		      Comme tous les termes sont positifs, on peut minorer la somme par le terme en $k=2$ :
+		      \[ n \ge \binom{n}{2}u_n^2 = \frac{n(n-1)}{2}u_n^2 \]
+		      Pour $n \ge 2$, on peut simplifier par $n$ :
+		      \[ 1 \ge \frac{n-1}{2}u_n^2 \implies u_n^2 \le \frac{2}{n-1} \]
+		      On a donc l'encadrement $0 \le u_n \le \sqrt{\frac{2}{n-1}}$.
+		      Comme $\lim_{n\to\infty} \sqrt{\frac{2}{n-1}} = 0$, par le théorème des gendarmes, $\lim_{n\to\infty} u_n = 0$.
+		      Puisque $u_n = \sqrt[n]{n} - 1$, on en déduit que $\lim_{n\to\infty} \sqrt[n]{n} = 1$.
+		\item On utilise le résultat de Césaro géométrique vu en TD4. Posons $x_n = n!$.
+		      On calcule la limite du rapport :
+		      \[ \frac{x_{n+1}}{x_n} = \frac{(n+1)!}{n!} = n+1 \]
+		      Comme $\lim_{n\to\infty} (n+1) = +\infty$, on en déduit que $\lim_{n\to\infty} \sqrt[n]{x_n} = \lim_{n\to\infty} \sqrt[n]{n!} = +\infty$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+	Soit $(u_n)_{n \in \mathbb{N}}$ et $(v_n)_{n \in \mathbb{N}}$ deux suites à valeurs strictement positives. On considère les deux suites de terme général
+	\[w_n=\dfrac{u_n^3+v_n^3}{u_n^2+v_n^2}\quad\quad \mbox{et}\quad\quad t_n=\max(u_n,v_n).\]
+	\begin{enumerate}
+		\item Démontrer que pour tout $ n\in\mathbb{N}$:
+		      \[
+			      \frac12t_n\le w_n\le 2 t_n.
+		      \]
+		\item En déduire que $\lim u_n=0$ et $\lim v_n=0 \iff \lim w_n=0$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item Soit $n \in \mathbb{N}$. Posons $t_n = \max(u_n, v_n)$. On a $u_n \le t_n$ et $v_n \le t_n$.
+		      \begin{itemize}
+			      \item \textbf{Majoration de $w_n$ :}
+			            $u_n^3 \le t_n^3$ et $v_n^3 \le t_n^3$, donc $u_n^3+v_n^3 \le 2t_n^3$.
+			            Aussi, $u_n^2+v_n^2 \ge t_n^2$ (car au moins un des termes, $u_n^2$ ou $v_n^2$, est égal à $t_n^2$).
+			            Donc, $w_n = \dfrac{u_n^3+v_n^3}{u_n^2+v_n^2} \le \dfrac{2t_n^3}{t_n^2} = 2t_n$.
+			            Pour la borne plus fine $w_n \le t_n$: $w_n - t_n = \frac{u_n^3+v_n^3 - t_n(u_n^2+v_n^2)}{u_n^2+v_n^2}$. Si $t_n=u_n$, le numérateur est $v_n^3 - u_n v_n^2 = v_n^2(v_n-u_n) \le 0$. Si $t_n=v_n$, le numérateur est $u_n^3 - v_n u_n^2 = u_n^2(u_n-v_n) \le 0$. Donc $w_n \le t_n$ est vrai.
+
+			      \item \textbf{Minoration de $w_n$ :}
+			            $u_n^3+v_n^3 \ge t_n^3$.
+			            $u_n^2 \le t_n^2$ et $v_n^2 \le t_n^2$, donc $u_n^2+v_n^2 \le 2t_n^2$.
+			            En passant à l'inverse, $\frac{1}{u_n^2+v_n^2} \ge \frac{1}{2t_n^2}$.
+			            Donc, $w_n = \frac{u_n^3+v_n^3}{u_n^2+v_n^2} \ge \frac{t_n^3}{2t_n^2} = \frac{1}{2}t_n$.
+		      \end{itemize}
+		      On a bien l'encadrement $\frac{1}{2}t_n \le w_n \le t_n$.
+		\item On note d'abord que $(\lim u_n=0 \text{ et } \lim v_n=0) \iff \lim t_n = 0$.
+		      ($\implies$) Si $u_n \to 0$ et $v_n \to 0$, comme $0 \le t_n = \max(u_n,v_n) \le u_n+v_n$, et que $u_n+v_n \to 0$, alors $t_n \to 0$ par encadrement.
+		      ($\impliedby$) Si $t_n \to 0$, comme $0 \le u_n \le t_n$ et $0 \le v_n \le t_n$, alors $u_n \to 0$ et $v_n \to 0$ par encadrement.
+
+		      Maintenant, utilisons l'encadrement de la question 1 : $\frac{1}{2}t_n \le w_n \le t_n$.
+		      Si $\lim w_n=0$, comme $\frac{1}{2}t_n \ge 0$, on a par encadrement $\lim \frac{1}{2}t_n = 0$, donc $\lim t_n=0$.
+		      Si $\lim t_n=0$, comme $w_n \ge 0$, on a par encadrement $\lim w_n=0$.
+		      Donc, $\lim w_n=0 \iff \lim t_n=0$.
+		      En combinant avec la première équivalence, on a le résultat voulu.
+	\end{enumerate}
+\end{solution}
+
+\end{document}
