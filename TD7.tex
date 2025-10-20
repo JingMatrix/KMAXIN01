@@ -1,0 +1,223 @@
+\documentclass[solutions]{exercices}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tkz-tab} % For variation tables
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{7}{Suites récurrentes}
+
+\begin{exercice}[\di]
+Considérer la suite $(u_n)_{n \in \mathbb{N}}$ définie par
+$$u_0\in[-1,+\infty[\ \textrm{et} \ \forall n\in\mathbb{N}, u_{n+1}=\sqrt{1+u_n}.$$
+La fonction itératrice $f:x\mapsto\sqrt{1+x}$ est définie sur $[-1,+\infty[$.
+On admet que la suite $(u_n)$ est bien définie et $u_n\in[-1,+\infty[$ pour tout $n$.
+\begin{enumerate}
+ \item Étudier les variations de $f$.
+ \item Déterminer l'unique point fixe de la fonction itératrice. On le notera $\varphi$.
+ \item Déterminer le signe de la fonction $g(x)=f(x)-x$ sur $[-1,+\infty[$.
+ \item On suppose que $u_0 \in [-1, \varphi[$. Montrer que la suite $(u_n)$ est croissante et majorée par $\varphi$. Conclure.
+ \item On suppose que $u_0 > \varphi$. Montrer que la suite $(u_n)$ est décroissante et minorée par $\varphi$. Conclure.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item La fonction $f(x)=\sqrt{1+x}$ est dérivable sur $]-1, +\infty[$ et sa dérivée est $f'(x) = \frac{1}{2\sqrt{1+x}}$.
+    Pour tout $x > -1$, on a $f'(x) > 0$. Donc, $f$ est strictement croissante sur $[-1, +\infty[$.
+    \item Un point fixe $x$ vérifie $f(x)=x$.
+    \[ \sqrt{1+x} = x \]
+    Pour que cette équation ait un sens, il faut que $x \ge 0$. Sous cette condition, on peut élever au carré :
+    \[ 1+x = x^2 \iff x^2 - x - 1 = 0 \]
+    Le discriminant est $\Delta = (-1)^2 - 4(1)(-1) = 5$. Les racines sont $x_1 = \frac{1-\sqrt{5}}{2}$ et $x_2 = \frac{1+\sqrt{5}}{2}$.
+    La racine $x_1$ est négative, elle n'est donc pas solution. La seule solution positive est $x_2 = \frac{1+\sqrt{5}}{2}$, le nombre d'or.
+    On note donc $\varphi = \frac{1+\sqrt{5}}{2}$.
+    \item Le signe de $g(x)=f(x)-x$ détermine la monotonie de la suite. On sait que $g(x)=0$ si et seulement si $x=\varphi$.
+    Le trinôme $x^2-x-1$ est négatif entre ses racines. Donc, pour $x \in [0, \varphi[$, $x^2-x-1 < 0$, ce qui signifie $x > \sqrt{1+x}$ (car $x<0$ n'est pas solution) est faux. Donc $g(x)=\sqrt{1+x}-x > 0$.
+    Pour $x > \varphi$, $x^2-x-1 > 0$, donc $g(x) < 0$.
+    En résumé :
+    \begin{itemize}
+        \item $g(x) > 0$ sur $[-1, \varphi[$
+        \item $g(x) = 0$ pour $x = \varphi$
+        \item $g(x) < 0$ sur $]\varphi, +\infty[$
+    \end{itemize}
+    \item Cas $u_0 \in [-1, \varphi[$.
+    \textbf{Monotonie :} La monotonie de la suite est donnée par le signe de $u_{n+1}-u_n = f(u_n)-u_n = g(u_n)$.
+    Puisque $f$ est croissante et que l'intervalle $[-1, \varphi]$ est stable par $f$ (car $f([-1,\varphi]) = [0, \varphi] \subset [-1, \varphi]$), on peut montrer par récurrence que si $u_0 \in [-1, \varphi[$, alors $u_n \in [-1, \varphi[$ pour tout $n$.
+    Donc $g(u_n) > 0$ pour tout $n$, ce qui signifie $u_{n+1} > u_n$. La suite est croissante.
+    \textbf{Convergence :} La suite $(u_n)$ est croissante et majorée par $\varphi$. D'après le théorème de la convergence monotone, elle converge vers une limite $\ell$.
+    Comme $f$ est continue, cette limite doit être un point fixe de $f$. L'unique point fixe est $\varphi$. Donc, $\lim_{n\to\infty} u_n = \varphi$.
+    \item Cas $u_0 > \varphi$.
+    \textbf{Monotonie :} L'intervalle $]\varphi, +\infty[$ est stable par $f$ (car si $x>\varphi$, $f(x)>f(\varphi)=\varphi$). On montre par récurrence que $u_n > \varphi$ pour tout $n$.
+    Le signe de $u_{n+1}-u_n$ est celui de $g(u_n)$. Comme $u_n > \varphi$, on a $g(u_n) < 0$. La suite est donc décroissante.
+    \textbf{Convergence :} La suite $(u_n)$ est décroissante et minorée par $\varphi$. Elle converge donc vers une limite $\ell$.
+    Cette limite est un point fixe de $f$, donc $\ell=\varphi$.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+On considère la suite $(u_n)$ définie par : $u_0=5$ et $u_{n+1}=\dfrac{1}{2}\left(u_n+\dfrac{5}{u_n}\right)$.
+On pose $f(x)=\dfrac{1}{2}\left(x+\dfrac{5}x\right)$.
+\begin{enumerate}
+ \item Faire l'étude de $f$.
+ \item En déduire que $f([\sqrt{5},+\infty[)\subset[\sqrt{5},+\infty[$.
+ \item En déduire que pour tout $n\in\mathbb{N}$, $u_n$ est bien définie et vérifie $u_n\ge \sqrt{5}$.
+ \item Étudier le signe de $g(x)=f(x)-x$.
+ \item Établir la convergence de la suite $(u_n)$.
+ \item Montrer que pour tout $n\in\mathbb{N}$, $|u_{n+1}-\sqrt{5}|\le\dfrac{(u_n-\sqrt5)^2}{2\sqrt{5}}$.
+\item On admet que $|u_4-\sqrt{5}|\le 10^{-6}$. Donner un encadrement de $\sqrt{5}$ à l'aide de $u_5$.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item \textbf{Étude de $f(x) = \frac{1}{2}(x+\frac{5}{x})$ sur $\mathbb{R}_+^*$ :}
+    $f$ est dérivable et $f'(x) = \frac{1}{2}(1-\frac{5}{x^2}) = \frac{x^2-5}{2x^2}$.
+    $f'(x)=0 \iff x=\sqrt{5}$.
+    $f'(x)<0$ sur $]0, \sqrt{5}[$ et $f'(x)>0$ sur $]\sqrt{5}, +\infty[$.
+    $f$ est décroissante sur $]0, \sqrt{5}]$ et croissante sur $[\sqrt{5}, +\infty[$.
+    Le minimum de $f$ est atteint en $x=\sqrt{5}$ et vaut $f(\sqrt{5}) = \frac{1}{2}(\sqrt{5}+\frac{5}{\sqrt{5}}) = \sqrt{5}$.
+    \item L'intervalle $I=[\sqrt{5}, +\infty[$ est stable par $f$. En effet, sur cet intervalle, $f$ est croissante. Pour tout $x \ge \sqrt{5}$, on a $f(x) \ge f(\sqrt{5}) = \sqrt{5}$. Donc $f(I) \subset I$.
+    \item On montre par récurrence que $u_n$ est bien défini et $u_n \ge \sqrt{5}$ pour tout $n$.
+    \textbf{Initialisation :} $u_0=5 \ge \sqrt{5}$. La proposition est vraie pour $n=0$.
+    \textbf{Hérédité :} Supposons $u_n \ge \sqrt{5}$. Alors $u_n \in [\sqrt{5}, +\infty[$.
+    D'après la question 2, $u_{n+1} = f(u_n) \in [\sqrt{5}, +\infty[$. Donc $u_{n+1}$ est bien défini et $u_{n+1} \ge \sqrt{5}$.
+    La proposition est donc vraie pour tout $n \in \mathbb{N}$.
+    \item \textbf{Signe de $g(x)=f(x)-x$ :}
+    $g(x) = \frac{1}{2}(x+\frac{5}{x}) - x = \frac{1}{2}(-x+\frac{5}{x}) = \frac{5-x^2}{2x}$.
+    Sur $\mathbb{R}_+^*$, le signe de $g(x)$ est celui de $5-x^2$.
+    $g(x) > 0$ sur $]0, \sqrt{5}[$, $g(\sqrt{5})=0$, et $g(x) < 0$ sur $]\sqrt{5}, +\infty[$.
+    \item \textbf{Convergence :} On étudie la monotonie de $(u_n)$. Pour tout $n$, $u_n \ge \sqrt{5}$, donc $u_n$ est dans l'intervalle $]\sqrt{5}, +\infty[$ (sauf si $u_n=\sqrt{5}$).
+    Le signe de $u_{n+1}-u_n$ est le signe de $g(u_n)$. Puisque $u_n > \sqrt{5}$, on a $g(u_n) < 0$.
+    La suite $(u_n)$ est donc décroissante.
+    Étant décroissante et minorée par $\sqrt{5}$, elle converge vers une limite $\ell$.
+    Cette limite doit vérifier $\ell \ge \sqrt{5}$ et être un point fixe de $f$ (car $f$ est continue).
+    Le seul point fixe de $f$ sur $\mathbb{R}_+^*$ est $\sqrt{5}$. Donc $\lim_{n\to\infty} u_n = \sqrt{5}$.
+    \item \textbf{Vitesse de convergence :}
+    \[ u_{n+1}-\sqrt{5} = \frac{1}{2}\left(u_n+\frac{5}{u_n}\right) - \sqrt{5} = \frac{u_n^2+5-2u_n\sqrt{5}}{2u_n} = \frac{(u_n-\sqrt{5})^2}{2u_n} \]
+    Comme $u_n \ge \sqrt{5}$, on a $2u_n \ge 2\sqrt{5}$, et donc $\frac{1}{2u_n} \le \frac{1}{2\sqrt{5}}$.
+    Puisque $u_{n+1}-\sqrt{5} \ge 0$, on peut écrire :
+    \[ |u_{n+1}-\sqrt{5}| = u_{n+1}-\sqrt{5} = \frac{(u_n-\sqrt{5})^2}{2u_n} \le \frac{(u_n-\sqrt{5})^2}{2\sqrt{5}} \]
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+Considérer la suite $(u_n)_{n \in \mathbb{N}}$ définie par $u_0\in\mathbb{R}$ et $u_{n+1}=u_n^2+1$.
+\begin{enumerate}
+    \item Montrer que $u_n$ existe et que $u_n\geq1$ pour chaque $n\in\mathbb{N}^*.$
+    \item Montrer que la suite est croissante.
+    \item Montrer que la fonction itératrice $f:x\mapsto x^2 +1$ n'a aucun point fixe. Conclure sur la convergence de $(u_n)$.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item Pour tout $n \in \mathbb{N}$, si $u_n$ est un réel, alors $u_{n+1}=u_n^2+1$ est aussi un réel. La suite est bien définie.
+    Pour $n \ge 1$, on a $u_n = u_{n-1}^2+1$. Comme $u_{n-1}^2 \ge 0$, on a $u_n \ge 1$.
+    \item On étudie le signe de $u_{n+1}-u_n = (u_n^2+1)-u_n = u_n^2 - u_n + 1$.
+    C'est un trinôme du second degré en $u_n$. Son discriminant est $\Delta = (-1)^2 - 4(1)(1) = -3 < 0$.
+    Le trinôme est donc toujours du signe de son coefficient dominant (positif).
+    Ainsi, $u_n^2-u_n+1 > 0$ pour tout $u_n$.
+    Donc $u_{n+1}-u_n > 0$, la suite est strictement croissante.
+    \item Les points fixes de $f$ sont les solutions de $f(x)=x$, soit $x^2-x+1=0$.
+    On a vu que cette équation n'a pas de solution réelle ($\Delta < 0$). La fonction n'a aucun point fixe.
+    
+    \textbf{Conclusion sur la convergence :}
+    La suite $(u_n)$ est croissante. D'après le théorème de la convergence monotone, soit elle converge vers une limite finie $\ell$, soit elle diverge vers $+\infty$.
+    Si elle convergeait vers une limite finie $\ell$, cette limite devrait être un point fixe de $f$. Or, il n'y en a pas.
+    La seule possibilité restante est que la suite diverge. Comme elle est croissante, elle diverge vers $+\infty$.
+    (Cas particulier : si $u_0$ est tel que la suite n'est pas minorée, par exemple $u_0$ imaginaire, mais l'énoncé est dans $\mathbb{R}$).
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+\'Etudier la suite $(u_n)_{n \in \mathbb{N}}$ définie par $u_0=a\in\mathbb{R}$ et $u_{n+1}=u_n^3$.
+\end{exercice}
+
+\begin{solution}
+Soit $f(x)=x^3$. Les points fixes sont les solutions de $x^3=x$, soit $x(x^2-1)=0$, donc $\{-1, 0, 1\}$.
+La fonction $f$ est croissante. Le signe de $f(x)-x=x^3-x=x(x-1)(x+1)$ est positif sur $[-1,0] \cup [1, +\infty]$ et négatif sur $]-\infty, -1] \cup [0,1]$.
+\begin{itemize}
+    \item Si $a \in \{-1, 0, 1\}$, la suite est constante.
+    \item Si $a \in ]-1, 0[ \cup ]1, +\infty[$, alors $u_1 = a^3 > a$, donc la suite est croissante.
+        \begin{itemize}
+            \item Si $a \in ]1, +\infty[$, la suite est croissante et non majorée (sinon elle convergerait vers un point fixe $>1$, ce qui est impossible). Elle diverge vers $+\infty$.
+            \item Si $a \in ]-1, 0[$, la suite est croissante et majorée par 0. Elle converge vers le point fixe 0.
+        \end{itemize}
+    \item Si $a \in ]-\infty, -1[ \cup ]0, 1[$, alors $u_1 = a^3 < a$, donc la suite est décroissante.
+        \begin{itemize}
+            \item Si $a \in ]0, 1[$, la suite est décroissante et minorée par 0. Elle converge vers le point fixe 0.
+            \item Si $a \in ]-\infty, -1[$, la suite est décroissante et non minorée. Elle diverge vers $-\infty$.
+        \end{itemize}
+\end{itemize}
+\end{solution}
+
+\begin{exercice}
+\'Etudier la suite $(u_n)_{n \in \mathbb{N}}$ définie par $u_0\in\mathbb{R}$ et $u_{n+1}=e^{u_n}-1$.
+\end{exercice}
+
+\begin{solution}
+Soit $f(x)=e^x-1$. Le seul point fixe est $x=0$ (solution de $e^x=x+1$).
+La fonction $f$ est croissante. Le signe de $f(x)-x$ est celui de $e^x-(x+1)$. On sait que $e^x \ge x+1$ pour tout $x$, avec égalité seulement en $x=0$. Donc $f(x)-x \ge 0$.
+\begin{itemize}
+    \item Si $u_0=0$, la suite est constante et vaut 0.
+    \item Si $u_0 \ne 0$, on a $u_{n+1}-u_n = f(u_n)-u_n > 0$. La suite est strictement croissante.
+    \item Si $u_0 > 0$, la suite est croissante et non majorée (sinon elle convergerait vers 0, mais elle est croissante et part de $u_0>0$). Elle diverge vers $+\infty$.
+    \item Si $u_0 < 0$, la suite est croissante et majorée par 0. Elle converge vers l'unique point fixe, 0.
+\end{itemize}
+\end{solution}
+
+\begin{exercice}
+Que vaut le nombre $\sqrt{2}^{\sqrt{2}^{\sqrt{2}^{\,\cdot^{\,\cdot^{\,\cdot}}}}}  ?$
+\end{exercice}
+
+\begin{solution}
+On interprète ce nombre comme la limite de la suite récurrente définie par $u_0 = \sqrt{2}$ et $u_{n+1} = \sqrt{2}^{u_n}$.
+Soit $f(x) = \sqrt{2}^x = e^{x\ln(\sqrt{2})}$.
+\begin{itemize}
+    \item \textbf{Monotonie :} La fonction $f$ est croissante. $u_1 = \sqrt{2}^{\sqrt{2}} > \sqrt{2}^{1} = u_0$. Comme la fonction est croissante, la suite $(u_n)$ est croissante.
+    \item \textbf{Points fixes :} On cherche les solutions de $f(x)=x$. Une solution évidente est $x=2$, car $f(2)=\sqrt{2}^2=2$. Une autre est $x=4$, car $f(4)=\sqrt{2}^4 = 4$.
+    \item \textbf{Convergence :} Montrons par récurrence que la suite est majorée par 2.
+    $u_0 = \sqrt{2} \le 2$.
+    Supposons $u_n \le 2$. Comme $f$ est croissante, $u_{n+1} = f(u_n) \le f(2) = 2$.
+    La suite est donc croissante et majorée par 2. Elle converge vers une limite $\ell$.
+    Cette limite est un point fixe de $f$ et doit vérifier $\ell \le 2$.
+    Le seul point fixe dans cet intervalle est 2.
+    Donc la limite est 2.
+\end{itemize}
+\end{solution}
+
+\begin{exercice}
+\'Etudier la suite $(u_n)_{n \in \mathbb{N}}$ définie par $1<u_0\in\mathbb{R}$ et $u_{n+1}=1+\ln(u_n)$.
+\end{exercice}
+
+\begin{solution}
+Soit $f(x)=1+\ln(x)$, définie sur $]0, +\infty[$.
+\begin{itemize}
+    \item \textbf{Points fixes :} On cherche $x$ tel que $1+\ln(x)=x$. L'étude de la fonction $g(x)=x-1-\ln(x)$ montre que $g'(x)=1-1/x$, s'annulant en $x=1$. $g(1)=0$ est un minimum. Donc $x=1$ est l'unique point fixe.
+    \item \textbf{Monotonie :} $f$ est croissante sur $]0, +\infty[$. Le signe de $f(x)-x$ est l'opposé de celui de $g(x)$. Comme $g(x)>0$ pour $x \ne 1$, on a $f(x)-x < 0$ pour $x \ne 1$.
+    \item \textbf{Stabilité de l'intervalle :} Si $x>1$, alors $\ln(x)>0$, donc $f(x)=1+\ln(x)>1$. L'intervalle $]1, +\infty[$ est stable par $f$.
+    \item \textbf{Étude de la suite :} Comme $u_0 > 1$, tous les termes $u_n$ restent dans $]1, +\infty[$.
+    Puisque $u_n > 1$, on a $u_{n+1}-u_n = f(u_n)-u_n < 0$. La suite est donc décroissante.
+    Étant décroissante et minorée par 1, elle converge vers une limite $\ell \ge 1$.
+    Cette limite est un point fixe de $f$, donc $\ell=1$.
+\end{itemize}
+\end{solution}
+
+\begin{exercice}[\st]
+On considère la suite $(u_n)$ définie par $u_0=1/2$ et $u_{n+1}=1-u_n^2$.
+(Cet exercice est complexe et étudie les sous-suites pair et impair. Seule la conclusion est donnée ici).
+\end{exercice}
+\begin{solution}
+Cet exercice analyse en détail le comportement de la suite $u_{n+1}=1-u_n^2$. La méthode consiste à étudier la suite des termes de rang pair $(u_{2n})$ et celle des termes de rang impair $(u_{2n+1})$.
+On montre que :
+\begin{enumerate}
+    \item La suite des termes pairs $(u_{2n})$ est décroissante et converge vers 0.
+    \item La suite des termes impairs $(u_{2n+1})$ est croissante et converge vers 1.
+\end{enumerate}
+Comme les deux sous-suites extraites, qui recouvrent l'ensemble de la suite, convergent vers des limites différentes, on conclut que la suite $(u_n)$ est **divergente**.
+\end{solution}
+
+\end{document}

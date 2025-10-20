@@ -1,0 +1,250 @@
+\documentclass[solutions]{exercices}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tkz-tab}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{8}{Comparaison de suites}
+
+\begin{exercice}[\di]
+	Déterminer un équivalent le plus simple possible des suites suivantes.
+	\begin{multicols}{3}
+		\newcommand{\elabel}{${\Alph*}_n  =$}
+		\begin{enumerate}[label=\elabel]
+			\item ${\displaystyle \frac{n^2-3n+5}{1-n^2} }$
+			\item ${\displaystyle  \frac{\ln(n^2+1)}{n + 1} }$
+			\item ${\displaystyle   \frac{2^n - 3^n}{2^n + 5^n} }$
+			\item ${\displaystyle \frac{2^n + n!}{\sqrt[3]{n^3 + 3n^2 + e^n}} }$
+			\item ${\displaystyle   (n + 3\ln(n))e^{-(n+1)}}$
+			\item ${\displaystyle   \frac{1}{n} - \frac{1}{n+1} }$
+			\item ${\displaystyle   \sqrt{n+1} - \sqrt{n-1}}$
+			\item ${\displaystyle   n \sin\left( \frac{1}{n} \right)}$
+			\item ${\displaystyle   \frac{1}{n} + (-1)^n }$.
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}[label=${\Alph*}_n)$]
+		\item Pour une fraction rationnelle, on prend l'équivalent des termes de plus haut degré au numérateur et au dénominateur :
+		      \[ A_n = \frac{n^2-3n+5}{1-n^2} \sim_{n\to\infty} \frac{n^2}{-n^2} = -1. \]
+		\item On cherche les équivalents du numérateur et du dénominateur.
+		      Numérateur : $\ln(n^2+1) = \ln(n^2(1+1/n^2)) = 2\ln(n) + \ln(1+1/n^2)$. Comme $\ln(1+1/n^2) \to 0$, ce terme est négligeable devant $2\ln(n) \to +\infty$. Donc, $\ln(n^2+1) \sim 2\ln(n)$.
+		      Dénominateur : $n+1 \sim n$.
+		      Par quotient d'équivalents : $ B_n \sim \frac{2\ln(n)}{n} $.
+		\item On factorise par les termes géométriques dominants (ceux avec la plus grande base) :
+		      \[ C_n = \frac{3^n((2/3)^n - 1)}{5^n((2/5)^n + 1)}. \]
+		      Comme $(2/3)^n \to 0$ et $(2/5)^n \to 0$, on a $(2/3)^n - 1 \to -1$ and $(2/5)^n + 1 \to 1$.
+		      Donc, $C_n \sim \frac{3^n(-1)}{5^n(1)} = -\left(\frac{3}{5}\right)^n$.
+		\item Par croissance comparée, on sait que $n! \gg 2^n$ et $n^3 \gg e^n$.
+		      Numérateur : $2^n + n! \sim n!$.
+		      Dénominateur : $\sqrt[3]{n^3 + 3n^2 + e^n} = (n^3(1+3/n+e^n/n^3))^{1/3} \sim (n^3)^{1/3} = n$.
+		      Par quotient d'équivalents : $ D_n \sim \frac{n!}{n} = (n-1)! $.
+		\item Dans la parenthèse, par croissance comparée, $n \gg \ln(n)$, donc $(n+3\ln(n)) \sim n$. L'équivalent est donc $n e^{-(n+1)}$.
+		\item On met au même dénominateur (car c'est une forme indéterminée $0-0$) :
+		      \[ F_n = \frac{(n+1)-n}{n(n+1)} = \frac{1}{n^2+n}. \]
+		      Le dénominateur est un polynôme, équivalent à son terme de plus haut degré $n^2$. Donc $ F_n \sim \frac{1}{n^2} $.
+		\item C'est une forme indéterminée "$\infty-\infty$". On utilise la quantité conjuguée :
+		      \[ G_n = \frac{(\sqrt{n+1} - \sqrt{n-1})(\sqrt{n+1} + \sqrt{n-1})}{\sqrt{n+1}+\sqrt{n-1}} = \frac{(n+1)-(n-1)}{\sqrt{n+1}+\sqrt{n-1}} = \frac{2}{\sqrt{n+1}+\sqrt{n-1}}. \]
+		      Au dénominateur, $\sqrt{n+1} \sim \sqrt{n}$ et $\sqrt{n-1} \sim \sqrt{n}$. Donc $\sqrt{n+1}+\sqrt{n-1} \sim 2\sqrt{n}$. L'équivalent est $ G_n \sim \frac{2}{2\sqrt{n}} = \frac{1}{\sqrt{n}} $.
+		\item On utilise le DL1 de $\sin(u)$ en $0$ : $\sin(u) = u + o(u)$.
+		      Posons $u=1/n$. Comme $u \to 0$ quand $n \to \infty$ :
+		      \[ H_n = n \sin\left(\frac{1}{n}\right) = n \left(\frac{1}{n} + o\left(\frac{1}{n}\right)\right) = 1 + n \cdot o\left(\frac{1}{n}\right) = 1 + o(1). \]
+		      Donc, $ H_n \sim 1 $.
+		\item Le terme $1/n$ tend vers 0, il est donc négligeable devant $(-1)^n$ qui n'a pas de limite mais est borné. L'équivalent est $(-1)^n$. Pour le prouver rigoureusement, on calcule le quotient :
+		      \[ \frac{I_n}{(-1)^n} = \frac{\frac{1}{n} + (-1)^n}{(-1)^n} = \frac{1}{n(-1)^n} + 1 = \frac{(-1)^n}{n} + 1. \]
+		      Comme $\lim_{n\to\infty} \frac{(-1)^n}{n} = 0$, le quotient tend vers 1. Donc $ I_n \sim (-1)^n $.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+	Soit \[S_n = \sum_{k=1}^n \frac{1}{\sqrt{k}}.\]
+	\begin{enumerate}
+		\item Montrer que, pour tout $n \in \mathbb{N}^*$, \[\frac{1}{\sqrt{n+1}} \leq 2(\sqrt{n+1} - \sqrt{n}) \leq \frac{1}{\sqrt{n}}\].
+		\item Étudier la limite de la suite $(S_n)$.
+		\item Montrer que la suite $u_n = S_n - 2 \sqrt{n}$ est convergente.
+		\item En déduire un équivalent simple de $S_n$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item On part de l'expression du milieu et on utilise la quantité conjuguée :
+		      $2(\sqrt{n+1}-\sqrt{n}) = \frac{2(n+1-n)}{\sqrt{n+1}+\sqrt{n}} = \frac{2}{\sqrt{n+1}+\sqrt{n}}$.
+		      On a l'encadrement évident $\sqrt{n}+\sqrt{n} \le \sqrt{n+1}+\sqrt{n} \le \sqrt{n+1}+\sqrt{n+1}$, soit $2\sqrt{n} \le \sqrt{n+1}+\sqrt{n} \le 2\sqrt{n+1}$.
+		      En passant à l'inverse, on a $\frac{1}{2\sqrt{n+1}} \le \frac{1}{\sqrt{n+1}+\sqrt{n}} \le \frac{1}{2\sqrt{n}}$.
+		      En multipliant par 2, on obtient bien l'inégalité demandée.
+		\item On utilise l'inégalité de droite de la question 1: $\frac{1}{\sqrt{k}} \ge 2(\sqrt{k+1}-\sqrt{k})$. On somme de $k=1$ à $n$ :
+		      \[ S_n = \sum_{k=1}^n \frac{1}{\sqrt{k}} \ge \sum_{k=1}^n 2(\sqrt{k+1}-\sqrt{k}) = 2\sum_{k=1}^n (\sqrt{k+1}-\sqrt{k}). \]
+		      La somme de droite est télescopique : $2((\sqrt{2}-\sqrt{1})+(\sqrt{3}-\sqrt{2})+\dots+(\sqrt{n+1}-\sqrt{n})) = 2(\sqrt{n+1}-1)$.
+		      Donc $S_n \ge 2\sqrt{n+1}-2$. Comme $\lim_{n\to\infty} (2\sqrt{n+1}-2) = +\infty$, par comparaison, $\lim_{n\to\infty} S_n = +\infty$.
+		\item On étudie la monotonie de $u_n$.
+		      $u_{n+1}-u_n = (S_{n+1}-S_n) - (2\sqrt{n+1}-2\sqrt{n}) = \frac{1}{\sqrt{n+1}} - 2(\sqrt{n+1}-\sqrt{n})$.
+		      D'après la question 1, $2(\sqrt{n+1}-\sqrt{n}) \ge \frac{1}{\sqrt{n+1}}$, donc $u_{n+1}-u_n \le 0$. La suite $(u_n)$ est décroissante.
+		      Pour la minoration, $u_n = \sum_{k=1}^n \frac{1}{\sqrt{k}} - 2\sqrt{n} \ge (2\sqrt{n+1}-2) - 2\sqrt{n} = 2(\sqrt{n+1}-\sqrt{n})-2 = \frac{2}{\sqrt{n+1}+\sqrt{n}}-2$.
+		      Cette expression est minorée (par -2).
+		      La suite $(u_n)$ est décroissante et minorée, donc elle converge.
+		\item On a montré que $u_n = S_n - 2\sqrt{n}$ converge vers une limite finie $\ell$. On peut donc écrire $S_n = 2\sqrt{n} + \ell + o(1)$.
+		      L'équivalent d'une somme est son terme dominant. Ici, $2\sqrt{n}$ diverge alors que $\ell+o(1)$ est borné, donc $\ell+o(1) = o(\sqrt{n})$.
+		      Ainsi, $S_n \sim 2\sqrt{n}$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+	Déterminer si les suites suivantes convergent et, le cas échéant, donner leur limite.
+	\begin{multicols}{2}
+		\newcommand{\elabel}{${\alph*}_n  =$}
+		\begin{enumerate}[label=\elabel]
+			\item $(1+\frac{1}{n^2})^{n}$
+			\item $(1-\frac{1}{n})^{n^2}$
+			\item $n^2(\cos(\frac1{n})-1)$
+			\item $\dfrac{\ln(1+\frac1n)}{1-\cos(\frac1n)}$
+			\item $(3^{n}+5^{n})^{\frac1n}$
+			\item  ${\displaystyle \frac{1-\ln(1+\frac1{n^2})-e^{\frac{1}{n^2}}}{\sin(\frac{1}{n^2})}}$
+			\item  ${\displaystyle n-(n^4+n^3-3)^{\frac14}}$
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	On utilise les DL1 : $\ln(1+u)=u+o(u)$, $e^u=1+u+o(u)$, $\cos(u)=1-u^2/2+o(u^2)$, $(1+u)^\alpha=1+\alpha u+o(u)$ pour $u\to 0$.
+	\begin{enumerate}[label=${\alph*}_n)$]
+		\item $u_n = \exp\left(n\ln(1+\frac{1}{n^2})\right)$. L'exposant est $n(\frac{1}{n^2}+o(\frac{1}{n^2})) = \frac{1}{n}+o(\frac{1}{n}) \to 0$. Par continuité de l'exponentielle, la limite est $e^0=1$.
+		\item $u_n = \exp\left(n^2\ln(1-\frac{1}{n})\right)$. L'exposant est $n^2(-\frac{1}{n}+o(\frac{1}{n})) = -n+o(n) \to -\infty$. La limite est $0$.
+		\item Avec le DL de $\cos(u)$ à l'ordre 2 : $\cos(u) = 1-u^2/2+o(u^2)$.
+		      Avec $u=1/n$ : $u_n = n^2(1-\frac{1}{2n^2}+o(\frac{1}{n^2})-1) = n^2(-\frac{1}{2n^2}+o(\frac{1}{n^2})) = -1/2+o(1)$. La limite est $-1/2$.
+		\item Numérateur : $\ln(1+1/n) \sim 1/n$. Dénominateur : $1-\cos(1/n) \sim -(-\frac{(1/n)^2}{2}) = \frac{1}{2n^2}$.
+		      Par quotient, $u_n \sim \frac{1/n}{1/(2n^2)}=2n$. La limite est $+\infty$.
+		\item $u_n = (5^n(1+(3/5)^n))^{1/n} = 5 \cdot (1+(3/5)^n)^{1/n} = 5 \exp\left(\frac{1}{n}\ln(1+(3/5)^n)\right)$.
+		      L'exposant est $\frac{1}{n} ((3/5)^n+o((3/5)^n)) \to 0$. La limite est $5e^0 = 5$.
+		\item On pose $x=1/n^2 \to 0$. La suite est $\frac{1-\ln(1+x)-e^x}{\sin(x)}$.
+		      Numérateur : $1-(x-x^2/2+o(x^2))-(1+x+x^2/2+o(x^2)) = -2x+o(x)$.
+		      Dénominateur : $\sin(x)\sim x$. Le quotient est équivalent à $\frac{-2x}{x} = -2$. La limite est $-2$.
+		\item On factorise par $n$ : $u_n = n\left(1 - (1+\frac{1}{n}-\frac{3}{n^4})^{1/4}\right)$.
+		      On utilise le DL1 de $(1+u)^{1/4} = 1+\frac{1}{4}u+o(u)$ avec $u = 1/n - 3/n^4 \sim 1/n$.
+		      $u_n = n\left(1 - (1+\frac{1}{4}(\frac{1}{n}) + o(\frac{1}{n}))\right) = n(-\frac{1}{4n} + o(\frac{1}{n})) = -1/4+o(1)$. La limite est $-1/4$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	Déterminer un équivalent simple de la suite de terme général :
+	\begin{multicols}{2}
+		\begin{enumerate}[]
+			\item ${\displaystyle a_n = ( n - 10^{10} \ln(n) ) ( 1 + 10^{-10}\ln(\ln(n)) )}$
+			\item ${\displaystyle b_n = a^n + n^a}$
+			\item ${\displaystyle c_n = \frac{\ln(n+1) - \ln(n)}{\sqrt{n+1} - \sqrt{n}}}$
+			\item ${\displaystyle d_n = \ln( \cos ( \frac{1}{n} ) ) \ln( \sin ( \frac{1}{n} ) )}$
+			\item ${\displaystyle e_n = \sqrt{1 + \frac{(-1)^n}{\sqrt{n}}} - 1 }$
+			\item [\st] ${\displaystyle f_n = \left( \frac{a^{1/n} + b^{1/n}}{2} \right)^n}$ ($a,b>0$)
+			\item ${\displaystyle g_n = \sum_{k=0}^n k! }$
+			\item [\st] ${\displaystyle h_n = \sqrt[n+1]{n+1} - \sqrt[n]{n}}$
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}[]
+		\item Premier facteur : $n - 10^{10} \ln(n) \sim n$. Second facteur : $1 + 10^{-10}\ln(\ln(n)) \sim 10^{-10}\ln(\ln(n))$. Par produit, $a_n \sim 10^{-10} n \ln(\ln(n))$.
+		\item Discussion selon $a$: si $|a| \le 1$, $b_n \sim n^a$. Si $|a|>1$, $b_n \sim a^n$.
+		\item Numérateur : $\ln(1+1/n) \sim 1/n$. Dénominateur : $\sqrt{n}(\sqrt{1+1/n}-1) \sim \sqrt{n}(1/(2n)) = \frac{1}{2\sqrt{n}}$.
+		      Par quotient, $c_n \sim \frac{1/n}{1/(2\sqrt{n})} = \frac{2}{\sqrt{n}}$.
+		\item $\ln(\cos(1/n)) \sim \cos(1/n)-1 \sim -1/(2n^2)$. $\sin(1/n) \sim 1/n$, donc $\ln(\sin(1/n)) \sim \ln(1/n) = -\ln(n)$.
+		      Par produit, $d_n \sim (-\frac{1}{2n^2})(-\ln(n)) = \frac{\ln(n)}{2n^2}$.
+		\item On utilise le DL1 $\sqrt{1+u}-1 \sim u/2$ pour $u\to 0$. Avec $u=\frac{(-1)^n}{\sqrt{n}} \to 0$, on a $e_n \sim \frac{1}{2}\frac{(-1)^n}{\sqrt{n}}$.
+		\item $f_n = \exp\left(n\ln\left(\frac{e^{\frac{\ln a}{n}}+e^{\frac{\ln b}{n}}}{2}\right)\right)$.
+		      L'argument du $\ln$ est $\frac{1+\frac{\ln a}{n}+o(\frac{1}{n}) + 1+\frac{\ln b}{n}+o(\frac{1}{n})}{2} = 1+\frac{\ln a+\ln b}{2n}+o(\frac{1}{n})$.
+		      L'exposant est $n \cdot (\frac{\ln(ab)}{2n}+o(\frac{1}{n})) = \frac{\ln(ab)}{2}+o(1) \to \ln(\sqrt{ab})$.
+		      La suite tend vers $\sqrt{ab}$. L'équivalent est donc $\sqrt{ab}$.
+		\item Le dernier terme de la somme, $n!$, est beaucoup plus grand que la somme de tous les autres. $\sum_{k=0}^{n-1} k! \le n \cdot (n-1)! = o(n!)$.
+		      Donc $g_n = n! + (n-1)! + \dots \sim n!$.
+		\item On pose $f(x) = x^{1/x} = e^{\frac{\ln x}{x}}$. $h_n = f(n+1)-f(n)$. On peut utiliser un DL :
+		      $\frac{\ln n}{n} - \frac{\ln(n+1)}{n+1} = \frac{\ln n}{n} - \frac{\ln(n)+\ln(1+1/n)}{n+1} = \frac{\ln n}{n} - \frac{\ln n + 1/n}{n+1} + o(\frac{1}{n^2}) \sim \frac{\ln n}{n^2}$.
+		      $h_n = e^{\frac{\ln(n+1)}{n+1}} - e^{\frac{\ln n}{n}} \sim 1-1=0$, il faut un DL plus précis.
+		      En utilisant le TAF, $h_n = f'(c_n)$ pour $c_n \in ]n, n+1[$. $f'(x) = x^{1/x} \frac{1-\ln x}{x^2} \sim \frac{-\ln x}{x^2}$.
+		      Donc $h_n \sim \frac{-\ln(c_n)}{c_n^2} \sim -\frac{\ln n}{n^2}$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\st]
+	(Intégrales de Wallis).
+	Soit \[W_n = \int_0^{\pi/2} \cos^n(x) dx\]
+	\begin{enumerate}
+		\item Montrer que la suite $(W_n)$ est strictement positive et décroissante.
+		\item Montrer que, pour tout $n \in \mathbb{N}$, $W_{n+2} = \frac{n+1}{n+2} W_n$.
+		\item Montrer que $W_{n+1} \sim W_n$.
+		\item Montrer que $W_n \sim \sqrt{\frac{\pi}{2n}}$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item Pour $x \in [0, \pi/2)$, $\cos^n(x)>0$, donc l'intégrale d'une fonction continue, positive et non identiquement nulle est strictement positive. Pour $x \in ]0,\pi/2[$, $\cos(x) < 1$, donc $\cos^{n+1}(x) < \cos^n(x)$. Par stricte croissance de l'intégrale, $W_{n+1} < W_n$.
+		\item Par intégration par parties : $W_{n+2} = \int_0^{\pi/2} \cos^{n+1}(x)\cos(x)dx$. On pose $u=\cos^{n+1}, v'=\cos$.
+		      $W_{n+2} = [\cos^{n+1}(x)\sin(x)]_0^{\pi/2} + (n+1)\int_0^{\pi/2}\sin^2(x)\cos^n(x)dx$.
+		      Le terme entre crochets est nul. On remplace $\sin^2=1-\cos^2$: $W_{n+2} = (n+1)(W_n - W_{n+2})$.
+		      En réarrangeant, $(n+2)W_{n+2} = (n+1)W_n$, d'où le résultat.
+		\item On a $W_{n+2} \le W_{n+1} \le W_n$. On divise par $W_n$: $\frac{W_{n+2}}{W_n} \le \frac{W_{n+1}}{W_n} \le 1$. Comme $\frac{n+1}{n+2} \to 1$, par encadrement, $\frac{W_{n+1}}{W_n} \to 1$.
+		\item On montre que la suite $v_n = (n+1)W_{n+1}W_n$ est constante. $v_n = (n+1)W_{n+1} (\frac{n+2}{n+1}W_{n+2}) = (n+2)W_{n+2}W_{n+1}=v_{n+1}$.
+		      $v_0 = (1)W_1 W_0 = 1 \cdot \pi/2 = \pi/2$. Donc $(n+1)W_{n+1}W_n = \pi/2$.
+		      Comme $W_{n+1} \sim W_n$ et $n+1 \sim n$, on a $n W_n^2 \sim \pi/2$, d'où $W_n^2 \sim \frac{\pi}{2n}$, et $W_n \sim \sqrt{\frac{\pi}{2n}}$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\st]
+	Soit $(u_n)$ une suite réelle décroissante telle que \[u_n + u_{n+1} \sim \frac{1}{n}.\]
+	\begin{enumerate}
+		\item Montrer que $u_n \to 0^+$.
+		\item Donner un équivalent simple de $u_n$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item $(u_n)$ est décroissante, donc elle converge vers $\ell \in \mathbb{R}$ ou diverge vers $-\infty$.
+		      $u_n+u_{n+1} \sim 1/n > 0$, donc la somme est positive pour $n$ assez grand.
+		      Puisque $u_n$ est décroissante, $u_n \ge u_{n+1}$. Donc $u_n+u_{n+1} \le 2u_n$.
+		      On a $0 < u_n+u_{n+1} \le 2u_n$, ce qui implique $u_n > 0$ pour $n$ assez grand.
+		      La suite est décroissante et minorée par 0, donc elle converge vers une limite $\ell \ge 0$.
+		      En passant à la limite dans l'équivalent, $u_n+u_{n+1} \to 2\ell$ et $1/n \to 0$, donc $2\ell = 0 \implies \ell=0$.
+		\item Comme $(u_n)$ est décroissante et tend vers 0, on a $0 \le u_{n+1} \le u_n$. En divisant par $u_n$, $0 \le u_{n+1}/u_n \le 1$.
+		      On montre que $\lim u_{n+1}/u_n=1$. Si ce n'était pas le cas, la limite serait $k<1$, et $u_n+u_{n+1}\sim(1+k)u_n \sim 1/n$. Alors $u_n$ serait une suite géométrique de raison $k$, ce qui n'est pas équivalent à $1/n$.
+		      Donc $u_{n+1} \sim u_n$. Alors $u_n+u_{n+1} \sim 2u_n$.
+		      En combinant avec l'énoncé, on obtient $2u_n \sim 1/n$, soit $u_n \sim \frac{1}{2n}$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	Pour chacune des assertions suivantes dire si elle est vraie ou fausse.
+	\begin{enumerate}
+		\item $n^2+(-1)^n\cdot 4n \sim n^2+4n$
+		\item $u_n\sim v_n \implies u_{2n}\sim v_{2n}$
+		\item $u_{2n}\sim v_{2n} \implies u_n\sim v_n$
+		\item $u_n\sim v_n \implies \frac{1}{u_{n}}\sim \frac{1}{v_{n}}$
+		\item $u_n\sim v_n \implies u_{n}^n\sim v_{n}^n$
+		\item Si $u_n\sim v_n$ et $u_n>0$ (à partir d'un certain rang), alors $v_n>0$ (à partir d'un certain rang).
+		\item Si $u_n\sim v_n$ et $u_n$ est croissante, alors $v_n$ est croissante (à partir d'un certain rang).
+		\item $(n+1)! \sim n !$
+		\item $1=o(u_n) \iff \lim_{n\to\infty} |u_n|=+\infty$
+		\item Si $u_n$ converge vers $\ell \ne 0$, alors $u_{n+1}\sim u_n$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item \textbf{Vrai.} Le quotient $\frac{n^2+(-1)^n 4n}{n^2+4n} = \frac{1+(-1)^n 4/n}{1+4/n} \to 1$.
+		\item \textbf{Vrai.} Si $\lim u_n/v_n = 1$, alors la sous-suite $\lim u_{2n}/v_{2n}$ vaut aussi 1.
+		\item \textbf{Faux.} Contre-exemple : $u_n=1, v_n=(-1)^n$. $u_{2n}=1 \sim v_{2n}=1$. Mais $u_n/v_n = (-1)^n$ diverge.
+		\item \textbf{Vrai.} Le quotient des inverses est l'inverse du quotient : $\frac{1/u_n}{1/v_n} = \frac{v_n}{u_n} \to 1$.
+		\item \textbf{Faux.} Contre-exemple : $u_n=1+1/n \sim v_n=1$. Mais $u_n^n = (1+1/n)^n \to e$, alors que $v_n^n=1^n=1$.
+		\item \textbf{Vrai.} $v_n/u_n \to 1$, donc à partir d'un certain rang, $v_n/u_n > 1/2 > 0$. Le signe de $v_n$ est celui de $u_n$.
+		\item \textbf{Faux.} Contre-exemple : $u_n=n$ (croissante) et $v_n=n+(-1)^n$. $u_n \sim v_n$, mais $(v_n)$ n'est pas monotone.
+		\item \textbf{Faux.} Le quotient $\frac{(n+1)!}{n!} = n+1 \to +\infty \ne 1$.
+		\item \textbf{Vrai.} $\lim 1/u_n = 0 \iff \lim |u_n|=\infty$. C'est la définition.
+		\item \textbf{Vrai.} Si $u_n \to \ell \ne 0$, alors $\lim u_{n+1}/u_n = \ell/\ell = 1$.
+	\end{enumerate}
+\end{solution}
+
+\end{document}
