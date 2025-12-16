@@ -1,0 +1,303 @@
+\documentclass[solutions]{exercices}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{multicol}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{13}{Développements Limités (I) et Formule de Taylor}
+
+\begin{exercice}
+	Pour $n\in\mathbb{N}^*$ et $x\in\mathbb{R}$, on pose $\displaystyle S_n(x)=\sum_{k=0}^n\dfrac{x^k}{k!}$.
+	\begin{enumerate}
+		\item Montrer que pour tout $x\in\mathbb{R}$, on a $\displaystyle \lim_{n\to+\infty}\frac{x^n}{n!}=0$.
+		\item Soient $n\ge 0$ et $x>0$, démontrer qu'il existe $c\in]0,x[$ tel que 
+            \[
+                e^x = S_n(x)+\frac{x^{n+1}}{(n+1)!}e^c.
+            \]
+		\item En déduire que $\displaystyle \lim_{x\to+\infty}x^{-n}e^x=+\infty$.
+		\item Démontrer que pour $n\ge 0$ et $x\ge 0$ on a : 
+            \[
+                S_n(x)\le e^x \le S_n(x)+\frac{x^{n+1}}{(n+1)!}e^x.
+            \]
+		\item En déduire que pour $x\ge 0$ on a $\displaystyle\lim_{n\to+\infty}S_n(x)=e^x$.
+		\item Démontrer que $e \le 3$.
+		\item Déterminer $n$ tel que $S_n(1)$ soit une approximation à $10^{-3}$ près de $e$.
+		\item Calculer $S_n(1)$ pour cet entier $n$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item Soit $x \in \mathbb{R}$ fixé. On veut montrer que $\frac{x^n}{n!} \to 0$.
+
+		      \textbf{Méthode 1 (Utilisation d'un résultat du cours sur les suites)}
+
+		      Posons $u_n = \frac{|x|^n}{n!}$. On a $u_n \ge 0$. On étudie le rapport de deux termes consécutifs :
+		      \[ \frac{u_{n+1}}{u_n} = \frac{|x|^{n+1}}{(n+1)!} \cdot \frac{n!}{|x|^n} = \frac{|x|}{n+1} \]
+		      La limite de ce rapport est :
+		      \[ \lim_{n\to+\infty} \frac{u_{n+1}}{u_n} = \lim_{n\to+\infty} \frac{|x|}{n+1} = 0. \]
+		      Un théorème du cours stipule que si une suite à termes positifs $(u_n)$ est telle que $\lim_{n\to\infty} \frac{u_{n+1}}{u_n} = L < 1$, alors $\lim_{n\to\infty} u_n = 0$. Ici $L=0$, donc le résultat s'applique.
+		      On a $\lim_{n\to+\infty} \frac{|x|^n}{n!} = 0$. Comme $-\frac{|x|^n}{n!} \le \frac{x^n}{n!} \le \frac{|x|^n}{n!}$, le théorème des gendarmes nous permet de conclure que $\displaystyle \lim_{n\to+\infty}\frac{x^n}{n!}=0$.
+
+		      \textbf{Méthode 2 (Preuve par encadrement)}
+
+		      Soit $x>0$. Soit $N$ un entier tel que $N > x$. Pour tout $n > N$, on peut écrire :
+		      \[ \frac{x^n}{n!} = \frac{x \cdot x \cdots x}{1 \cdot 2 \cdots n} = \left(\frac{x^N}{N!}\right) \cdot \left(\frac{x}{N+1} \cdot \frac{x}{N+2} \cdots \frac{x}{n}\right) \]
+		      Chacun des termes $\frac{x}{N+1}, \frac{x}{N+2}, \dots, \frac{x}{n-1}$ est plus petit que 1. On peut donc majorer :
+		      \[ 0 \le \frac{x^n}{n!} \le \frac{x^N}{N!} \cdot \left(\frac{x}{n}\right) \]
+		      Le terme $\frac{x^N}{N!}$ est une constante (puisque $N$ est fixé). Notons-la $C$. On a $0 \le \frac{x^n}{n!} \le C \cdot \frac{x}{n}$.
+		      Comme $\lim_{n\to+\infty} C \cdot \frac{x}{n} = 0$, le théorème des gendarmes implique que $\displaystyle \lim_{n\to+\infty}\frac{x^n}{n!}=0$.
+		      Le cas $x \le 0$ se déduit du cas $x>0$ en utilisant les valeurs absolues comme dans la première méthode.
+
+		\item Soit $f(x)=e^x$. Cette fonction est de classe $\mathcal{C}^\infty$ sur $\mathbb{R}$. Pour tout $k \in \mathbb{N}$, $f^{(k)}(x)=e^x$, donc $f^{(k)}(0)=1$. La formule de Taylor-Lagrange à l'ordre $n$ en 0 pour $f$ sur l'intervalle $[0,x]$ s'écrit : il existe $c \in ]0,x[$ tel que
+		      \[ f(x) = \sum_{k=0}^n \frac{f^{(k)}(0)}{k!}x^k + \frac{f^{(n+1)}(c)}{(n+1)!}x^{n+1} \]
+		      En remplaçant $f$ par l'exponentielle, on obtient :
+		      \[ e^x = \sum_{k=0}^n \frac{1}{k!}x^k + \frac{e^c}{(n+1)!}x^{n+1} = S_n(x) + \frac{x^{n+1}}{(n+1)!}e^c. \]
+
+		\item De la question précédente, pour $x>0$, on a $e^x - S_n(x) = \frac{x^{n+1}}{(n+1)!}e^c$.
+		      Comme $c \in ]0,x[$, on a $e^c > e^0 = 1$. De plus, pour $x>0$, $S_n(x) > 0$.
+		      On a donc $e^x > \frac{x^{n+1}}{(n+1)!}$. En divisant par $x^n$ (avec $x>0$) :
+		      \[ \frac{e^x}{x^n} > \frac{x}{(n+1)!}. \]
+		      Comme $\displaystyle\lim_{x\to+\infty} \frac{x}{(n+1)!} = +\infty$ (pour $n$ fixé), par comparaison, on conclut que $\displaystyle \lim_{x\to+\infty} \frac{e^x}{x^n} = +\infty$.
+
+		\item On part de l'égalité $e^x = S_n(x)+\frac{x^{n+1}}{(n+1)!}e^c$.
+		      Comme $x \ge 0$, le terme $\frac{x^{n+1}}{(n+1)!}$ est positif.
+		      Puisque $c \in ]0,x[$, on a $0 < c < x$. Par croissance de la fonction exponentielle, $e^0 < e^c < e^x$, soit $1 < e^c < e^x$.
+		      En multipliant cet encadrement par $\frac{x^{n+1}}{(n+1)!}$, on obtient :
+		      \[ \frac{x^{n+1}}{(n+1)!} \le \frac{x^{n+1}}{(n+1)!}e^c \le \frac{x^{n+1}}{(n+1)!}e^x. \]
+		      En remplaçant le terme du milieu par $e^x - S_n(x)$ :
+		      \[ \frac{x^{n+1}}{(n+1)!} \le e^x - S_n(x) \le \frac{x^{n+1}}{(n+1)!}e^x. \]
+		      De l'inégalité de droite, on tire $e^x \le S_n(x) + \frac{x^{n+1}}{(n+1)!}e^x$.
+		      De plus, comme $\frac{x^{n+1}}{(n+1)!}e^c \ge 0$, on a $e^x - S_n(x) \ge 0$, soit $S_n(x) \le e^x$. On a bien l'encadrement voulu.
+
+		\item De l'inégalité de la question 4, on peut écrire $0 \le e^x - S_n(x) \le \frac{x^{n+1}}{(n+1)!}e^x$.
+		      Ceci nous donne l'encadrement pour $S_n(x)$ :
+		      \[ e^x - \frac{x^{n+1}}{(n+1)!}e^x \le S_n(x) \le e^x. \]
+		      D'après la question 1, pour $x$ fixé, $\displaystyle \lim_{n\to+\infty} \frac{x^{n+1}}{(n+1)!} = 0$.
+		      Donc, $\displaystyle \lim_{n\to+\infty} \left(e^x - \frac{x^{n+1}}{(n+1)!}e^x\right) = e^x - 0 \cdot e^x = e^x$.
+		      D'après le théorème des gendarmes, on conclut que $\displaystyle\lim_{n\to+\infty}S_n(x)=e^x$.
+
+		\item On utilise l'inégalité de droite de la question 4 avec $x=1$ et $n=2$ :
+		      \[ e \le S_2(1) + \frac{1^{3}}{3!}e^1 \implies e \le \left(1+\frac{1}{1!} + \frac{1}{2!}\right) + \frac{e}{6} \]
+		      \[ e \le \left(1+1+\frac{1}{2}\right) + \frac{e}{6} \implies e \le \frac{5}{2} + \frac{e}{6} \]
+		      \[ e - \frac{e}{6} \le \frac{5}{2} \implies \frac{5}{6}e \le \frac{5}{2} \implies e \le \frac{5}{2} \cdot \frac{6}{5} \implies e \le 3. \]
+
+		\item On cherche $n$ tel que $|S_n(1) - e| \le 10^{-3}$. De la question 4, on a $0 \le e - S_n(1) \le \frac{e}{(n+1)!}$.
+		      On vient de montrer que $e \le 3$. Donc, $e - S_n(1) \le \frac{3}{(n+1)!}$.
+		      Il suffit de choisir $n$ tel que $\frac{3}{(n+1)!} \le 10^{-3}$, soit $(n+1)! \ge 3000$.
+		      On calcule : $6! = 720$ et $7! = 5040$. Il faut donc que $n+1 \ge 7$, soit $n=6$.
+
+		\item Pour $n=6$ :
+		      \[ S_6(1) = 1 + 1 + \frac{1}{2} + \frac{1}{6} + \frac{1}{24} + \frac{1}{120} + \frac{1}{720} = \frac{720+720+360+120+30+6+1}{720} = \frac{1957}{720}. \]
+		      La division donne $S_6(1) \approx 2.718055...$, ce qui est une approximation de $e \approx 2.71828...$ à moins de $10^{-3}$ près.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+	A l'aide de la formule du théorème de Taylor-Lagrange, démontrer que pour tout $x\in\mathbb{R}_+$ on a :
+	$$x - \frac{x^3}{6} \leq \sin(x) \leq x - \frac{x^3}{6} + \frac{x^5}{120}.$$
+	\emph{Indication : on appliquera la formule en 0 à l'ordre 3 pour obtenir le membre de gauche et en 0 à l'ordre 5 pour obtenir celui de droite.}
+\end{exercice}
+
+\begin{solution}
+	Soit $f(x) = \sin(x)$. Les dérivées successives sont : $f'(x)=\cos x$, $f''(x)=-\sin x$, $f'''(x)=-\cos x$, $f^{(4)}(x)=\sin x$, $f^{(5)}(x)=\cos x$.
+	Les valeurs en 0 sont : $f(0)=0$, $f'(0)=1$, $f''(0)=0$, $f'''(0)=-1$, $f^{(4)}(0)=0$, $f^{(5)}(0)=1$.
+
+	\textbf{Inégalité de gauche :} On applique la formule de Taylor-Lagrange à l'ordre $n=3$ en 0. Pour tout $x \ge 0$, il existe $c \in ]0,x[$ tel que :
+	\[ \sin(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f'''(0)}{3!}x^3 + \frac{f^{(4)}(c)}{4!}x^4 \]
+	\[ \sin(x) = 0 + x + 0 - \frac{1}{6}x^3 + \frac{\sin(c)}{24}x^4 = x - \frac{x^3}{6} + \frac{\sin(c)}{24}x^4 \]
+	Pour $x \ge 0$, on a $c \in ]0,x[$. Si $x \in [0,\pi]$, alors $c \in ]0,\pi[$ et $\sin(c) > 0$. Le terme $\frac{\sin(c)}{24}x^4$ est donc positif. Ainsi, $\sin(x) \ge x - \frac{x^3}{6}$ sur $[0,\pi]$. Si $x > \pi$, l'inégalité reste vraie (car $x-x^3/6$ devient très négatif).
+
+				\textbf{Inégalité de droite :} On applique la formule de Taylor-Lagrange à l'ordre $n=4$. Pour $x \ge 0$, il existe $d \in ]0,x[$ tel que :
+	\[ \sin(x) = \sum_{k=0}^4 \frac{f^{(k)}(0)}{k!}x^k + \frac{f^{(5)}(d)}{5!}x^5 = x - \frac{x^3}{6} + \frac{\cos(d)}{120}x^5 \]
+	On sait que pour tout réel $d$, $\cos(d) \le 1$. Comme $x \ge 0$, on a $x^5 \ge 0$. Ainsi, $\frac{\cos(d)}{120}x^5 \le \frac{1}{120}x^5$.
+	On en déduit que $\sin(x) \le x - \frac{x^3}{6} + \frac{x^5}{120}$.
+\end{solution}
+
+\begin{exercice}[\di]
+	Donner le développement limité (DL) en $x=0$ à l'ordre $n$ des fonctions suivantes :
+	\begin{multicols}{2}
+		\begin{enumerate}
+			\item $x \mapsto x \sin(x)$ ($n=5$)
+			\item $x \mapsto \sin(x) \cos(x)$ ($n=5$)
+			\item $x \mapsto (\ln(1+x))^2$ ($n=4$)
+			\item $x \mapsto \sin^3(x)$ ($n=6$)
+			\item $x \mapsto \sqrt{3+x}$ ($n=3$)
+			\item $x \mapsto \ln(\cos(x))$ ($n=4$)
+			\item $x \mapsto \exp(\sin(x))$ ($n=4$)
+			\item $x \mapsto \exp(\cos(x))$ ($n=4$)
+			\item $x \mapsto \frac{1}{\cos(x)}$ ($n=4$)
+			\item $x \mapsto \tan(x)$ ($n=5$)
+			\item $x \mapsto \sin(\tan(x))$ ($n=5$)
+			\item $x \mapsto \arcsin(\ln(1+x^2))$ ($n=6$)
+			\item $x \mapsto (1+x)^{\frac{1}{1+x}}$ ($n=4$)
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	On rappelle que $o(x^n)$ désigne une fonction qui peut s'écrire $x^n\varepsilon(x)$ où $x\mapsto\varepsilon(x)$ est une fonction définie dans un voisinage de $0$ et telle que $\lim_{x\to 0}\varepsilon(x)=0$.
+	\begin{enumerate}
+		\item Il faut un DL de $\sin(x)$ à l'ordre 4.
+		      \[ \sin(x) = x - \frac{x^3}{6} + o(x^4) \]
+		      \[ x\sin(x) = x\left(x - \frac{x^3}{6} + o(x^4)\right) = x^2 - \frac{x^4}{6} + o(x^5) \]
+		      \[
+			      \boxed{x\sin(x) = x^2 - \frac{x^4}{6} + o(x^5)}
+		      \]
+		\item On utilise $\sin(x)\cos(x) = \frac{1}{2}\sin(2x)$.
+		      \[ \sin(u) = u - \frac{u^3}{6} + \frac{u^5}{120} + o(u^5) \]
+		      Avec $u=2x$, on a $\sin(2x) = (2x) - \frac{(2x)^3}{6} + \frac{(2x)^5}{120} + o(x^5) = 2x - \frac{4}{3}x^3 + \frac{4}{15}x^5 + o(x^5)$.
+		      \[ \sin(x)\cos(x) = \frac{1}{2}\sin(2x) = x - \frac{2}{3}x^3 + \frac{2}{15}x^5 + o(x^5) \]
+		      \[
+			      \boxed{\sin(x)\cos(x) = x - \frac{2}{3}x^3 + \frac{2}{15}x^5 + o(x^5)}
+		      \]
+
+		\item $\ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + o(x^4)$.
+		      \[ (\ln(1+x))^2 = \left(x - \frac{x^2}{2} + \frac{x^3}{3} + o(x^3)\right)^2 \]
+		      $= x^2 + 2(x)(-\frac{x^2}{2}) + \left(\left(-\frac{x^2}{2}\right)^2 + 2(x)\left(\frac{x^3}{3}\right)\right) + o(x^4) = x^2 - x^3 + (\frac{1}{4}+\frac{2}{3})x^4 + o(x^4)$.
+		      \[
+			      \boxed{(\ln(1+x))^2 = x^2 - x^3 + \frac{11}{12}x^4 + o(x^4)}
+		      \]
+
+		\item $\sin(x) = x - \frac{x^3}{6} + o(x^5)$.
+		      \[ \sin^3(x) = \left(x - \frac{x^3}{6} + o(x^5)\right)^3 = x^3 - 3(x^2)\left(\frac{x^3}{6}\right) + o(x^6) = x^3 - \frac{1}{2}x^5 + o(x^6) \]
+		      \[
+			      \boxed{\sin^3(x) = x^3 - \frac{1}{2}x^5 + o(x^6)}
+		      \]
+
+		\item On factorise : $\sqrt{3+x} = \sqrt{3(1+x/3)} = \sqrt{3}(1+x/3)^{1/2}$. On pose $u=x/3$.
+		      \[ \sqrt{3}(1+u)^{1/2} = \sqrt{3}\left(1 + \frac{1}{2}u - \frac{1}{8}u^2 + \frac{1}{16}u^3 + o(u^3)\right) \]
+		      \[
+			      \boxed{\sqrt{3+x} = \sqrt{3}\left(1 + \frac{x}{6} - \frac{x^2}{72} + \frac{x^3}{432} + o(x^3)\right)}
+		      \]
+
+		\item $\cos(x)=1-x^2/2+x^4/24+o(x^5)$. On pose $u=-x^2/2+x^4/24+o(x^5)$.
+		      \[ \ln(\cos x) = \ln(1+u) = u - \frac{u^2}{2} + o(u^2) \]
+		      $u^2 = (-x^2/2)^2 + o(x^4) = x^4/4 + o(x^4)$.
+		      \[ \ln(\cos x) = \left(-\frac{x^2}{2}+\frac{x^4}{24}\right) - \frac{1}{2}\left(\frac{x^4}{4}\right) + o(x^4) = -\frac{x^2}{2} - \frac{x^4}{12} + o(x^4) \]
+		      \[
+			      \boxed{\ln(\cos x) = -\frac{x^2}{2} - \frac{x^4}{12} + o(x^4)}
+		      \]
+
+		\item On pose $u = \sin(x)=x-x^3/6+o(x^4)$.
+		      \[ e^{\sin x} = e^u = 1+u+\frac{u^2}{2}+\frac{u^3}{6}+\frac{u^4}{24}+o(u^4) \]
+		      $u^2 = (x-x^3/6)^2+o(x^4) = x^2-x^4/3+o(x^4)$. $u^3 = x^3+o(x^4)$. $u^4 = x^4+o(x^4)$.
+		      \[ e^{\sin x} = 1 + (x-x^3/6) + \frac{1}{2}(x^2-x^4/3) + \frac{1}{6}(x^3) + \frac{1}{24}(x^4) + o(x^4) \]
+		      \[
+			      \boxed{\exp(\sin x) = 1+x+\frac{x^2}{2}-\frac{x^4}{8}+o(x^4)}
+		      \]
+
+		\item Attention, $\cos(x) \to 1$. $e^{\cos x} = e \cdot e^{\cos x - 1}$.
+		      On pose $u = \cos x - 1 = -x^2/2+x^4/24+o(x^5)$.
+		      \[ e \cdot e^u = e\left(1+u+\frac{u^2}{2}+o(u^2)\right) = e\left(1+\left(-\frac{x^2}{2}+\frac{x^4}{24}\right) + \frac{1}{2}\left(-\frac{x^2}{2}\right)^2\right) + o(x^4) \]
+		      \[
+			      \boxed{\exp(\cos x) = e\left(1 - \frac{x^2}{2} + \frac{x^4}{6}\right) + o(x^4)}
+		      \]
+
+		\item On pose $u = \cos x - 1 = -x^2/2+x^4/24+o(x^5)$.
+		      \[ \frac{1}{\cos x} = \frac{1}{1+u} = 1-u+u^2+o(u^2) \]
+		      \[ = 1 - \left(-\frac{x^2}{2}+\frac{x^4}{24}\right) + \left(-\frac{x^2}{2}\right)^2 + o(x^4) = 1+\frac{x^2}{2} + \left(-\frac{1}{24}+\frac{1}{4}\right)x^4+o(x^4) \]
+		      \[
+			      \boxed{\frac{1}{\cos x} = 1+\frac{x^2}{2}+\frac{5x^4}{24}+o(x^4)}
+		      \]
+
+		\item $\tan x = \sin x \cdot \frac{1}{\cos x}$. On multiplie les DL connus :
+		      \[ \tan x = \left(x-\frac{x^3}{6}+\frac{x^5}{120}+o(x^5)\right)\left(1+\frac{x^2}{2}+\frac{5x^4}{24}+o(x^5)\right) \]
+		      $= x(1+\frac{x^2}{2}+\frac{5x^4}{24}) - \frac{x^3}{6}(1+\frac{x^2}{2}) + \frac{x^5}{120} + o(x^5)$
+		      $= x + x^3(\frac{1}{2}-\frac{1}{6}) + x^5(\frac{5}{24}-\frac{1}{12}+\frac{1}{120}) + o(x^5) = x+\frac{x^3}{3}+\frac{16}{120}x^5+o(x^5)$.
+		      \[
+			      \boxed{\tan x = x+\frac{x^3}{3}+\frac{2x^5}{15}+o(x^5)}
+		      \]
+
+		\item On pose $u = \tan(x) = x+x^3/3+2x^5/15+o(x^5)$.
+		      \[ \sin(u) = u - \frac{u^3}{6} + \frac{u^5}{120} + o(u^5) \]
+		      $u^3 = (x+x^3/3)^3+o(x^5) = x^3+x^5+o(x^5)$. $u^5 = x^5+o(x^5)$.
+		      \[ \sin(\tan x) = (x+\frac{x^3}{3}+\frac{2x^5}{15}) - \frac{1}{6}(x^3+x^5) + \frac{1}{120}x^5 + o(x^5) \]
+		      $= x + x^3(\frac{1}{3}-\frac{1}{6}) + x^5(\frac{2}{15}-\frac{1}{6}+\frac{1}{120}) + o(x^5) = x+\frac{x^3}{6}-\frac{3}{120}x^5+o(x^5)$.
+		      \[
+			      \boxed{\sin(\tan x) = x + \frac{x^3}{6} - \frac{x^5}{40} + o(x^5)}
+		      \]
+
+		\item On pose $u = \ln(1+x^2) = x^2-\frac{x^4}{2}+\frac{x^6}{3}+o(x^7)$. $\arcsin u = u+u^3/6+o(u^3)$.
+		      $u^3 = (x^2)^3+o(x^6)=x^6+o(x^6)$.
+		      \[ \arcsin(\ln(1+x^2)) = \left(x^2-\frac{x^4}{2}+\frac{x^6}{3}\right) + \frac{1}{6}(x^6)+o(x^6) \]
+		      \[
+			      \boxed{\arcsin(\ln(1+x^2)) = x^2 - \frac{x^4}{2} + \frac{x^6}{2} + o(x^6)}
+		      \]
+
+		\item On passe par la forme exponentielle : $(1+x)^{\frac{1}{1+x}} = \exp\left(\frac{\ln(1+x)}{1+x}\right)$.
+		      D'abord le DL de l'exposant $u = \frac{\ln(1+x)}{1+x}$ :
+		      \[ u = \left(x-\frac{x^2}{2}+\frac{x^3}{3}-\frac{x^4}{4}\right)\left(1-x+x^2-x^3+x^4\right)+o(x^4) \]
+		      \[ u = x - \frac{3}{2}x^2 + \frac{11}{6}x^3 - \frac{25}{12}x^4 + o(x^4) \]
+		      Puis on compose avec $e^u = 1+u+u^2/2+u^3/6+u^4/24+o(x^4)$.
+		      $u^2 = x^2-3x^3+\frac{71}{12}x^4+o(x^4)$. $u^3 = x^3-\frac{9}{2}x^4+o(x^4)$. $u^4 = x^4+o(x^4)$.
+		      \[ e^u = 1 + (x - \frac{3}{2}x^2 + \dots) + \frac{1}{2}(x^2-3x^3+\dots) + \frac{1}{6}(x^3+\dots) + o(x^4) \]
+		      \[ = 1 + x + x^2(-\frac{3}{2}+\frac{1}{2}) + x^3(\frac{11}{6}-\frac{3}{2}+\frac{1}{6}) + \dots = 1+x-x^2+\frac{1}{2}x^3+\frac{1}{6}x^4+o(x^4) \]
+		      \[
+			      \boxed{(1+x)^{\frac{1}{1+x}} = 1+x-x^2+\frac{1}{2}x^3+\frac{1}{6}x^4+o(x^4)}
+		      \]
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+Déterminer un équivalent le plus simple possible des suites suivantes, en déduire leurs limites éventuelles.
+\begin{multicols}{2}
+\begin{enumerate}
+    \item $u_n=(-1)^n \sqrt{n} \sin \frac{1}{n}$
+    \item $u_n=\displaystyle \sqrt{n^4+2n+1}-\sqrt{n^4+n}$
+    \item $u_n=\displaystyle \cos \left(\frac{1}{n}\right) -1+ \frac{1}{2n^2}$
+    \item $u_n=\displaystyle n^4\left( \sin\left(\frac{1}{n}\right)-\tan\left(\frac{1}{n}\right) \right)$
+    \item $u_n= \dfrac{\ln(n+1) - \ln(n)}{\sqrt{n+1} - \sqrt{n}}$
+    \item (\st) $u_n=\sqrt[n+1]{n+1}-\sqrt[n]{n}$
+\end{enumerate}
+\end{multicols}
+\end{exercice}
+
+\begin{solution}
+Pour trouver un équivalent de $u_n$ lorsque $n \to +\infty$, on utilise les développements limités au voisinage de 0 en posant $h=1/n$.
+\begin{enumerate}
+    \item On utilise le DL de $\sin(h)$ en 0.
+    \[ \sin\left(\frac{1}{n}\right) = \frac{1}{n} + o\left(\frac{1}{n}\right) \implies \sin\left(\frac{1}{n}\right) \sim \frac{1}{n} \]
+    Ainsi,
+    \[ u_n = (-1)^n \sqrt{n} \cdot \sin\left(\frac{1}{n}\right) \sim (-1)^n \sqrt{n} \cdot \frac{1}{n} = \frac{(-1)^n}{\sqrt{n}} \]
+    Comme $\displaystyle \lim_{n\to\infty} \frac{1}{\sqrt{n}} = 0$, on a $\displaystyle \lim_{n\to\infty} u_n = 0$.
+    \item On a une forme indéterminée "$\infty-\infty$". On utilise le développement limité.
+    \begin{align*} u_n &= n^2\sqrt{1+\frac{2}{n^3}+\frac{1}{n^4}} - n^2\sqrt{1+\frac{1}{n^3}} \\ &= n^2\left( \left(1+\frac{1}{2}\left(\frac{2}{n^3}\right) + o\left(\frac{1}{n^3}\right)\right) - \left(1+\frac{1}{2}\left(\frac{1}{n^3}\right) + o\left(\frac{1}{n^3}\right)\right) \right) \\ &= n^2\left( \frac{1}{n^3} - \frac{1}{2n^3} + o\left(\frac{1}{n^3}\right) \right) = n^2\left( \frac{1}{2n^3} + o\left(\frac{1}{n^3}\right) \right) = \frac{1}{2n} + o\left(\frac{1}{n}\right) \end{align*}
+    Donc $u_n \sim \frac{1}{2n}$ et $\displaystyle \lim_{n\to\infty} u_n = 0$.
+
+    \item On pose $h=1/n$. Il faut un DL de $\cos(h)$ à un ordre suffisant.
+    \[ \cos(h) = 1 - \frac{h^2}{2} + \frac{h^4}{24} + o(h^4) \]
+    \[ u_n = \left(1 - \frac{1}{2n^2} + \frac{1}{24n^4} + o\left(\frac{1}{n^4}\right)\right) - 1 + \frac{1}{2n^2} = \frac{1}{24n^4} + o\left(\frac{1}{n^4}\right) \]
+    Donc $u_n \sim \frac{1}{24n^4}$ et $\displaystyle \lim_{n\to\infty} u_n = 0$.
+
+    \item On pose $h=1/n$. Il faut un DL de $\sin h - \tan h$.
+    \[ \sin h = h - \frac{h^3}{6} + o(h^4) \quad \text{et} \quad \tan h = h + \frac{h^3}{3} + o(h^4) \]
+    \[ \sin h - \tan h = \left(h - \frac{h^3}{6}\right) - \left(h + \frac{h^3}{3}\right) + o(h^3) = -\frac{1}{2}h^3 + o(h^3) \]
+    \[ u_n = n^4\left(-\frac{1}{2n^3} + o\left(\frac{1}{n^3}\right)\right) = -\frac{n}{2} + o(n) \]
+    Donc $u_n \sim -\frac{n}{2}$ et $\displaystyle \lim_{n\to\infty} u_n = -\infty$.
+
+    \item On cherche un équivalent du numérateur et du dénominateur.
+    Numérateur : $\ln(n+1) - \ln(n) = \ln\left(\frac{n+1}{n}\right) = \ln\left(1+\frac{1}{n}\right) \sim \frac{1}{n}$.
+    Dénominateur : $\sqrt{n+1} - \sqrt{n} = \sqrt{n}\left(\sqrt{1+\frac{1}{n}}-1\right) = \sqrt{n}\left(1+\frac{1}{2n}+o\left(\frac{1}{n}\right)-1\right) \sim \sqrt{n} \cdot \frac{1}{2n} = \frac{1}{2\sqrt{n}}$.
+    \[ u_n \sim \frac{1/n}{1/(2\sqrt{n})} = \frac{2\sqrt{n}}{n} = \frac{2}{\sqrt{n}} \]
+    Donc $\displaystyle \lim_{n\to\infty} u_n = 0$.
+
+    \item (\st) On exprime les termes avec l'exponentielle : $u_n = e^{\frac{\ln(n+1)}{n+1}} - e^{\frac{\ln n}{n}}$.
+    Posons $a_n = \frac{\ln n}{n}$. On a $\displaystyle \lim_{n\to\infty} a_n = 0$. On a donc $u_n = e^{a_{n+1}} - e^{a_n}$.
+    Comme $a_n \to 0$, on peut utiliser un DL : $e^{a_n} = 1 + a_n + o(a_n)$.
+    \[ u_n = (1+a_{n+1}+o(a_{n+1})) - (1+a_n+o(a_n)) = a_{n+1}-a_n + o(a_n) \]
+    Il faut trouver un équivalent de $a_{n+1}-a_n$:
+    \begin{align*} a_{n+1}-a_n &= \frac{\ln(n+1)}{n+1} - \frac{\ln n}{n} = \frac{n\ln(n+1)-(n+1)\ln n}{n(n+1)} \\ &= \frac{n\ln(n(1+1/n))-(n+1)\ln n}{n^2+n} \\ &= \frac{n(\ln n + \ln(1+1/n))-(n+1)\ln n}{n^2+n} \\ &= \frac{n\ln(1+1/n) - \ln n}{n^2+n} = \frac{n(1/n - 1/(2n^2) + o(1/n^2)) - \ln n}{n^2+n} \\ &= \frac{1 - 1/(2n) - \ln n + o(1/n)}{n^2+n} \end{align*}
+    Le terme dominant au numérateur est $-\ln n$ et au dénominateur $n^2$.
+    \[ u_n \sim a_{n+1}-a_n \sim \frac{-\ln n}{n^2} \]
+    Donc $\displaystyle \lim_{n\to\infty} u_n = 0$.
+\end{enumerate}
+\end{solution}
+
+\end{document}

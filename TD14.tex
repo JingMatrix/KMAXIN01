@@ -1,0 +1,480 @@
+\documentclass[]{exercices}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{multicol}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{14}{Développements Limités (II) et Applications}
+
+\begin{exercice}[\di]
+	Donner le développement limité (DL) en $x=0$ à l'ordre $n$ des fonctions suivantes :
+	\begin{multicols}{2}
+		\newcommand{\elabel}{$f_{\arabic*}(x)=$}
+		\begin{enumerate}[label=\elabel]
+			\item $(1+x)^{\frac{1}{x}}$ ($n=3$)
+			\item $\arcsin(\ln(1+x^2))$ ($n=6$)
+			\item $\dfrac{\arctan(x)-x}{\sin(x)-x}$ ($n=3$)
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	On rappelle que $o(x^n)$ désigne une fonction qui peut s'écrire $x^n\varepsilon(x)$ où $x\mapsto\varepsilon(x)$ est une fonction définie dans un voisinage de $0$ et telle que $\displaystyle\lim_{x\to 0}\varepsilon(x)=0$.
+
+	\newcommand{\elabel}{$f_{\arabic*}(x)=$}
+	\begin{enumerate}[label=\elabel]
+		\item $(1+x)^{\frac{1}{x}}$ ($n=3$).
+
+		      \textbf{Attention :} On ne peut pas utiliser le DL de $(1+x)^{\alpha}$ car l'exposant $\frac{1}{x}$ n'est pas constant. Il faut utiliser la forme exponentielle :
+		      \[ (1+x)^{\frac{1}{x}} = \exp\left(\frac{1}{x}\ln(1+x)\right) \]
+		      On commence par chercher le DL de l'argument de l'exponentielle. Le dénominateur $x$ s'annule en 0, il faut donc un DL du numérateur $\ln(1+x)$ à l'ordre $n+1=3+1=4$.
+		      \[ \ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + o(x^4) \]
+		      On divise par $x$ :
+		      \[ \frac{\ln(1+x)}{x} = 1 - \frac{x}{2} + \frac{x^2}{3} - \frac{x^3}{4} + o(x^3) \]
+		      On pose $u = -\frac{x}{2} + \frac{x^2}{3} - \frac{x^3}{4} + o(x^3)$, et on a bien $\displaystyle\lim_{x\to 0} u = 0$.
+		      On compose avec le DL de $e^{1+u} = e \cdot e^u$:
+		      \[ e \cdot e^u = e \left(1 + u + \frac{u^2}{2} + \frac{u^3}{6} + o(u^3)\right) \]
+		      Calculons les puissances de $u$ en ne gardant que les termes jusqu'à l'ordre 3 :
+		      \begin{itemize}
+			      \item $u = -\frac{x}{2} + \frac{x^2}{3} - \frac{x^3}{4} + o(x^3)$
+			      \item $u^2 = \left(-\frac{x}{2} + \frac{x^2}{3}\right)^2 + o(x^3) = \frac{x^2}{4} - \frac{x^3}{3} + o(x^3)$
+			      \item $u^3 = \left(-\frac{x}{2}\right)^3 + o(x^3) = -\frac{x^3}{8} + o(x^3)$
+		      \end{itemize}
+		      On substitue dans le DL de $e \cdot e^u$:
+		      \begin{align*}
+			      e \cdot e^u & = e \left(1 + \left(-\frac{x}{2} + \frac{x^2}{3} - \frac{x^3}{4}\right) + \frac{1}{2}\left(\frac{x^2}{4} - \frac{x^3}{3}\right) + \frac{1}{6}\left(-\frac{x^3}{8}\right) + o(x^3)\right) \\
+			                  & = e \left(1 - \frac{x}{2} + x^2\left(\frac{1}{3}+\frac{1}{8}\right) + x^3\left(-\frac{1}{4}-\frac{1}{6}-\frac{1}{48}\right) + o(x^3)\right)                                              \\
+			                  & = e \left(1 - \frac{x}{2} + \frac{11}{24}x^2 - \frac{21}{48}x^3 + o(x^3)\right) = e \left(1 - \frac{x}{2} + \frac{11}{24}x^2 - \frac{7}{16}x^3 + o(x^3)\right)
+		      \end{align*}
+		      \[ \boxed{(1+x)^{\frac{1}{x}} = e - \frac{e}{2}x + \frac{11e}{24}x^2 - \frac{7e}{16}x^3 + o(x^3)} \]
+
+		\item $\arcsin(\ln(1+x^2))$ ($n=6$).
+
+		      C'est une composition de fonctions. On pose $u(x) = \ln(1+x^2)$. Comme $u(0)=0$, on peut composer les DL.
+		      Le DL de $\ln(1+v)$ est $v - v^2/2 + v^3/3 + o(v^3)$. Avec $v=x^2$, on obtient :
+		      \[ u(x) = \ln(1+x^2) = x^2 - \frac{(x^2)^2}{2} + \frac{(x^2)^3}{3} + o(x^6) = x^2 - \frac{x^4}{2} + \frac{x^6}{3} + o(x^6) \]
+		      Pour trouver le DL de $\arcsin(u)$, on part de sa dérivée : $(\arcsin v)' = (1-v^2)^{-1/2}$.
+		      \[ (1-w)^{-1/2} = 1 + \frac{1}{2}w + \frac{3}{8}w^2 + o(w^2) \]
+		      Avec $w=v^2$, $(\arcsin v)' = 1 + \frac{1}{2}v^2 + o(v^3)$. En intégrant, on obtient :
+		      \[ \arcsin(v) = \arcsin(0) + v + \frac{1}{6}v^3 + o(v^4) = v + \frac{1}{6}v^3 + o(v^4) \]
+		      On compose avec $u(x)$. Comme $u(x)$ commence par un terme en $x^2$, un DL de $\arcsin(v)$ à l'ordre 3 en $v$ est suffisant pour avoir un DL à l'ordre 6 en $x$.
+		      \begin{align*} \arcsin(\ln(1+x^2)) &= \arcsin(u(x)) \\ &= u(x) + \frac{1}{6}(u(x))^3 + o(u(x)^3) \\ &= \left(x^2 - \frac{x^4}{2} + \frac{x^6}{3}\right) + \frac{1}{6}\left(x^2 - \frac{x^4}{2} + \dots\right)^3 + o(x^6) \\ &= \left(x^2 - \frac{x^4}{2} + \frac{x^6}{3}\right) + \frac{1}{6}(x^2)^3 + o(x^6) \\ &= x^2 - \frac{x^4}{2} + \left(\frac{1}{3}+\frac{1}{6}\right)x^6 + o(x^6) \end{align*}
+		      \[ \boxed{\arcsin(\ln(1+x^2)) = x^2 - \frac{x^4}{2} + \frac{x^6}{2} + o(x^6)} \]
+
+		\item $\dfrac{\arctan(x)-x}{\sin(x)-x}$ ($n=3$).
+
+		      Le dénominateur s'annule en 0. On fait un DL du numérateur et du dénominateur pour trouver le premier terme non nul.
+		      \[ \sin(x)-x = (x-\frac{x^3}{6}+\dots)-x = -\frac{x^3}{6} + o(x^4) \]
+		      Le dénominateur est d'ordre 3. Pour un DL du quotient à l'ordre 3, il nous faut les DL du numérateur et du dénominateur à l'ordre $3+3=6$.
+		      \begin{itemize}
+			      \item Numérateur : $\arctan(x) - x = (x-\frac{x^3}{3}+\frac{x^5}{5}+o(x^6)) - x = -\frac{x^3}{3}+\frac{x^5}{5}+o(x^6)$
+			      \item Dénominateur : $\sin(x) - x = (x-\frac{x^3}{6}+\frac{x^5}{120}+o(x^6)) - x = -\frac{x^3}{6}+\frac{x^5}{120}+o(x^6)$
+		      \end{itemize}
+		      On factorise par le terme de plus bas degré ($x^3$) :
+		      \[ \frac{-\frac{x^3}{3}+\frac{x^5}{5}+o(x^6)}{-\frac{x^3}{6}+\frac{x^5}{120}+o(x^6)} = \frac{x^3(-\frac{1}{3}+\frac{x^2}{5}+o(x^3))}{x^3(-\frac{1}{6}+\frac{x^2}{120}+o(x^3))} = \frac{-\frac{1}{3}+\frac{x^2}{5}+o(x^3)}{-\frac{1}{6}+\frac{x^2}{120}+o(x^3)} \]
+		      On effectue la division suivant les puissances croissantes de $-\frac{1}{3}+\frac{x^2}{5}$ par $-\frac{1}{6}+\frac{x^2}{120}$ à l'ordre 3.
+		      Une autre méthode consiste à factoriser le terme constant du dénominateur :
+		      \begin{align*}
+			      \frac{-1/3+x^2/5}{-1/6+x^2/120} & = \frac{2-6x^2/5}{1-x^2/20} = \left(2-\frac{6}{5}x^2\right)\left(1+\frac{x^2}{20}+o(x^3)\right)                                           \\
+			                                      & = 2 + \frac{2x^2}{20} - \frac{6x^2}{5} + o(x^3) = 2 + x^2\left(\frac{1}{10}-\frac{12}{10}\right) + o(x^3) = 2 - \frac{11}{10}x^2 + o(x^3)
+		      \end{align*}
+		      \[ \boxed{\dfrac{\arctan(x)-x}{\sin(x)-x} = 2 - \frac{11}{10}x^2 + o(x^3)} \]
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+	Déterminer les limites suivantes:
+	\begin{multicols}{3}
+		\begin{enumerate}
+			\item $\displaystyle \lim_{x\to 0}\frac{e^{x^2}-1}{x\sin(x)}$
+			\item $\displaystyle \lim_{x\to 0}\frac{\ln(1+x^2)-x\sin(x)}{x^4}$
+			\item $\displaystyle \lim_{x\to 0}\frac{\cos(x)-\sqrt{1-x^2}}{x^4}$
+			\item $\displaystyle \lim_{x\to 0}\frac{1}{x}\ln\left(\frac{e^x-1}{x}\right)$
+			\item $\displaystyle \lim_{x\to 0}\left(\frac{1}{\sin^2(x)}-\frac{1}{x^2}\right)$
+			\item $\displaystyle \lim_{x\to+\infty}\left(\frac{x^2-1}{x^2+1}\right)^{x}$
+			\item $\displaystyle \lim_{x\to 0}\frac{e^x-e^{\sin(x)}}{x^3}$
+			\item $\displaystyle \lim_{x\to 0}\left(\frac{\sin(x)}{x}\right)^{\frac{1}{x^2}}$
+			\item $\displaystyle \lim_{x\to-\infty}x+\sqrt{x^2+4x-1}$
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	Pour déterminer la limite d'une fonction, il suffit souvent de trouver son premier terme non nul dans son DL (ou un équivalent).
+	\begin{enumerate}
+		\item Numérateur : $e^{x^2}-1 = (1+x^2+o(x^2))-1 = x^2+o(x^2)$.
+		      Dénominateur : $x\sin(x) = x(x+o(x)) = x^2+o(x^2)$.
+		      \[ \frac{e^{x^2}-1}{x\sin(x)} = \frac{x^2+o(x^2)}{x^2+o(x^2)} = \frac{1+o(1)}{1+o(1)} \xrightarrow[x\to 0]{} 1. \]
+
+		\item Il faut un DL à l'ordre 4 du numérateur.
+		      $\ln(1+x^2) = x^2 - x^4/2 + o(x^4)$.
+		      $x\sin(x) = x(x-x^3/6+o(x^3)) = x^2 - x^4/6 + o(x^4)$.
+		      Numérateur : $(x^2-x^4/2) - (x^2-x^4/6) + o(x^4) = (-1/2+1/6)x^4 + o(x^4) = -x^4/3 + o(x^4)$.
+		      \[ \frac{-x^4/3 + o(x^4)}{x^4} = -\frac{1}{3} + o(1) \xrightarrow[x\to 0]{} -\frac{1}{3}. \]
+
+		\item DL à l'ordre 4 du numérateur.
+		      $\cos(x) = 1-x^2/2+x^4/24+o(x^4)$.
+		      $\sqrt{1-x^2}=(1-x^2)^{1/2} = 1-x^2/2-x^4/8+o(x^4)$.
+		      Numérateur : $(1-x^2/2+x^4/24) - (1-x^2/2-x^4/8) + o(x^4) = (1/24+1/8)x^4 + o(x^4) = x^4/6 + o(x^4)$.
+		      \[ \frac{x^4/6 + o(x^4)}{x^4} = \frac{1}{6} + o(1) \xrightarrow[x\to 0]{} \frac{1}{6}. \]
+
+		\item On fait un DL de l'argument du log.
+		      $\frac{e^x-1}{x} = \frac{(1+x+x^2/2+o(x^2))-1}{x} = 1+x/2+o(x)$.
+		      $\ln(\frac{e^x-1}{x}) = \ln(1+x/2+o(x)) = x/2+o(x)$.
+		      \[ \frac{1}{x}\ln\left(\frac{e^x-1}{x}\right) = \frac{1}{x}(x/2+o(x)) = \frac{1}{2}+o(1) \xrightarrow[x\to 0]{} \frac{1}{2}. \]
+
+		\item On réduit au même dénominateur : $\frac{x^2-\sin^2(x)}{x^2\sin^2(x)}$.
+		      Numérateur : $\sin(x)=x-x^3/6+o(x^4) \implies \sin^2(x) = (x-x^3/6)^2+o(x^4) = x^2-x^4/3+o(x^4)$.
+		      $x^2-\sin^2(x) = x^4/3+o(x^4)$.
+		      Dénominateur : $x^2\sin^2(x) = x^2(x^2+o(x^2)) = x^4+o(x^4)$.
+		      \[ \frac{x^4/3+o(x^4)}{x^4+o(x^4)} = \frac{1/3+o(1)}{1+o(1)} \xrightarrow[x\to 0]{} \frac{1}{3}. \]
+
+		\item On pose $h=1/x \to 0$. L'expression devient $\left(\frac{1/h^2-1}{1/h^2+1}\right)^{1/h} = \left(\frac{1-h^2}{1+h^2}\right)^{1/h} = \exp\left(\frac{1}{h}\ln\frac{1-h^2}{1+h^2}\right)$.
+		      $\ln\frac{1-h^2}{1+h^2} = \ln(1-h^2) - \ln(1+h^2) = (-h^2+o(h^2)) - (h^2+o(h^2)) = -2h^2+o(h^2)$.
+		      L'exposant est $\frac{1}{h}(-2h^2+o(h^2)) = -2h+o(h)$, qui tend vers 0.
+		      La limite est $e^0=1$.
+
+		\item $e^x - e^{\sin x} = e^{\sin x}(e^{x-\sin x}-1)$.
+		      $x-\sin x = x - (x-x^3/6+o(x^4)) = x^3/6+o(x^4)$.
+		      $e^{\sin x} \to e^0 = 1$.
+		      $e^{x-\sin x}-1 \sim x-\sin x \sim x^3/6$.
+		      Le numérateur est équivalent à $x^3/6$. La limite est $1/6$.
+
+		\item On passe à la forme exponentielle : $\exp\left(\frac{1}{x^2}\ln\frac{\sin x}{x}\right)$.
+		      $\frac{\sin x}{x} = \frac{x-x^3/6+o(x^4)}{x} = 1-x^2/6+o(x^3)$.
+		      $\ln\frac{\sin x}{x} = \ln(1-x^2/6+o(x^3)) = -x^2/6+o(x^3)$.
+		      L'exposant est $\frac{1}{x^2}(-x^2/6+o(x^3)) = -1/6+o(x)$, qui tend vers $-1/6$.
+		      La limite est $e^{-1/6}$.
+
+		\item Pour $x \to -\infty$, on factorise le terme dominant sous la racine. Attention $|x|=-x$.
+		      $x + \sqrt{x^2(1+4/x-1/x^2)} = x + |x|\sqrt{1+4/x-1/x^2} = x - x\sqrt{1+4/x-1/x^2}$.
+		      On pose $h=1/x \to 0^-$.
+		      $\frac{1}{h} - \frac{1}{h}\sqrt{1+4h-h^2} = \frac{1}{h}(1 - (1+4h-h^2)^{1/2})$.
+		      $(1+u)^{1/2} = 1+u/2+o(u)$.
+		      $1-(1+2h+o(h)) = -2h+o(h)$.
+		      L'expression devient $\frac{1}{h}(-2h+o(h)) = -2+o(1) \xrightarrow[h\to 0]{} -2$.
+		      Correction : j'ai fait une erreur de signe.
+		      $x+\sqrt{x^2+4x-1} = \frac{(x+\sqrt{x^2+4x-1})(x-\sqrt{x^2+4x-1})}{x-\sqrt{x^2+4x-1}} = \frac{x^2-(x^2+4x-1)}{x - |x|\sqrt{1+4/x-1/x^2}} = \frac{-4x+1}{x+x\sqrt{1+...}} = \frac{x(-4+1/x)}{x(1+\sqrt{1+...})} \to \frac{-4}{1+1} = -2$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	Donner le développement limité à l'ordre 3, en $x=1,$ des fonctions suivantes :
+	\begin{multicols}{2}
+		\begin{enumerate}
+			\item $f(x) = \sqrt{x}$
+			\item $g(x)=\exp(\sqrt{x})$
+			\item $k(x)=\cos(x)$
+			\item $l(x)=\tan(x)$
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	Pour trouver un DL au voisinage de $x=1$, on pose $h=x-1$ (donc $x=1+h$) et on cherche un DL en $h=0$.
+	\begin{enumerate}
+		\item $f(x) = \sqrt{x} = \sqrt{1+h}$.
+		      C'est un DL usuel en $h=0$ : $(1+h)^\alpha = 1+\alpha h + \frac{\alpha(\alpha-1)}{2}h^2 + \frac{\alpha(\alpha-1)(\alpha-2)}{6}h^3 + o(h^3)$.
+		      Avec $\alpha = 1/2$ :
+		      \[ \sqrt{1+h} = 1 + \frac{1}{2}h + \frac{\frac{1}{2}(-\frac{1}{2})}{2}h^2 + \frac{\frac{1}{2}(-\frac{1}{2})(-\frac{3}{2})}{6}h^3 + o(h^3) = 1 + \frac{1}{2}h - \frac{1}{8}h^2 + \frac{1}{16}h^3 + o(h^3) \]
+		      En remplaçant $h$ par $x-1$ :
+		      \[ \boxed{\sqrt{x} = 1 + \frac{1}{2}(x-1) - \frac{1}{8}(x-1)^2 + \frac{1}{16}(x-1)^3 + o((x-1)^3)} \]
+
+		\item $g(x) = \exp(\sqrt{x}) = \exp(\sqrt{1+h})$.
+		      C'est une composition. On utilise le DL de $\sqrt{1+h}$ trouvé ci-dessus.
+		      \[ \exp(\sqrt{1+h}) = \exp\left(1 + \frac{h}{2} - \frac{h^2}{8} + \frac{h^3}{16} + o(h^3)\right) = e \cdot \exp\left(\frac{h}{2} - \frac{h^2}{8} + \frac{h^3}{16} + o(h^3)\right) \]
+		      On pose $u = \frac{h}{2} - \frac{h^2}{8} + \frac{h^3}{16} + o(h^3)$, et on utilise $e^u = 1+u+u^2/2+u^3/6+o(u^3)$.
+		      \begin{itemize}
+			      \item $u = \frac{h}{2} - \frac{h^2}{8} + \frac{h^3}{16} + o(h^3)$
+			      \item $u^2 = (\frac{h}{2}-\frac{h^2}{8})^2+o(h^3) = \frac{h^2}{4} - \frac{h^3}{8} + o(h^3)$
+			      \item $u^3 = (\frac{h}{2})^3+o(h^3) = \frac{h^3}{8} + o(h^3)$
+		      \end{itemize}
+		      \begin{align*}
+			      e \cdot e^u & = e \left(1 + \left(\frac{h}{2} - \frac{h^2}{8} + \frac{h^3}{16}\right) + \frac{1}{2}\left(\frac{h^2}{4} - \frac{h^3}{8}\right) + \frac{1}{6}\left(\frac{h^3}{8}\right) + o(h^3)\right) \\
+			                  & = e \left(1 + \frac{h}{2} + h^2(-\frac{1}{8}+\frac{1}{8}) + h^3(\frac{1}{16}-\frac{1}{16}+\frac{1}{48}) + o(h^3)\right)                                                                 \\
+			                  & = e \left(1 + \frac{h}{2} + \frac{h^3}{48} + o(h^3)\right)
+		      \end{align*}
+		      En revenant à $x$:
+		      \[ \boxed{\exp(\sqrt{x}) = e + \frac{e}{2}(x-1) + \frac{e}{48}(x-1)^3 + o((x-1)^3)} \]
+		\item $k(x) = \cos(x) = \cos(1+h)$.
+		      On utilise la formule d'addition $\cos(a+b)=\cos(a)\cos(b)-\sin(a)\sin(b)$.
+		      \[ \cos(1+h) = \cos(1)\cos(h) - \sin(1)\sin(h) \]
+		      On utilise les DL usuels de $\cos(h)$ et $\sin(h)$ à l'ordre 3 en $h=0$:
+		      \begin{itemize}
+			      \item $\cos(h) = 1 - \dfrac{h^2}{2} + o(h^3)$
+			      \item $\sin(h) = h - \dfrac{h^3}{6} + o(h^3)$
+		      \end{itemize}
+		      On substitue :
+		      \begin{align*}
+			      \cos(1+h) & = \cos(1)\left(1 - \frac{h^2}{2}\right) - \sin(1)\left(h - \frac{h^3}{6}\right) + o(h^3) \\
+			                & = \cos(1) - \sin(1)h - \frac{\cos(1)}{2}h^2 + \frac{\sin(1)}{6}h^3 + o(h^3)
+		      \end{align*}
+		      En revenant à la variable $x$:
+		      \[ \boxed{\cos(x) = \cos(1) - \sin(1)(x-1) - \frac{\cos(1)}{2}(x-1)^2 + \frac{\sin(1)}{6}(x-1)^3 + o((x-1)^3)} \]
+
+		\item $l(x) = \tan(x) = \tan(1+h)$.
+		      La méthode la plus directe est d'utiliser la formule de Taylor-Young :
+		      \[ f(1+h) = f(1) + f'(1)h + \frac{f''(1)}{2}h^2 + \frac{f'''(1)}{6}h^3 + o(h^3) \]
+		      Calculons les dérivées successives de $\tan(x)$ et leurs valeurs en $x=1$. Posons $T=\tan(1)$.
+		      \begin{itemize}
+			      \item $l(x) = \tan(x) \implies l(1) = T$
+			      \item $l'(x) = 1+\tan^2(x) \implies l'(1) = 1+T^2$
+			      \item $l''(x) = 2\tan(x)(1+\tan^2(x)) \implies l''(1) = 2T(1+T^2)$
+			      \item $l'''(x) = 2(1+\tan^2(x))^2 + 4\tan^2(x)(1+\tan^2(x)) = (2+6\tan^2(x))(1+\tan^2(x)) \implies l'''(1) = (2+6T^2)(1+T^2)$
+		      \end{itemize}
+		      On applique la formule :
+		      \[ \tan(1+h) = T + (1+T^2)h + \frac{2T(1+T^2)}{2}h^2 + \frac{(2+6T^2)(1+T^2)}{6}h^3 + o(h^3) \]
+		      \[ \tan(1+h) = T + (1+T^2)h + T(1+T^2)h^2 + \frac{(1+3T^2)(1+T^2)}{3}h^3 + o(h^3) \]
+		      En revenant à $x$ et en remplaçant $T$ par $\tan(1)$:
+		      \begin{align*}
+			      \tan(x) & = \tan(1) + (1+\tan^2 1)(x-1) + \tan(1)(1+\tan^2 1)(x-1)^2 \\& + \frac{(1+3\tan^2 1)(1+\tan^2 1)}{3}(x-1)^3 + o((x-1)^3)
+		      \end{align*}
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	\begin{enumerate}
+		\item Soit $f : \mathbb{R} \to \mathbb{R}$ la fonction définie par $f(x)=0$ si $x \le 0$ et $f(x)=\exp(-1/x)$ sinon. Calculer, pour tout $n \in \mathbb{N}$, le développement limité de $f$ en $0$. Quelles conclusions en tirer ?
+		\item Soit $g : \mathbb{R} \to \mathbb{R}$ la fonction définie par $g(0)=0$ et, si $x \neq 0$, $g(x)=x^3\sin(1/x)$. Montrer que $g$ a un développement limité d'ordre $2$ en $0$ mais n'a pas de dérivée seconde en $0$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item On cherche le DL de $f$ à l'ordre $n$ en 0. On utilise la formule de Taylor-Young. Il faut donc calculer les dérivées successives de $f$ en 0.
+
+		      Pour $x \le 0$, $f(x)=0$, donc toutes les dérivées à gauche sont nulles.
+		      Pour $x > 0$, on peut montrer par récurrence que la $k$-ième dérivée de $f$ est de la forme $f^{(k)}(x) = P_k(1/x)e^{-1/x}$, où $P_k$ est un polynôme.
+		      On montre ensuite que $\displaystyle\lim_{x\to 0^+} f^{(k)}(x) = 0$ pour tout $k \in \mathbb{N}$, en utilisant les croissances comparées (en posant $u=1/x$, la limite devient $\displaystyle\lim_{u\to +\infty} P_k(u)e^{-u}=0$).
+		      Le théorème de la limite de la dérivée nous permet de conclure que $f$ est de classe $\mathcal{C}^\infty$ en 0, et que $f^{(k)}(0) = 0$ for all $k \ge 0$.
+
+		      La formule de Taylor-Young donne donc, pour tout $n \in \mathbb{N}$:
+		      \[ f(x) = \sum_{k=0}^n \frac{f^{(k)}(0)}{k!}x^k + o(x^n) = 0 + 0\cdot x + \dots + 0\cdot x^n + o(x^n) \]
+		      \[ \boxed{f(x) = o(x^n)} \]
+
+		      \textbf{Conclusion :} La fonction $f$ admet un développement limité à n'importe quel ordre en 0, et ce développement limité est toujours le polynôme nul. Pourtant, la fonction $f$ n'est pas la fonction nulle dans un voisinage de 0 (puisqu'elle est strictement positive pour $x>0$). Cela montre qu'une fonction peut avoir le même DL qu'une autre (ici la fonction nulle) sans lui être égale. C'est un exemple de fonction $\mathcal{C}^\infty$ mais non analytique.
+
+		\item On cherche un DL d'ordre 2 de $g$. On a $|g(x)| = |x^3\sin(1/x)| \le |x^3|$.
+		      Donc $\displaystyle\lim_{x\to 0}\frac{g(x)}{x^2} = \lim_{x\to 0} x\sin(1/x) = 0$.
+		      Par définition, $g(x) = o(x^2)$. Le DL à l'ordre 2 de $g$ est donc :
+		      \[ \boxed{g(x) = 0 + 0\cdot x + 0\cdot x^2 + o(x^2)} \]
+		      Le DL existe bien.
+
+		      Vérifions l'existence de la dérivée seconde.
+		      \begin{itemize}
+			      \item $g'(0) = \displaystyle\lim_{h\to 0} \frac{g(h)-g(0)}{h} = \lim_{h\to 0} \frac{h^3\sin(1/h)}{h} = \lim_{h\to 0} h^2\sin(1/h) = 0$.
+			      \item Pour $x\neq 0$, $g'(x) = 3x^2\sin(1/x) - x\cos(1/x)$.
+			      \item $g''(0) = \displaystyle\lim_{h\to 0} \frac{g'(h)-g'(0)}{h} = \lim_{h\to 0} \frac{3h^2\sin(1/h)-h\cos(1/h)}{h} = \lim_{h\to 0} (3h\sin(1/h) - \cos(1/h))$.
+		      \end{itemize}
+		      Le terme $3h\sin(1/h)$ tend vers 0. Cependant, le terme $\cos(1/h)$ n'a pas de limite lorsque $h \to 0$.
+		      Donc, $g''(0)$ n'existe pas.
+
+		      \textbf{Conclusion :} L'existence d'un DL à l'ordre $n$ en un point n'implique pas l'existence de la dérivée $n$-ième en ce point. Le théorème de Taylor-Young fournit une condition suffisante, mais pas nécessaire.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	\begin{enumerate}
+		\item (\di) Étudier la position du graphe de la fonction $f(x)=\ln(1+x+x^2)$ par rapport à sa tangente au voisinage de 0, puis de 1. Dans les deux cas, on fera un développement limité à l'ordre 2 de $f$ au point considéré.
+		\item (\di) Démontrer que le graphe de la fonction $f$ suivante $x\mapsto\sqrt[3]{x^2(x-2)}$ possède une asymptote (oblique) que l'on déterminera en $+\infty$. Étudier les positions relatives de l'asymptote et du graphe au voisinage de $+\infty$.
+		\item Mêmes questions qu'au 2. avec $g:x\mapsto x\sqrt{\frac{x+1}{2x+1}}$.
+		\item Mêmes questions qu'au 2. avec $h:x\mapsto \dfrac{x^3e^{-\frac1x}}{x-1}$ (On cherchera une parabole asymptote à $\mathcal{C}_h$).
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item Étude de $f(x)=\ln(1+x+x^2)$.
+
+		      \begin{itemize}
+			      \item \textbf{Au voisinage de 0 :}
+
+			            On cherche le DL de $f(x)$ à l'ordre 2. On pose $u = x+x^2$. Quand $x\to 0$, $u\to 0$.
+			            On utilise le DL de $\ln(1+u) = u - \frac{u^2}{2} + o(u^2)$.
+			            \begin{itemize}
+				            \item $u = x+x^2$
+				            \item $u^2 = (x+x^2)^2 = x^2 + 2x^3 + x^4 = x^2 + o(x^2)$
+			            \end{itemize}
+			            En substituant, on obtient :
+			            \[ f(x) = (x+x^2) - \frac{1}{2}(x^2+o(x^2)) + o(x^2) = x + \frac{1}{2}x^2 + o(x^2) \]
+			            Le DL à l'ordre 2 de $f$ en 0 est $f(x) = x + \frac{1}{2}x^2 + o(x^2)$.
+			            L'équation de la tangente à la courbe $\mathcal{C}_f$ en 0 est donnée par la partie affine du DL, soit $y = x$.
+			            Pour étudier la position de la courbe par rapport à sa tangente, on étudie le signe de la différence $f(x)-y$:
+			            \[ f(x) - y = f(x) - x = \frac{1}{2}x^2 + o(x^2) = x^2\left(\frac{1}{2} + o(1)\right) \]
+			            Au voisinage de 0, le terme $\frac{1}{2} + o(1)$ est positif (car il tend vers $\frac{1}{2}$). De plus, $x^2 \ge 0$.
+			            La différence $f(x)-x$ est donc positive au voisinage de 0.
+			            On conclut que la courbe $\mathcal{C}_f$ est \textbf{au-dessus} de sa tangente au voisinage de 0.
+
+			      \item \textbf{Au voisinage de 1 :}
+
+			            On pose $h=x-1$, de sorte que $x=1+h$. On cherche un DL en $h=0$.
+			            \begin{align*} f(x) = f(1+h) &= \ln(1+(1+h)+(1+h)^2) \\ &= \ln(1+1+h+1+2h+h^2) = \ln(3+3h+h^2) \end{align*}
+			            On factorise par 3 pour se ramener à un DL en 0 :
+			            \[ f(1+h) = \ln\left(3\left(1+h+\frac{h^2}{3}\right)\right) = \ln(3) + \ln\left(1+h+\frac{h^2}{3}\right) \]
+			            On pose $u = h+\frac{h^2}{3}$ et on utilise le DL de $\ln(1+u) = u - \frac{u^2}{2} + o(u^2)$.
+			            $u^2 = (h+\frac{h^2}{3})^2 = h^2 + o(h^2)$.
+			            \[ \ln\left(1+h+\frac{h^2}{3}\right) = \left(h+\frac{h^2}{3}\right) - \frac{1}{2}(h^2) + o(h^2) = h - \frac{1}{6}h^2 + o(h^2) \]
+			            Le DL de $f(1+h)$ est donc :
+			            \[ f(1+h) = \ln(3) + h - \frac{1}{6}h^2 + o(h^2) \]
+			            En revenant à la variable $x$ (avec $h=x-1$) :
+			            \[ f(x) = \ln(3) + (x-1) - \frac{1}{6}(x-1)^2 + o((x-1)^2) \]
+			            La tangente en $x=1$ a pour équation $y = \ln(3)+(x-1)$.
+			            La différence $f(x)-y$ est :
+			            \[ f(x) - y = -\frac{1}{6}(x-1)^2 + o((x-1)^2) = (x-1)^2\left(-\frac{1}{6} + o(1)\right) \]
+			            Au voisinage de 1, le terme $-\frac{1}{6} + o(1)$ est négatif. Le terme $(x-1)^2$ est positif.
+			            La différence est donc négative. La courbe $\mathcal{C}_f$ est \textbf{en dessous} de sa tangente au voisinage de 1.
+		      \end{itemize}
+
+		\item Étude de $f(x)=\sqrt[3]{x^2(x-2)} = (x^3-2x^2)^{1/3}$ en $+\infty$.
+
+		      On factorise par le terme dominant $x^3$ :
+		      \[ f(x) = \left(x^3\left(1-\frac{2}{x}\right)\right)^{1/3} = x\left(1-\frac{2}{x}\right)^{1/3} \]
+		      On pose $h=1/x$. Lorsque $x\to+\infty$, $h\to 0^+$.
+		      \[ f(x) = \frac{1}{h}(1-2h)^{1/3} \]
+		      On utilise le DL de $(1+u)^\alpha$ à l'ordre 2 avec $u=-2h$ et $\alpha=1/3$.
+		      \[ (1-2h)^{1/3} = 1 + \frac{1}{3}(-2h) + \frac{\frac{1}{3}(\frac{1}{3}-1)}{2}(-2h)^2 + o(h^2) = 1 - \frac{2}{3}h - \frac{4}{9}h^2 + o(h^2) \]
+		      On remplace dans l'expression de $f(x)$ :
+		      \[ f(x) = \frac{1}{h}\left(1 - \frac{2}{3}h - \frac{4}{9}h^2 + o(h^2)\right) = \frac{1}{h} - \frac{2}{3} - \frac{4}{9}h + o(h) \]
+		      En revenant à la variable $x$ :
+		      \[ f(x) = x - \frac{2}{3} - \frac{4}{9x} + o\left(\frac{1}{x}\right) \]
+		      De ce DL, on déduit que $\displaystyle \lim_{x\to+\infty} \left(f(x) - (x-\frac{2}{3})\right) = \lim_{x\to+\infty} \left(-\frac{4}{9x} + o\left(\frac{1}{x}\right)\right) = 0$.
+		      La droite d'équation $y = x - \frac{2}{3}$ est donc une asymptote oblique à $\mathcal{C}_f$ en $+\infty$.
+		      Pour la position relative, on étudie le signe de $f(x)-y$:
+		      \[ f(x) - y = -\frac{4}{9x} + o\left(\frac{1}{x}\right) \]
+		      Au voisinage de $+\infty$, le terme $-\frac{4}{9x}$ est négatif et l'emporte. La différence est donc négative.
+		      La courbe $\mathcal{C}_f$ est \textbf{en dessous} de son asymptote au voisinage de $+\infty$.
+
+		\item Étude de $g(x) = x\sqrt{\frac{x+1}{2x+1}}$ en $+\infty$.
+
+		      On pose $h=1/x \to 0^+$.
+		      \[ g(x) = \frac{1}{h}\sqrt{\frac{1/h+1}{2/h+1}} = \frac{1}{h}\sqrt{\frac{1+h}{2+h}} = \frac{1}{h\sqrt{2}}\sqrt{\frac{1+h}{1+h/2}} = \frac{1}{h\sqrt{2}}(1+h)^{1/2}(1+h/2)^{-1/2} \]
+		      On fait les DL à l'ordre 2 en $h$:
+		      $(1+h)^{1/2} = 1+\frac{h}{2}-\frac{h^2}{8}+o(h^2)$.
+		      $(1+h/2)^{-1/2} = 1-\frac{1}{2}(\frac{h}{2})+\frac{3}{8}(\frac{h}{2})^2+o(h^2) = 1-\frac{h}{4}+\frac{3h^2}{32}+o(h^2)$.
+		      Le produit est : $(1+\frac{h}{2}-\frac{h^2}{8})(1-\frac{h}{4}+\frac{3h^2}{32}) = 1 + \frac{h}{4} - \frac{5h^2}{32} + o(h^2)$.
+		      \[ g(x) = \frac{1}{h\sqrt{2}}\left(1 + \frac{h}{4} - \frac{5h^2}{32} + o(h^2)\right) = \frac{1}{\sqrt{2}}\left(\frac{1}{h} + \frac{1}{4} - \frac{5h}{32} + o(h)\right) \]
+		      En revenant à $x$:
+		      \[ g(x) = \frac{x}{\sqrt{2}} + \frac{1}{4\sqrt{2}} - \frac{5}{32x\sqrt{2}} + o\left(\frac{1}{x}\right) \]
+		      L'asymptote oblique est $y = \frac{x}{\sqrt{2}} + \frac{1}{4\sqrt{2}}$.
+		      La différence $g(x)-y = -\frac{5}{32x\sqrt{2}} + o(\frac{1}{x})$ est négative pour $x$ grand.
+		      La courbe $\mathcal{C}_g$ est \textbf{en dessous} de son asymptote au voisinage de $+\infty$.
+
+		\item Étude de $h(x) = \dfrac{x^3e^{-1/x}}{x-1}$ en $+\infty$.
+
+		      On pose $t=1/x \to 0^+$.
+		      \[ h(x) = \frac{(1/t)^3 e^{-t}}{1/t-1} = \frac{e^{-t}/t^3}{(1-t)/t} = \frac{e^{-t}}{t^2(1-t)} \]
+		      On fait le DL à l'ordre 3 en $t$ du produit $e^{-t}(1-t)^{-1}$:
+		      $e^{-t} = 1 - t + t^2/2 - t^3/6 + o(t^3)$.
+		      $(1-t)^{-1} = 1 + t + t^2 + t^3 + o(t^3)$.
+		      $e^{-t}(1-t)^{-1} = (1-t+t^2/2)(1+t+t^2+t^3) + o(t^3) = 1 + t^2/2 + t^3/3 + o(t^3)$.
+		      \[ h(x) = \frac{1}{t^2}\left(1 + \frac{t^2}{2} + \frac{t^3}{3} + o(t^3)\right) = \frac{1}{t^2} + \frac{1}{2} + \frac{t}{3} + o(t) \]
+		      En revenant à $x$:
+		      \[ h(x) = x^2 + \frac{1}{2} + \frac{1}{3x} + o\left(\frac{1}{x}\right) \]
+		      Ici l'asymptote est une parabole d'équation $y = x^2 + \frac{1}{2}$.
+		      La différence $h(x)-y = \frac{1}{3x} + o(\frac{1}{x})$ est positive pour $x$ grand.
+		      La courbe $\mathcal{C}_h$ est \textbf{au-dessus} de sa parabole asymptote au voisinage de $+\infty$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	Effectuer les développements limités en $+\infty$ des fonctions suivantes :
+	\begin{enumerate}
+		\item $\ln(x+\sqrt{1+x^2})-\ln(x)$ à l'ordre 4.
+		\item $\sqrt{1+\frac{2}{x}}$ à l'ordre 3.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	On pose $h=1/x \to 0$.
+	\begin{enumerate}
+		\item L'expression est $\ln\left(\frac{x+\sqrt{1+x^2}}{x}\right) = \ln\left(1+\sqrt{\frac{1}{x^2}+1}\right) = \ln(1+\sqrt{1+h^2})$.
+		      $\sqrt{1+h^2} = 1+\frac{1}{2}h^2-\frac{1}{8}h^4+o(h^5)$.
+		      $1+\sqrt{1+h^2} = 2+\frac{1}{2}h^2-\frac{1}{8}h^4+o(h^5) = 2\left(1+\frac{1}{4}h^2-\frac{1}{16}h^4+o(h^5)\right)$.
+		      On pose $u = \frac{1}{4}h^2-\frac{1}{16}h^4+o(h^5)$.
+		      $\ln(2(1+u)) = \ln(2) + \ln(1+u) = \ln(2) + u - u^2/2 + o(u^2)$.
+		      $u^2 = (\frac{h^2}{4})^2+o(h^4) = \frac{h^4}{16}+o(h^4)$.
+		      Le DL est $\ln(2) + \left(\frac{h^2}{4}-\frac{h^4}{16}\right) - \frac{1}{2}\left(\frac{h^4}{16}\right) + o(h^4) = \ln(2)+\frac{h^2}{4}-\frac{3h^4}{32}+o(h^4)$.
+		      \[ \boxed{\ln(2) + \frac{1}{4x^2} - \frac{3}{32x^4} + o\left(\frac{1}{x^4}\right)} \]
+
+		\item On pose $h=1/x$. On cherche le DL de $\sqrt{1+2h}$ à l'ordre 3.
+		      $(1+u)^{1/2} = 1+u/2-u^2/8+u^3/16+o(u^3)$. Avec $u=2h$:
+		      \[ \sqrt{1+2h} = 1+\frac{2h}{2}-\frac{(2h)^2}{8}+\frac{(2h)^3}{16}+o(h^3) = 1+h-\frac{h^2}{2}+\frac{h^3}{2}+o(h^3) \]
+		      \[ \boxed{1+\frac{1}{x}-\frac{1}{2x^2}+\frac{1}{2x^3}+o\left(\frac{1}{x^3}\right)} \]
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\st]
+	Soit
+	\begin{align*}
+		f: \quad]-\frac{\pi}{2},\frac{\pi}{2}[ & \quad\to\quad \R
+		\\
+		x\quad                                 & \quad \mapsto \quad e^x\tan(x) .
+	\end{align*}
+	\begin{enumerate}
+		\item Montrer que $f$ est bijective.
+		\item Justifier que $f^{-1}$ possède un développement limité à l'ordre $5$ en 0 et le déterminer.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item $f'(x) = e^x\tan(x) + e^x(1+\tan^2(x)) = e^x(1+\tan(x)+\tan^2(x))$.
+		      Le trinôme $T^2+T+1$ (avec $T=\tan x$) a un discriminant $\Delta=1-4=-3<0$, il est donc toujours positif. Comme $e^x>0$, on a $f'(x)>0$.
+		      $f$ est donc strictement croissante.
+		      $\displaystyle\lim_{x\to-\pi/2^+} f(x) = -\infty$ et $\displaystyle\lim_{x\to \pi/2^-} f(x) = +\infty$.
+		      D'après le théorème de la bijection, $f$ réalise une bijection de $]-\pi/2,\pi/2[$ sur $\mathbb{R}$.
+
+		\item $f(0)=0$ et $f'(0)=1 \neq 0$, donc la bijection réciproque $f^{-1}$ est dérivable en $0$ et admet un DL à tout ordre. On pose $y=f^{-1}(x)$, de sorte que $x=f(y)$. On cherche $y = c_1x+c_2x^2+c_3x^3+c_4x^4+c_5x^5+o(x^5)$.
+		      DL de $f(y)$ en $y=0$ à l'ordre 5 :
+		      $e^y = 1+y+y^2/2+y^3/6+y^4/24+o(y^4)$.
+		      $\tan(y) = y+y^3/3+2y^5/15+o(y^5)$.
+		      $x=f(y) = (1+y+y^2/2+\dots)(y+y^3/3+\dots) = y+y^2+\frac{5}{6}y^3+\frac{2}{3}y^4+\frac{31}{120}y^5+o(y^5)$.
+		      On substitue $y=c_1x+\dots$ et on identifie les coefficients de $x = (c_1x+\dots)+(c_1x+\dots)^2+\dots$
+		      \begin{itemize}
+			      \item Coeff de $x^1$: $1 = c_1$.
+			      \item Coeff de $x^2$: $0 = c_2 + c_1^2 \implies c_2 = -1$.
+			      \item Coeff de $x^3$: $0 = c_3 + 2c_1c_2 + \frac{5}{6}c_1^3 \implies c_3 = -2(1)(-1) - \frac{5}{6} = \frac{7}{6}$.
+			      \item Coeff de $x^4$: $0 = c_4 + 2c_1c_3+c_2^2 + \frac{5}{6}(3c_1^2c_2) + \frac{2}{3}c_1^4 \implies c_4 = -2(\frac{7}{6})-1-\frac{5}{2}(-1)-\frac{2}{3} = -\frac{3}{2}$.
+			      \item Coeff de $x^5$: $0 = c_5+2c_1c_4+2c_2c_3+... \implies c_5 = \frac{317}{120}$.
+		      \end{itemize}
+		      \[ \boxed{f^{-1}(x) = x-x^2+\frac{7}{6}x^3-\frac{3}{2}x^4+\frac{317}{120}x^5+o(x^5)} \]
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\st]
+	Montrer que pour tout $n\in\mathbb{N}^*$, l'équation $e^x+x-n=0$ possède une unique solution dans $\mathbb{R}_+$ que l'on notera $u_n$.
+	\begin{enumerate}
+		\item Montrer que $\displaystyle\lim_{n\to+\infty}u_n=+\infty$.
+		\item Montrer que $u_n=\ln(n)+o(\ln(n))$.
+		\item Montrer que $u_n=\ln(n)-\dfrac{\ln(n)}{n}+o\left(\frac{\ln(n)}{n}\right)$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	Soit $f_n(x)=e^x+x-n$. $f_n'(x)=e^x+1>0$, donc $f_n$ est strictement croissante sur $\mathbb{R}_+$.
+	$f_n(0)=1-n \le 0$ et $\displaystyle\lim_{x\to+\infty}f_n(x)=+\infty$. Par le Théorème des valeurs intermédiaires, il existe une unique solution $u_n \in [0, +\infty)$.
+	\begin{enumerate}
+		\item On a $e^{u_{n+1}}+u_{n+1}=n+1 > n = e^{u_n}+u_n$. Comme $f_n$ est croissante, $u_{n+1}>u_n$.
+		      La suite $(u_n)$ est croissante. Si elle convergeait vers $L$, on aurait $e^L+L=\lim n = +\infty$, impossible. Donc $u_n \to +\infty$.
+
+		\item De $e^{u_n}+u_n=n$, on a $e^{u_n} = n-u_n$. Comme $u_n > 0$, $e^{u_n} < n$, donc $u_n < \ln(n)$.
+		      De plus, $u_n = \ln(n-u_n) = \ln(n(1-u_n/n)) = \ln(n)+\ln(1-u_n/n)$.
+		      On a $0 < u_n/n < \ln(n)/n \to 0$. Donc $\ln(1-u_n/n) \to 0$.
+		      Divisons par $\ln(n)$: $\frac{u_n}{\ln(n)} = 1 + \frac{\ln(1-u_n/n)}{\ln(n)}$. Le second terme tend vers 0.
+		      Donc $\displaystyle\lim_{n\to\infty} \frac{u_n}{\ln(n)}=1$, ce qui signifie $u_n \sim \ln(n)$, soit $u_n = \ln(n)+o(\ln(n))$.
+
+		\item On repart de $u_n = \ln(n)+\ln(1-u_n/n)$.
+		      On utilise le DL $\ln(1-v)=-v+o(v)$ avec $v=u_n/n$.
+		      \[ u_n = \ln(n) - \frac{u_n}{n} + o\left(\frac{u_n}{n}\right) \]
+		      On sait que $u_n \sim \ln(n)$, donc $u_n/n \sim \ln(n)/n$ et $o(u_n/n) = o(\ln(n)/n)$.
+		      \[ u_n = \ln(n) - \frac{\ln(n)+o(\ln n)}{n} + o\left(\frac{\ln n}{n}\right) = \ln(n) - \frac{\ln n}{n} + o\left(\frac{\ln n}{n}\right) \]
+	\end{enumerate}
+\end{solution}
+
+\end{document}

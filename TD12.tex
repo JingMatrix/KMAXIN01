@@ -1,0 +1,348 @@
+\documentclass[]{exercices}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{multicol}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{12}{Dérivabilité (II)}
+
+\begin{exercice}[Révisions]
+La fonction tangente hyperbolique, notée $\tanh$, est définie sur $\mathbb{R}$ par
+$$\tanh(x)=\dfrac{e^{x}-e^{-x}}{e^x+e^{-x}}.$$
+\begin{enumerate}
+    \item Justifier que $\tanh$ est dérivable sur $\mathbb{R}$ et exprimer $\tanh'(x)$ en fonction de $\tanh(x)$.
+    \item Déterminer $\lim\limits_{x\to+\infty}\tanh(x)$ et $\lim\limits_{x\to-\infty}\tanh(x)$.
+    \item Démontrer que $\tanh$ réalise une bijection de $\mathbb{R}$ dans $]-1,1[$. On notera $\operatorname{Argth}$ sa bijection réciproque.
+    \item Démontrer que $\operatorname{Argth}$ est dérivable sur $]-1,1[$ et que pour tout $x\in]-1,1[$, $\operatorname{Argth}'(x)=\frac{1}{1-x^2}.$
+    \item En déduire que pour tout $x\in]-1,1[$, $\operatorname{Argth}(x)=\frac12\ln\left(\frac{1+x}{1-x}\right).$
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item La fonction $x \mapsto e^x+e^{-x} = 2\cosh(x)$ ne s'annule jamais. La fonction $\tanh$ est donc dérivable sur $\mathbb{R}$ comme quotient de fonctions dérivables.
+    En utilisant $(u/v)' = (u'v-uv')/v^2$ :
+    \[ \tanh'(x) = \frac{(e^x+e^{-x})(e^x+e^{-x}) - (e^x-e^{-x})(e^x-e^{-x})}{(e^x+e^{-x})^2} = \frac{(e^x+e^{-x})^2 - (e^x-e^{-x})^2}{(e^x+e^{-x})^2}. \]
+    \[ \tanh'(x) = 1 - \left(\frac{e^x-e^{-x}}{e^x+e^{-x}}\right)^2 = 1 - \tanh^2(x). \]
+    \item En factorisant par $e^x$ : $\tanh(x) = \frac{e^x(1-e^{-2x})}{e^x(1+e^{-2x})} = \frac{1-e^{-2x}}{1+e^{-2x}}$.
+    Quand $x\to+\infty$, $e^{-2x} \to 0$, donc $\lim_{x\to+\infty}\tanh(x) = \frac{1-0}{1+0}=1$.
+    En factorisant par $e^{-x}$ : $\tanh(x) = \frac{e^{-x}(e^{2x}-1)}{e^{-x}(e^{2x}+1)} = \frac{e^{2x}-1}{e^{2x}+1}$.
+    Quand $x\to-\infty$, $e^{2x} \to 0$, donc $\lim_{x\to-\infty}\tanh(x) = \frac{0-1}{0+1}=-1$.
+    \item La dérivée $\tanh'(x) = 1-\tanh^2(x)$. Comme $-1 < \tanh(x) < 1$, on a $\tanh^2(x)<1$, donc $\tanh'(x)>0$.
+    La fonction est strictement croissante sur $\mathbb{R}$. Elle réalise donc une bijection de $\mathbb{R}$ sur son image, qui est $]\lim_{-\infty}\tanh, \lim_{+\infty}\tanh[ \,=\, ]-1,1[$.
+    \item D'après le théorème de dérivation de la bijection réciproque, $\operatorname{Argth}$ est dérivable sur $]-1,1[$ car $\tanh'$ ne s'annule pas.
+    Soit $y = \operatorname{Argth}(x)$, donc $x = \tanh(y)$.
+    \[ \operatorname{Argth}'(x) = \frac{1}{\tanh'(y)} = \frac{1}{1-\tanh^2(y)} = \frac{1}{1-x^2}. \]
+    \item On cherche une primitive de $\frac{1}{1-x^2}$. On décompose en éléments simples : $\frac{1}{1-x^2} = \frac{1/2}{1-x} + \frac{1/2}{1+x}$.
+    Une primitive est donc $\frac{1}{2}(-\ln(1-x)+\ln(1+x)) = \frac{1}{2}\ln\left(\frac{1+x}{1-x}\right)$.
+    Ainsi, $\operatorname{Argth}(x) = \frac{1}{2}\ln\left(\frac{1+x}{1-x}\right) + C$.
+    Comme $\operatorname{Argth}(0) = 0$, on a $C=0$. D'où la formule.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}[Révisions]
+Pour tout $x \in ]1, +\infty[$, on pose $f(x) = x\ln(x) - x$. Montrer que $f$ est une bijection de $]1, +\infty[$ sur $]-1, +\infty[$. On pose $g=f^{-1}$. Calculer $g(0)$ et $g'(0)$.
+\end{exercice}
+
+\begin{solution}
+La fonction $f$ est dérivable sur $]1, +\infty[$ et $f'(x) = (1\cdot\ln(x) + x\cdot\frac{1}{x}) - 1 = \ln(x)$.
+Pour $x>1$, $\ln(x)>0$, donc $f'(x)>0$. La fonction $f$ est strictement croissante.
+Elle réalise donc une bijection de $]1, +\infty[$ sur son image $]\lim_{x\to 1^+} f(x), \lim_{x\to +\infty} f(x)[$.
+$\lim_{x\to 1^+} (x\ln x - x) = 1\ln(1)-1 = -1$.
+$\lim_{x\to +\infty} x(\ln x - 1) = +\infty$.
+Donc $f$ est une bijection de $]1, +\infty[$ sur $]-1, +\infty[$.
+
+Calcul de $g(0)$ : On cherche $x$ tel que $f(x)=0$.
+$x\ln(x)-x = 0 \iff x(\ln(x)-1)=0$. Comme $x \in ]1, +\infty[$, la seule solution est $\ln(x)=1$, soit $x=e$.
+Donc, $g(0)=e$.
+
+Calcul de $g'(0)$ : On utilise la formule de la dérivée de la bijection réciproque : $g'(y_0) = \frac{1}{f'(g(y_0))}$.
+Ici, $y_0=0$. On a $g(0)=e$.
+$g'(0) = \frac{1}{f'(g(0))} = \frac{1}{f'(e)}$.
+Comme $f'(x)=\ln(x)$, on a $f'(e)=\ln(e)=1$.
+Donc, $g'(0) = 1/1 = 1$.
+\end{solution}
+
+\begin{exercice}
+Soit $g$ une fonction 2 fois dérivable sur $[a,b]$ telle que $g(a)=g(b)=0$ et $g''(x)\leq 0$ pour tout $x\in ]a,b[$.
+\begin{enumerate}
+    \item Montrer qu'il existe $c\in]a,b[$ tel que $g'(x)\geq 0$ pour tout $x\leq c$ et $g'(x)\leq 0$ pour tout $x\geq c$.
+    \item En déduire que pour tout $x\in [a,b]$, $g(x)\geq 0$.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item La fonction $g$ est continue sur $[a,b]$ et dérivable sur $]a,b[$, avec $g(a)=g(b)$. D'après le théorème de Rolle, il existe $c \in ]a,b[$ tel que $g'(c)=0$.
+    On sait que $g''(x) \le 0$ sur $]a,b[$. Cela signifie que la fonction $g'$ est décroissante sur $[a,b]$.
+    \begin{itemize}
+        \item Pour tout $x \in [a,c]$, on a $x \le c$. Comme $g'$ est décroissante, $g'(x) \ge g'(c) = 0$.
+        \item Pour tout $x \in [c,b]$, on a $x \ge c$. Comme $g'$ est décroissante, $g'(x) \le g'(c) = 0$.
+    \end{itemize}
+    \item D'après la question 1, la fonction $g$ est croissante sur l'intervalle $[a,c]$ (car sa dérivée y est positive) et décroissante sur l'intervalle $[c,b]$ (car sa dérivée y est négative).
+    Ainsi, pour tout $x \in [a,c]$, on a $g(x) \ge g(a)$. Or $g(a)=0$, donc $g(x) \ge 0$.
+    Pour tout $x \in [c,b]$, on a $g(x) \ge g(b)$. Or $g(b)=0$, donc $g(x) \ge 0$.
+    En conclusion, pour tout $x \in [a,b]$, on a $g(x) \ge 0$.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+Montrer que l'équation $x^5-5x+1=0$ a trois solutions réelles.
+\end{exercice}
+
+\begin{solution}
+Soit $f(x) = x^5-5x+1$. $f$ est une fonction polynomiale, donc continue et dérivable sur $\mathbb{R}$.
+On étudie les variations de $f$. $f'(x) = 5x^4-5 = 5(x^4-1) = 5(x^2-1)(x^2+1) = 5(x-1)(x+1)(x^2+1)$.
+La dérivée s'annule en $x=-1$ et $x=1$.
+\begin{itemize}
+    \item Sur $]-\infty, -1[$, $f'(x)>0$, $f$ est croissante.
+    \item Sur $]-1, 1[$, $f'(x)<0$, $f$ est décroissante.
+    \item Sur $]1, +\infty[$, $f'(x)>0$, $f$ est croissante.
+\end{itemize}
+On calcule les limites et les extrema locaux :
+$\lim_{x\to-\infty} f(x) = -\infty$.
+$f(-1) = (-1)^5-5(-1)+1 = -1+5+1=5$ (maximum local).
+$f(1) = 1^5-5(1)+1 = -3$ (minimum local).
+$\lim_{x\to+\infty} f(x) = +\infty$.
+
+On applique le Théorème des Valeurs Intermédiaires (TVI) sur les trois intervalles de monotonie :
+\begin{enumerate}
+    \item Sur $]-\infty, -1]$, $f$ est continue et strictement croissante. L'image est $]-\infty, 5]$. Comme $0 \in ]-\infty, 5]$, l'équation $f(x)=0$ admet une unique solution sur cet intervalle.
+    \item Sur $[-1, 1]$, $f$ est continue et strictement décroissante. L'image est $[-3, 5]$. Comme $0 \in [-3, 5]$, l'équation $f(x)=0$ admet une unique solution sur cet intervalle.
+    \item Sur $[1, +\infty[$, $f$ est continue et strictement croissante. L'image est $[-3, +\infty[$. Comme $0 \in [-3, +\infty[$, l'équation $f(x)=0$ admet une unique solution sur cet intervalle.
+\end{enumerate}
+En conclusion, l'équation $x^5-5x+1=0$ a exactement trois solutions réelles.
+\end{solution}
+
+\begin{exercice}[\di]
+On considère le polynôme $P(X)=X^n+aX+b$, où $a$ et $b$ sont des réels et $n\geq 3$ est un entier.
+\begin{enumerate}
+    \item Calculer les racines de $P''$.
+    \item Montrer par l'absurde que $P$ admet au plus trois racines réelles.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item On dérive le polynôme $P$ deux fois :
+    \begin{itemize}
+        \item $P'(X) = nX^{n-1} + a$
+        \item $P''(X) = n(n-1)X^{n-2}$
+    \end{itemize}
+    Comme l'énoncé précise que $n \ge 3$, l'exposant $n-2$ est supérieur ou égal à 1.
+    L'équation $P''(X) = 0$ devient $n(n-1)X^{n-2}=0$. Puisque $n \ge 3$, le coefficient $n(n-1)$ est non nul. La seule solution est donc $X=0$.
+    La dérivée seconde $P''$ admet une unique racine réelle : $0$.
+    \item On raisonne par l'absurde. Supposons que $P$ admette au moins quatre racines réelles distinctes, notées $x_1 < x_2 < x_3 < x_4$.
+    \begin{itemize}
+        \item La fonction $P$ est continue et dérivable sur $\mathbb{R}$. Sur chaque intervalle $[x_i, x_{i+1}]$, on a $P(x_i)=P(x_{i+1})=0$. D'après le théorème de Rolle, il existe un réel $c_i \in ]x_i, x_{i+1}[$ tel que $P'(c_i)=0$.
+        \item En appliquant ce théorème sur les intervalles $[x_1, x_2]$, $[x_2, x_3]$ et $[x_3, x_4]$, on montre l'existence d'au moins trois racines distinctes pour $P'$, notées $c_1 < c_2 < c_3$.
+        \item On peut maintenant appliquer le même raisonnement à la fonction $P'$. Elle est continue et dérivable sur $\mathbb{R}$. Sur les intervalles $[c_1, c_2]$ et $[c_2, c_3]$, $P'$ s'annule aux bornes. Le théorème de Rolle garantit donc l'existence de réels $d_1 \in ]c_1, c_2[$ et $d_2 \in ]c_2, c_3[$ tels que $P''(d_1)=0$ et $P''(d_2)=0$.
+        \item On a ainsi prouvé que $P''$ admet au moins deux racines réelles distinctes, $d_1$ et $d_2$.
+    \end{itemize}
+    Ceci est en contradiction avec le résultat de la première question, qui affirmait que $P''$ n'a qu'une seule racine réelle.
+    L'hypothèse de départ est donc fausse. En conclusion, $P$ admet au plus trois racines réelles.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+Soient $I$ un intervalle, $x_0 \in I$, et $f : I \to \mathbb{R}$ continue sur $I$ et dérivable sur $I\setminus\{x_0\}$.
+\begin{enumerate}
+    \item Soit $x\in I\setminus\{x_0\}$. Appliquer le théorème des accroissements finis entre $x$ et $x_0$.
+    \item En déduire que si $\lim_{x\to x_0} f'(x)=\alpha\in\mathbb{R}$, alors $f$ est dérivable en $x_0$ et $f'(x_0)=\alpha$.
+    \item La réciproque est-elle vraie ?
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item Soit $x \in I \setminus \{x_0\}$. La fonction $f$ est continue sur l'intervalle fermé d'extrémités $x_0$ et $x$, et dérivable sur l'intervalle ouvert. D'après le Théorème des Accroissements Finis (TAF), il existe un réel $c_x$ strictement compris entre $x_0$ et $x$ tel que :
+    \[ \frac{f(x)-f(x_0)}{x-x_0} = f'(c_x). \]
+    \item On suppose que $\lim_{y\to x_0} f'(y) = \alpha$.
+    Lorsque $x \to x_0$, on a $c_x \to x_0$ par le théorème des gendarmes (car $c_x$ est ``coincé" entre $x$ et $x_0$).
+    On peut donc passer à la limite dans l'égalité du TAF :
+    \[ \lim_{x\to x_0} \frac{f(x)-f(x_0)}{x-x_0} = \lim_{x\to x_0} f'(c_x). \]
+    Comme $c_x \to x_0$, par composition des limites, on a $\lim_{x\to x_0} f'(c_x) = \lim_{y\to x_0} f'(y) = \alpha$.
+    La limite du taux d'accroissement en $x_0$ existe et vaut $\alpha$. Par définition, $f$ est dérivable en $x_0$ et $f'(x_0)=\alpha$.
+\item La réciproque est : ``Si $f$ est dérivable en $x_0$, alors $f'$ admet une limite en $x_0$". C'est \textbf{faux}.
+    La dérivabilité en un point n'implique pas la continuité de la dérivée en ce point.
+    Contre-exemple : la fonction $\tilde{f}$ de l'exercice 4 du TD11, $f(x) = x^2\sin(1/x)$ pour $x\ne 0$ et $f(0)=0$.
+    On a montré qu'elle est dérivable en 0 avec $f'(0)=0$, mais que sa dérivée $f'(x)=2x\sin(1/x)-\cos(1/x)$ n'a pas de limite en 0.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+Soit $f(x) = \begin{cases} e^{-1/x^2} & \text{si } x \neq 0, \\ 0 & \text{si } x=0. \end{cases}$
+\begin{enumerate}
+    \item Montrer que $f$ est continue en 0.
+    \item Montrer que $f$ est dérivable en 0 et que $f'(0)=0$.
+    \item Démontrer par récurrence que pour tout $n\in\mathbb{N}^*$, $f$ est $n$ fois dérivable sur $\mathbb{R}$ et qu'il existe un polynôme $Q_n(X)$ tel que
+    \[ f^{(n)}(x) = \begin{cases} \frac{Q_n(x)}{x^{3n}}e^{-1/x^2} & \text{si } x\neq 0 \\ 0 & \text{si } x=0. \end{cases} \]
+    (On pourra utiliser le résultat de l'exercice précédent sur la limite de la dérivée).
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+On rappelle le résultat de croissances comparées : $\forall \alpha \in \mathbb{R}, \lim_{t\to+\infty} t^\alpha e^{-t}=0$.
+\begin{enumerate}
+    \item On a $\lim_{x\to 0} -\frac{1}{x^2} = -\infty$. En posant $u = -1/x^2$, on a $\lim_{u\to-\infty} e^u = 0$. Par composition de limites, $\lim_{x\to 0} f(x) = 0 = f(0)$. La fonction $f$ est donc continue en 0.
+    \item On étudie la limite du taux d'accroissement en 0 :
+    \[ \frac{f(x)-f(0)}{x-0} = \frac{e^{-1/x^2}}{x}. \]
+    Posons $t = 1/x^2$. Quand $x \to 0$, $t \to +\infty$.
+    Pour $x>0$, $x=1/\sqrt{t}$. Le taux d'accroissement est $\sqrt{t} e^{-t}$.
+    Pour $x<0$, $x=-1/\sqrt{t}$. Le taux d'accroissement est $-\sqrt{t} e^{-t}$.
+    Dans les deux cas, la limite quand $t\to+\infty$ est 0, d'après les croissances comparées (avec $\alpha=1/2$).
+    Donc $\lim_{x\to 0} \frac{f(x)-f(0)}{x-0} = 0$.
+    $f$ est dérivable en 0 et $f'(0)=0$.
+    \item On procède par récurrence sur $n \in \mathbb{N}^*$.
+    \begin{itemize}
+        \item \textbf{Initialisation (n=1)} :
+        Pour $x\neq 0$, $f'(x) = \left(-\frac{1}{x^2}\right)' e^{-1/x^2} = \frac{2}{x^3}e^{-1/x^2}$.
+        Ceci correspond bien à la formule donnée avec $Q_1(x)=2$, qui est un polynôme.
+        On a déjà montré que $f'(0)=0$.
+        La propriété est donc vraie au rang 1.
+        \item \textbf{Hérédité} : Soit $n \ge 1$. Supposons que la propriété est vraie au rang $n$.
+        Pour $x \ne 0$, on dérive $f^{(n)}(x)$ :
+        \begin{align*}
+            f^{(n+1)}(x) &= \frac{d}{dx}\left(\frac{Q_n(x)}{x^{3n}}e^{-1/x^2}\right) \\
+            &= \left( \frac{Q_n'(x)x^{3n} - Q_n(x)(3n x^{3n-1})}{x^{6n}} + \frac{Q_n(x)}{x^{3n}}\cdot\frac{2}{x^3} \right) e^{-1/x^2} \\
+            &= \left( \frac{Q_n'(x)x^3 - 3n x^2 Q_n(x) + 2 Q_n(x)}{x^{3(n+1)}} \right) e^{-1/x^2}
+        \end{align*}
+        En posant $Q_{n+1}(x) = x^3 Q_n'(x) - 3n x^2 Q_n(x) + 2 Q_n(x)$, qui est bien un polynôme (car $Q_n$ et $Q_n'$ le sont), on obtient la forme voulue pour $f^{(n+1)}(x)$ sur $\mathbb{R}^*$.
+
+        Il reste à montrer que $f^{(n)}$ est dérivable en 0 et que $f^{(n+1)}(0)=0$. Pour cela, on utilise le théorème de la limite de la dérivée (Exercice 5). Il suffit de montrer que $\lim_{x\to 0} f^{(n+1)}(x) = 0$.
+        \[ \lim_{x\to 0} f^{(n+1)}(x) = \lim_{x\to 0} \frac{Q_{n+1}(x)}{x^{3(n+1)}} e^{-1/x^2}. \]
+        Posons $t=1/x^2$ ($t\to+\infty$). On a $|x|=t^{-1/2}$. Le terme devient :
+        \[ \frac{Q_{n+1}(\pm t^{-1/2})}{(\pm t^{-1/2})^{3(n+1)}} e^{-t}. \]
+        Le polynôme $Q_{n+1}$ a un comportement borné ou polynomial en $t^{-1/2}$ quand $t\to+\infty$. Le terme dominant est $t^{3(n+1)/2}e^{-t}$.
+        Plus formellement, l'expression est une somme finie de termes de la forme $C \cdot x^{-k} e^{-1/x^2}$ pour un certain entier $k$.
+        En posant $t=1/x^2$, la limite en 0 de $|x^{-k}e^{-1/x^2}|$ devient $\lim_{t\to+\infty} t^{k/2}e^{-t}$, qui vaut 0 par croissances comparées.
+        Donc, $\lim_{x\to 0} f^{(n+1)}(x) = 0$.
+        D'après le théorème de la limite de la dérivée, $f^{(n)}$ est dérivable en 0 et $f^{(n+1)}(0) = 0$.
+        La propriété est donc vraie au rang $n+1$.
+    \end{itemize}
+    Par le principe de récurrence, la propriété est vraie pour tout $n \in \mathbb{N}^*$.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+Majorer l'erreur dans les approximations suivantes en utilisant le théorème des accroissements finis :
+\begin{enumerate}
+    \item $\sqrt{10001}\simeq 100$
+    \item $\cos(1)\simeq \frac12$
+    \item $0.999^{-2}\simeq 1$
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+Le TAF nous dit que pour une fonction $f$ continue sur $[a,b]$ et dérivable sur $]a,b[$, il existe $c \in ]a,b[$ tel que $f(b)-f(a)=f'(c)(b-a)$. L'erreur d'approximation $|f(b)-f(a)|$ peut donc être majorée en trouvant un majorant pour $|f'(c)|$ sur l'intervalle $]a,b[$.
+\begin{enumerate}
+    \item Soit $f(x)=\sqrt{x}$, $a=10000$ et $b=10001$. L'approximation est $\sqrt{b} \simeq \sqrt{a}$.
+    L'erreur est $E = |\sqrt{10001} - \sqrt{10000}|$.
+    D'après le TAF, il existe $c \in ]10000, 10001[$ tel que
+    $E = |f'(c)(10001-10000)| = |f'(c)| = \left|\frac{1}{2\sqrt{c}}\right| = \frac{1}{2\sqrt{c}}$.
+    Comme $c > 10000$, on a $\sqrt{c} > \sqrt{10000}=100$.
+    Donc, $\frac{1}{\sqrt{c}} < \frac{1}{100}$.
+    On en déduit une majoration de l'erreur : $E < \frac{1}{2 \cdot 100} = \frac{1}{200} = 0.005$.
+    \item Soit $f(x)=\cos(x)$. L'approximation $\cos(1) \simeq 1/2$ revient à comparer $\cos(1)$ à $\cos(\pi/3)$.
+    On applique le TAF sur l'intervalle $[1, \pi/3]$ (on a bien $1 < \pi/3 \approx 1.047$).
+    L'erreur est $E = |\cos(1) - \cos(\pi/3)|$.
+    Il existe $c \in ]1, \pi/3[$ tel que $E = |f'(c)(1-\pi/3)| = |-\sin(c)(\pi/3-1)| = \sin(c)(\pi/3-1)$.
+    Sur l'intervalle $]1, \pi/3[$, la fonction sinus est croissante et positive. Donc $\sin(c) < \sin(\pi/3) = \frac{\sqrt{3}}{2}$.
+    On majore l'erreur : $E < \frac{\sqrt{3}}{2}\left(\frac{\pi}{3}-1\right)$.
+    (Valeur approchée : $E \lesssim \frac{1.732}{2}(\frac{3.142}{3}-1) \approx 0.866 \times 0.047 \approx 0.041$).
+    \item Soit $f(x) = x^{-2} = 1/x^2$. On prend $a=0.999$ et $b=1$. L'approximation est $f(0.999) \simeq f(1)$.
+    L'erreur est $E = |0.999^{-2} - 1^{-2}| = |f(0.999)-f(1)|$.
+    On applique le TAF sur $[0.999, 1]$. Il existe $c \in ]0.999, 1[$ tel que
+    $E = |f'(c)(0.999-1)| = \left|\frac{-2}{c^3}(-0.001)\right| = \frac{0.002}{c^3}$.
+    Comme $c \in ]0.999, 1[$, on a $c > 0.999$.
+    Donc $c^3 > 0.999^3$, et $\frac{1}{c^3} < \frac{1}{0.999^3}$.
+    L'erreur est donc $E < \frac{0.002}{0.999^3}$.
+    Pour obtenir une majoration plus simple, on peut minorer le dénominateur : $0.999 > 0.9$, donc $0.999^3 > 0.9^3 = 0.729$.
+    $E < \frac{0.002}{0.729} \approx 0.0027$.
+    Une majoration encore plus simple mais moins précise : $0.999^3$ est proche de 1. Par exemple, $0.999^3 > (1-10^{-3})^3 \approx 1 - 3 \cdot 10^{-3} = 0.997$.
+    On peut aussi remarquer que $1/0.999^3$ est un peu plus grand que 1. On peut majorer grossièrement par $E < 2.1 \times 10^{-3}$. La majoration de la correction originale par $3 \times 10^{-3}$ est donc tout à fait valide.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+En utilisant le théorème des accroissements finis, montrer que :
+\begin{enumerate}
+    \item Pour tout $x,y \in \mathbb{R}$, $|\sin x-\sin y|\leq |x-y|$.
+    \item Pour tout $x\in ]0,+\infty[$, $\ln(1+x)<x$.
+    \item Pour tout $x\in\mathbb{R}$, $e^x\ge1+x$.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item Soit $f(t)=\sin(t)$. $f$ est dérivable sur $\mathbb{R}$ et $f'(t)=\cos(t)$.
+    Soient $x,y \in \mathbb{R}$. D'après le TAF, il existe $c$ entre $x$ et $y$ tel que $\frac{f(x)-f(y)}{x-y}=f'(c)$.
+    $|\sin x - \sin y| = |\cos(c)||x-y|$. Comme $|\cos(c)| \le 1$, on a $|\sin x-\sin y|\leq |x-y|$.
+    \item Soit $f(t)=\ln(1+t)$. $f$ est dérivable sur $]-1, +\infty[$ et $f'(t)=1/(1+t)$.
+    Soit $x>0$. On applique le TAF sur $[0,x]$. Il existe $c \in ]0,x[$ tel que $\frac{f(x)-f(0)}{x-0}=f'(c)$.
+    $\frac{\ln(1+x)-0}{x} = \frac{1}{1+c}$.
+    Comme $c \in ]0,x[$, on a $c>0$, donc $1+c>1$ et $\frac{1}{1+c}<1$.
+    On a donc $\frac{\ln(1+x)}{x} < 1$, ce qui donne $\ln(1+x)<x$.
+    \item Soit $f(t)=e^t$.
+    Cas 1: $x>0$. On applique le TAF sur $[0,x]$. Il existe $c \in ]0,x[$ tel que $\frac{e^x-e^0}{x-0}=e^c$.
+    $\frac{e^x-1}{x} = e^c$. Comme $c>0$, $e^c > e^0 = 1$.
+    Donc $\frac{e^x-1}{x}>1$. Comme $x>0$, on a $e^x-1>x$, soit $e^x > 1+x$.
+    Cas 2: $x<0$. On applique le TAF sur $[x,0]$. Il existe $c \in ]x,0[$ tel que $\frac{e^0-e^x}{0-x}=e^c$.
+    $\frac{1-e^x}{-x} = e^c$. Comme $c<0$, $e^c < e^0 = 1$.
+    Donc $\frac{1-e^x}{-x}<1$. Comme $-x>0$, on a $1-e^x < -x$, soit $1+x < e^x$.
+    Cas 3: $x=0$. $e^0=1+0$, l'égalité est vérifiée.
+    Dans tous les cas, $e^x \ge 1+x$.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+Grâce à la règle de l'Hôpital, déterminer les limites suivantes :
+\begin{multicols}{2}
+\begin{enumerate}
+    \item $\displaystyle \lim_{x \to 0} \frac{1 - \cos x}{x^2}$
+    \item $\displaystyle \lim_{x \to 0} \frac{e^{2 x} - 1 - 2 x}{\ln (1 + x) - x}$
+    \item $\displaystyle \lim_{x\to0}\frac{\sin(x)-x}{1-\cos(x)}$
+    \item $\displaystyle \lim_{x\to1}\frac{1+\cos(\pi x)}{(x-1)^2}$
+    \item $\displaystyle \lim_{x\to0}\frac{\ln(1+x^2)-x\sin(x)}{x^3}$
+\end{enumerate}
+\end{multicols}
+\end{exercice}
+
+\begin{solution}
+Pour chaque limite, on vérifie qu'on est face à une forme indéterminée ``0/0" ou ``$\infty/\infty$" avant d'appliquer la règle de l'Hôpital, qui stipule que $\lim \frac{f(x)}{g(x)} = \lim \frac{f'(x)}{g'(x)}$ si cette dernière existe.
+\begin{enumerate}
+    \item $\displaystyle  \lim_{x \to 0} \frac{1 - \cos x}{x^2}$. Forme ``0/0".
+    \[ \lim_{x \to 0} \frac{(1 - \cos x)'}{(x^2)'} = \lim_{x \to 0} \frac{\sin x}{2x} = \frac{1}{2} \lim_{x \to 0} \frac{\sin x}{x} = \frac{1}{2} \cdot 1 = \frac{1}{2}. \]
+    On a reconnu une limite usuelle, mais on pourrait aussi ré-appliquer la règle :
+    \[ \lim_{x \to 0} \frac{(\sin x)'}{(2x)'} = \lim_{x \to 0} \frac{\cos x}{2} = \frac{\cos 0}{2} = \frac{1}{2}. \]
+
+    \item $\displaystyle  \lim_{x \to 0} \frac{e^{2 x} - 1 - 2 x}{\ln (1 + x) - x}$. Forme ``0/0".
+    \[ \lim_{x \to 0} \frac{(e^{2 x} - 1 - 2 x)'}{(\ln (1 + x) - x)'} = \lim_{x \to 0} \frac{2e^{2x}-2}{\frac{1}{1+x}-1}. \]
+    C'est encore une forme ``0/0". On applique la règle une seconde fois.
+    \[ \lim_{x \to 0} \frac{(2e^{2x}-2)'}{(\frac{1}{1+x}-1)'} = \lim_{x \to 0} \frac{4e^{2x}}{\frac{-1}{(1+x)^2}} = \frac{4e^0}{\frac{-1}{(1+0)^2}} = \frac{4}{-1} = -4. \]
+
+    \item $\displaystyle \lim_{x\to0}\frac{\sin(x)-x}{1-\cos(x)}$. Forme ``0/0".
+    \[ \lim_{x\to0}\frac{(\sin(x)-x)'}{(1-\cos(x))'} = \lim_{x\to0}\frac{\cos(x)-1}{\sin(x)}. \]
+    Encore une forme ``0/0". On continue.
+    \[ \lim_{x\to0}\frac{(\cos(x)-1)'}{(\sin(x))'} = \lim_{x\to0}\frac{-\sin(x)}{\cos(x)} = \frac{-\sin(0)}{\cos(0)} = \frac{0}{1} = 0. \]
+
+    \item $\displaystyle \lim_{x\to1}\frac{1+\cos(\pi x)}{(x-1)^2}$. Forme ``0/0" car $\cos(\pi)=-1$.
+    \[ \lim_{x\to1}\frac{(1+\cos(\pi x))'}{((x-1)^2)'} = \lim_{x\to1}\frac{-\pi\sin(\pi x)}{2(x-1)}. \]
+    Encore une forme ``0/0" car $\sin(\pi)=0$.
+    \[ \lim_{x\to1}\frac{(-\pi\sin(\pi x))'}{(2(x-1))'} = \lim_{x\to1}\frac{-\pi^2\cos(\pi x)}{2} = \frac{-\pi^2\cos(\pi)}{2} = \frac{-\pi^2(-1)}{2} = \frac{\pi^2}{2}. \]
+
+    \item $\displaystyle \lim_{x\to0}\frac{\ln(1+x^2)-x\sin(x)}{x^3}$. Forme ``0/0".
+    \[ \lim_{x\to0}\frac{(\ln(1+x^2)-x\sin(x))'}{(x^3)'} = \lim_{x\to0}\frac{\frac{2x}{1+x^2} - (\sin x + x\cos x)}{3x^2}. \]
+    C'est toujours une forme ``0/0". La dérivation successive est possible mais très calculatoire. Le résultat est 0. (Note : avec les développements limités, vus plus tard, le calcul est quasi-immédiat).
+    Numérateur : $\ln(1+x^2) - x\sin(x) = (x^2 - \frac{x^4}{2} + \dots) - x(x - \frac{x^3}{6} + \dots) = (x^2-x^2) - \frac{x^4}{2} + \frac{x^4}{6} + \dots \sim -\frac{1}{3}x^4$.
+    Le quotient est donc équivalent à $\frac{-x^4/3}{x^3} = -x/3$, qui tend vers 0.
+\end{enumerate}
+\end{solution}
+
+\end{document}

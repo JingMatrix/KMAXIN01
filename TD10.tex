@@ -1,0 +1,240 @@
+\documentclass[]{exercices}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{10}{Continuité sur un intervalle}
+
+\begin{exercice}[\di]
+	Soit la fonction réelle définie par
+	$$f(x)=\begin{cases}
+			x,         & \text{si } x<0,           \\
+			x^2,       & \text{si } 0\leq x\leq 1, \\
+			2\sqrt{x}, & \text{si } x> 1.
+		\end{cases}$$
+	\begin{enumerate}
+		\item Dessiner le graphe de $f$.
+		\item Étudier la continuité de $f$ en tout point de $\mathbb{R}$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item \textbf{Graphe de $f$ :}
+		      \begin{center}
+			      \begin{tikzpicture}
+				      \draw[->,>=latex, gray] (-2.5,0)--(3.5,0) node[below,black] {$x$};
+				      \draw[->,>=latex, gray] (0,-2.5)--(0,3.5) node[left,black] {$y$};
+				      \draw[dotted] (1,0) -- (1,1);
+				      \node at (1,0) [below] {$1$};
+				      \node at (0,1) [left] {$1$};
+				      \draw[ultra thick, blue, domain=-2:0] plot (\x,{\x});
+				      \draw[ultra thick, blue, domain=0:1] plot (\x,{\x*\x});
+				      \draw[ultra thick, blue, domain=1:2.5] plot (\x,{2*sqrt(\x)});
+				      \filldraw[blue] (0,0) circle (1.5pt);
+				      \filldraw[blue] (1,1) circle (1.5pt);
+				      \draw[blue, fill=white] (1,2) circle (1.5pt);
+			      \end{tikzpicture}
+		      \end{center}
+		\item \textbf{Étude de la continuité :}
+		      \begin{itemize}
+			      \item Sur les intervalles ouverts $]-\infty, 0[$, $]0, 1[$ et $]1, +\infty[$, la fonction $f$ coïncide avec des fonctions usuelles ($x \mapsto x$, $x \mapsto x^2$, $x \mapsto 2\sqrt{x}$) qui sont continues sur ces intervalles. Donc $f$ est continue sur $\mathbb{R} \setminus \{0,1\}$.
+			      \item \textbf{Continuité en 0 :}
+			            On étudie les limites à gauche et à droite.
+			            $\lim_{x\to 0^-} f(x) = \lim_{x\to 0^-} x = 0$.
+			            $\lim_{x\to 0^+} f(x) = \lim_{x\to 0^+} x^2 = 0$.
+			            La valeur de la fonction est $f(0)=0^2=0$.
+			            Comme $\lim_{x\to 0^-} f(x) = \lim_{x\to 0^+} f(x) = f(0)$, la fonction $f$ est continue en 0.
+			      \item \textbf{Continuité en 1 :}
+			            $\lim_{x\to 1^-} f(x) = \lim_{x\to 1^-} x^2 = 1$.
+			            $\lim_{x\to 1^+} f(x) = \lim_{x\to 1^+} 2\sqrt{x} = 2\sqrt{1}=2$.
+			            La valeur de la fonction est $f(1)=1^2=1$.
+			            Comme la limite à gauche (1) est différente de la limite à droite (2), la fonction $f$ n'est pas continue en 1.
+		      \end{itemize}
+		      \textbf{Conclusion :} La fonction $f$ est continue sur $\mathbb{R} \setminus \{1\}$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	\begin{enumerate}
+		\item Montrer que si une fonction $f$, définie sur un intervalle ouvert $I\subset\mathbb{R}$, est continue en $x_0\in I$ alors la fonction $|f|$ est aussi continue en $x_0$.
+		\item Construire un exemple de fonction discontinue en $0$ dont la valeur absolue est continue sur $\mathbb{R}$.
+		\item Est-ce que la réciproque de la propriété énoncée à la question 1) est vraie ?
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item On utilise la seconde inégalité triangulaire : pour tous réels $a,b$, on a $||a|-|b|| \le |a-b|$.
+		      Soit $x_0 \in I$. On veut montrer que $\lim_{x\to x_0} |f(x)| = |f(x_0)|$.
+		      Soit $\varepsilon > 0$. Comme $f$ est continue en $x_0$, il existe $\delta>0$ tel que si $|x-x_0|<\delta$, alors $|f(x)-f(x_0)| < \varepsilon$.
+		      Pour ces mêmes $x$, on a :
+		      \[ ||f(x)| - |f(x_0)|| \le |f(x)-f(x_0)| < \varepsilon. \]
+		      Ceci est exactement la définition de la continuité de $|f|$ en $x_0$.
+		\item Soit la fonction $f$ définie par $f(x)=1$ si $x \ge 0$ et $f(x)=-1$ si $x < 0$.
+		      Cette fonction est discontinue en 0 car $\lim_{x\to 0^+} f(x) = 1$ et $\lim_{x\to 0^-} f(x) = -1$.
+		      Cependant, $|f(x)|=1$ pour tout $x \in \mathbb{R}$. C'est une fonction constante, donc continue partout, y compris en 0.
+		\item Non, la réciproque est fausse. L'exemple de la question 2 le prouve : $|f|$ est continue en 0 mais $f$ ne l'est pas.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+	Étudier l'ensemble de définition, la continuité et les prolongements par continuité possibles de $f$ dans les cas suivants :
+	\begin{multicols}{2}
+		\begin{enumerate}[label=\alph*)]
+			\item $f(x)=(1+x)\ln(1+x)$
+			\item $f(x)=(1+x)^{1/x}$
+			\item $f(x)=\frac{1}{1+e^{1/x}}$
+			\item (\st) $f(x)=\left(\frac{1+e^x}{2}\right)^{1/x}$
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}[label=\alph*)]
+		\item $\mathcal{D}_f = ]-1, +\infty[$. Sur cet intervalle, $f$ est continue comme produit/composition de fonctions continues.
+		      On étudie la limite en $-1^+$. On pose $X=x+1$. Quand $x\to -1^+$, $X \to 0^+$.
+		      $\lim_{x\to-1^+} f(x) = \lim_{X\to 0^+} X\ln(X) = 0$ par croissance comparée.
+		      La limite est finie, donc $f$ est prolongeable par continuité en $-1$ en posant $\tilde{f}(-1)=0$.
+		\item $f(x)=\exp(\frac{1}{x}\ln(1+x))$. Il faut $1+x>0$ et $x\ne 0$. $\mathcal{D}_f = ]-1,0[\cup]0,+\infty[$. $f$ est continue sur son domaine.
+		      \textbf{En 0 :} On reconnaît un taux d'accroissement : $\lim_{x\to 0} \frac{\ln(1+x)}{x} = \lim_{x\to 0} \frac{\ln(1+x)-\ln(1)}{x-0} = (\ln)'(1)=1$.
+		      Donc $\lim_{x\to 0} f(x) = e^1 = e$. $f$ est prolongeable par continuité en 0 en posant $\tilde{f}(0)=e$.
+		      \textbf{En -1 :} $\lim_{x\to-1^+} \ln(1+x)=-\infty$, donc $\lim_{x\to-1^+} \frac{\ln(1+x)}{x} = +\infty$. La limite de $f$ est $e^{+\infty}=+\infty$. $f$ n'est pas prolongeable en -1.
+		\item $\mathcal{D}_f = \mathbb{R}^*$. $f$ est continue sur son domaine.
+		      \textbf{En 0 :} On étudie les limites à gauche et à droite.
+		      $\lim_{x\to 0^+} 1/x = +\infty \implies \lim_{x\to 0^+} e^{1/x}=+\infty \implies \lim_{x\to 0^+} f(x)=0$.
+		      $\lim_{x\to 0^-} 1/x = -\infty \implies \lim_{x\to 0^-} e^{1/x}=0 \implies \lim_{x\to 0^-} f(x)=\frac{1}{1+0}=1$.
+		      Les limites à gauche et à droite sont différentes, $f$ n'admet pas de limite en 0 et n'est pas prolongeable.
+		\item $f(x)=\exp(\frac{1}{x}\ln(\frac{1+e^x}{2}))$. $\mathcal{D}_f=\mathbb{R}^*$.
+		      On étudie la limite de l'exposant en 0 en reconnaissant un taux d'accroissement pour $g(x)=\ln(\frac{1+e^x}{2})$.
+		      $g(0)=\ln(1)=0$. On calcule $\lim_{x\to 0} \frac{g(x)-g(0)}{x-0} = g'(0)$.
+		      $g'(x) = \frac{e^x/(1+e^x)}{2} \cdot \frac{2}{1+e^x} = \frac{e^x}{1+e^x}$. Donc $g'(0)=\frac{e^0}{1+e^0}=1/2$.
+		      La limite de l'exposant est $1/2$. Par continuité de l'exponentielle, $\lim_{x\to 0} f(x) = e^{1/2}=\sqrt{e}$.
+		      $f$ est prolongeable par continuité en 0 en posant $\tilde{f}(0)=\sqrt{e}$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	\begin{enumerate}
+		\item Soit $f$ une fonction continue sur un intervalle $I$ qui ne s'annule pas. Montrer que $f$ est de signe constant sur $I$.
+		\item Soit $f$ continue sur $[0,1]$ avec $f(x)>0$ pour tout $x\in[0,1]$. Montrer qu'il existe $a>0$ tel que $f(x)\ge a$ sur $[0,1]$.
+		\item Montrer qu'il n'existe pas de bijection continue de $[0,1]$ dans $\mathbb{R}$.
+		\item Soit $f:I\to\mathbb{R}$ une fonction continue et bijective. Montrer qu'elle est strictement monotone.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item On raisonne par l'absurde. Supposons que $f$ ne soit pas de signe constant. Il existe alors $a,b \in I$ tels que $f(a)<0$ et $f(b)>0$.
+		      Comme $I$ est un intervalle, le segment $[a,b]$ est inclus dans $I$. La fonction $f$ est continue sur $[a,b]$. D'après le Théorème des Valeurs Intermédiaires (TVI), pour tout réel $k$ compris entre $f(a)$ et $f(b)$, il existe $c \in [a,b]$ tel que $f(c)=k$.
+		      En choisissant $k=0$ (qui est bien entre un nombre négatif et un nombre positif), il existe $c \in [a,b]$ tel que $f(c)=0$.
+		      Ceci contredit l'hypothèse que $f$ ne s'annule pas sur $I$. Donc $f$ doit être de signe constant.
+		\item La fonction $f$ est continue sur l'intervalle fermé et borné $[0,1]$. D'après le théorème des bornes atteintes, $f$ admet un minimum sur $[0,1]$. C'est-à-dire qu'il existe $x_0 \in [0,1]$ tel que pour tout $x \in [0,1]$, $f(x) \ge f(x_0)$.
+		      Posons $a = f(x_0)$. Par hypothèse, $f(x_0) > 0$, donc $a>0$. On a bien trouvé un $a>0$ tel que $f(x) \ge a$ pour tout $x \in [0,1]$.
+		\item Supposons qu'une telle fonction $f$ existe. $f$ est une fonction continue sur l'intervalle fermé borné $[0,1]$. D'après le théorème des bornes atteintes, l'image $f([0,1])$ est un intervalle fermé et borné, disons $[m, M]$.
+		      Or, on suppose que $f$ est une bijection de $[0,1]$ dans $\mathbb{R}$, donc l'image doit être $\mathbb{R}$ tout entier. L'ensemble $\mathbb{R}$ n'est pas borné. C'est une contradiction. Donc une telle fonction n'existe pas.
+		\item On raisonne par l'absurde. Supposons que $f$ n'est pas strictement monotone. Comme elle est bijective, elle est injective, donc elle ne peut pas être constante. Si elle n'est ni strictement croissante, ni strictement décroissante, il existe $a<b<c$ dans $I$ tels que $f(a)<f(b)$ et $f(b)>f(c)$ (ou $f(a)>f(b)$ et $f(b)<f(c)$).
+		      Prenons le cas $f(a)<f(b)$ et $f(b)>f(c)$. Soit $k$ un réel tel que $\max(f(a), f(c)) < k < f(b)$.
+		      D'après le TVI sur $[a,b]$, il existe $x_1 \in ]a,b[$ tel que $f(x_1)=k$.
+		      D'après le TVI sur $[b,c]$, il existe $x_2 \in ]b,c[$ tel que $f(x_2)=k$.
+		      On a trouvé $x_1 \ne x_2$ tels que $f(x_1)=f(x_2)=k$. Ceci contredit l'injectivité de $f$.
+		      L'hypothèse est fausse, donc $f$ est strictement monotone.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[Révisions]
+	Montrer en utilisant le théorème des valeurs intermédiaires que tout polynôme de degré impair admet au moins une racine réelle.
+\end{exercice}
+
+\begin{solution}
+	Soit $P(x) = a_n x^n + \dots + a_0$ un polynôme de degré $n$ impair, avec $a_n \ne 0$.
+	Une fonction polynôme est continue sur $\mathbb{R}$.
+	On étudie les limites en $\pm\infty$. On a $P(x) \sim_{x\to\pm\infty} a_n x^n$.
+	Comme $n$ est impair, $x^n$ tend vers $+\infty$ en $+\infty$ et vers $-\infty$ en $-\infty$.
+	\begin{itemize}
+		\item Si $a_n > 0$, alors $\lim_{x\to+\infty} P(x) = +\infty$ et $\lim_{x\to-\infty} P(x) = -\infty$.
+		\item Si $a_n < 0$, alors $\lim_{x\to+\infty} P(x) = -\infty$ et $\lim_{x\to-\infty} P(x) = +\infty$.
+	\end{itemize}
+	Dans les deux cas, les limites en $+\infty$ et $-\infty$ sont de signes opposés.
+	Cela signifie qu'il existe un réel $A$ tel que $P(A)$ est positif et un réel $B$ tel que $P(B)$ est négatif.
+	D'après le Théorème des Valeurs Intermédiaires appliqué sur l'intervalle $[A,B]$ (ou $[B,A]$), la fonction continue $P$ doit prendre toutes les valeurs entre $P(A)$ et $P(B)$. En particulier, elle doit prendre la valeur 0.
+	Il existe donc $c \in \mathbb{R}$ tel que $P(c)=0$. Le polynôme admet au moins une racine réelle.
+\end{solution}
+
+\begin{exercice}[\di]
+	Soit $f$ une fonction continue sur $I=[a,b]$ telle que $f([a,b])\subset [a,b]$.
+	\begin{enumerate}
+		\item Montrer que $f(a)-a\geq 0$ et que $f(b)-b\leq 0$.
+		\item En déduire que $f$ admet un point fixe.
+		\item On suppose que $f$ est $k$-contractante ($k\in[0,1[$). Montrer que le point fixe est unique.
+		\item On définit la suite $(u_n)$ par $u_0\in[a,b]$ et $u_{n+1}=f(u_n)$. Montrer que $|u_n-\alpha|\le k^n |u_0-\alpha |$, où $\alpha$ est le point fixe.
+		\item En déduire la limite de $(u_n)$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item L'hypothèse $f([a,b])\subset [a,b]$ signifie que pour tout $x \in [a,b]$, on a $f(x) \in [a,b]$.
+		      En particulier, pour $x=a$, $f(a) \in [a,b]$, ce qui implique $f(a) \ge a$, soit $f(a)-a \ge 0$.
+		      De même, pour $x=b$, $f(b) \in [a,b]$, ce qui implique $f(b) \le b$, soit $f(b)-b \le 0$.
+		\item Soit $g(x) = f(x)-x$. $g$ est continue sur $[a,b]$ car $f$ et $x \mapsto -x$ le sont.
+		      D'après la question 1, on a $g(a) \ge 0$ et $g(b) \le 0$.
+		      D'après le TVI, il existe $c \in [a,b]$ tel que $g(c)=0$.
+		      Ceci signifie $f(c)-c=0$, soit $f(c)=c$. $f$ admet donc au moins un point fixe.
+		\item Supposons que $f$ admette deux points fixes distincts, $\alpha_1$ and $\alpha_2$.
+		      On a $f(\alpha_1)=\alpha_1$ et $f(\alpha_2)=\alpha_2$.
+		      Comme $f$ est contractante, $|f(\alpha_1)-f(\alpha_2)| \le k|\alpha_1-\alpha_2|$.
+		      En remplaçant par les valeurs, on obtient $|\alpha_1-\alpha_2| \le k|\alpha_1-\alpha_2|$.
+		      Comme $\alpha_1 \ne \alpha_2$, on peut diviser par $|\alpha_1-\alpha_2| > 0$, ce qui donne $1 \le k$.
+		      Ceci contredit l'hypothèse $k \in [0,1[$. L'hypothèse de l'existence de deux points fixes est donc fausse. Le point fixe est unique.
+		\item Soit $\alpha$ l'unique point fixe. On a $f(\alpha)=\alpha$.
+		      On montre le résultat par récurrence. Pour $n=0$, c'est $|u_0-\alpha| \le k^0|u_0-\alpha|$, ce qui est vrai.
+		      Supposons que $|u_n-\alpha|\le k^n |u_0-\alpha |$ pour un certain $n \ge 0$.
+		      On a $|u_{n+1}-\alpha| = |f(u_n)-f(\alpha)|$. Comme $f$ est contractante :
+		      $|f(u_n)-f(\alpha)| \le k|u_n-\alpha|$.
+		      En utilisant l'hypothèse de récurrence :
+		      $|u_{n+1}-\alpha| \le k \cdot (k^n|u_0-\alpha|) = k^{n+1}|u_0-\alpha|$.
+		      La propriété est vraie au rang $n+1$.
+		\item On a l'encadrement $0 \le |u_n-\alpha| \le k^n |u_0-\alpha|$.
+		      Comme $k \in [0,1[$, la suite géométrique $(k^n)$ converge vers 0.
+		      Par le théorème des gendarmes, on en déduit que $\lim_{n\to\infty} |u_n-\alpha| = 0$, ce qui signifie que $\lim_{n\to\infty} u_n = \alpha$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	Soit $f:\mathbb{R}\to\mathbb{R}$ une fonction continue.
+	\begin{enumerate}
+		\item Est-ce que $f$ est bornée ? Justifier.
+	\end{enumerate}
+	On suppose de plus que $\lim_{x\rightarrow +\infty} f(x)=l_1\in\mathbb{R}$ et $\lim_{x\rightarrow -\infty} f(x)=l_2\in\mathbb{R}$.
+	\begin{enumerate}
+		\setcounter{enumi}{1}
+		\item Traduire ces hypothèses avec des quantificateurs.
+		\item En déduire qu'il existe un intervalle $[a,b]$ en dehors duquel $f$ est bornée.
+		\item En déduire que $f$ est bornée sur $\mathbb{R}$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item Non, une fonction continue sur $\mathbb{R}$ n'est pas nécessairement bornée. Contre-exemple : $f(x)=x$ est continue sur $\mathbb{R}$ mais n'est ni majorée, ni minorée.
+		\item $\lim_{x\to+\infty} f(x) = l_1 \iff \forall \varepsilon>0, \exists A>0, \forall x \ge A, |f(x)-l_1|<\varepsilon$.
+		      $\lim_{x\to-\infty} f(x) = l_2 \iff \forall \varepsilon>0, \exists B<0, \forall x \le B, |f(x)-l_2|<\varepsilon$.
+		\item Appliquons les définitions ci-dessus avec $\varepsilon=1$.
+		      Il existe $A>0$ tel que pour $x \ge A$, on a $|f(x)-l_1|<1$, ce qui implique $l_1-1 < f(x) < l_1+1$.
+		      Il existe $B<0$ tel que pour $x \le B$, on a $|f(x)-l_2|<1$, ce qui implique $l_2-1 < f(x) < l_2+1$.
+		      En posant $a=B$ et $b=A$, on a trouvé un intervalle $[a,b]$ en dehors duquel $f$ est bornée.
+		      Plus précisément, pour $x \in ]-\infty, a] \cup [b, +\infty[$, $f(x)$ est compris entre $\min(l_1-1, l_2-1)$ et $\max(l_1+1, l_2+1)$.
+		\item On a montré que $f$ est bornée sur $]-\infty, a] \cup [b, +\infty[$.
+		      Sur l'intervalle fermé et borné $[a,b]$, la fonction $f$ est continue. D'après le théorème des bornes atteintes, $f$ est bornée sur $[a,b]$.
+		      Puisque $f$ est bornée sur $[a,b]$ et sur son complémentaire $\mathbb{R}\setminus[a,b]$, elle est bornée sur $\mathbb{R}$ tout entier.
+	\end{enumerate}
+\end{solution}
+
+\end{document}

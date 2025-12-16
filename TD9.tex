@@ -1,0 +1,277 @@
+\documentclass[]{exercices}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tkz-tab} % For variation tables
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{9}{Fonctions 1 : Limites et continuité}
+
+\begin{exercice}[Révisions]
+On considère les fonctions définies par
+$$f(x)=\sqrt{x(x-1)}+1,\quad \quad g(x)=x^2-1.$$
+\begin{enumerate}
+    \item Déterminer les domaines de définition de $f$ et $g$.
+    \item Déterminer le domaine de définition de $f\circ g$ et calculer son expression.
+    \item Déterminer le domaine de définition de $g\circ f$ et calculer son expression.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item \textbf{Domaine de $f$ :}
+    La fonction $f(x)$ est définie si l'expression sous la racine est non-négative, c'est-à-dire $x(x-1) \ge 0$.
+    Le trinôme $x(x-1)$ est positif à l'extérieur de ses racines (0 et 1).
+    Donc, $\mathcal{D}_f = ]-\infty, 0] \cup [1, +\infty[$.
+
+    \textbf{Domaine de $g$ :}
+    La fonction $g(x)=x^2-1$ est un polynôme, elle est donc définie sur tout $\mathbb{R}$.
+    $\mathcal{D}_g = \mathbb{R}$.
+
+    \item \textbf{Domaine et expression de $f \circ g$ :}
+    $f \circ g(x) = f(g(x))$. Pour que cette expression soit définie, il faut que $x \in \mathcal{D}_g$ et que $g(x) \in \mathcal{D}_f$.
+    La première condition est toujours vraie. Il faut donc trouver les $x$ tels que $g(x) \in ]-\infty, 0] \cup [1, +\infty[$.
+    Cela signifie $g(x) \le 0$ ou $g(x) \ge 1$.
+    \begin{itemize}
+        \item $g(x) \le 0 \iff x^2-1 \le 0 \iff x^2 \le 1 \iff x \in [-1, 1]$.
+        \item $g(x) \ge 1 \iff x^2-1 \ge 1 \iff x^2 \ge 2 \iff x \in ]-\infty, -\sqrt{2}] \cup [\sqrt{2}, +\infty[$.
+    \end{itemize}
+    Le domaine de définition est donc $\mathcal{D}_{f \circ g} = ]-\infty, -\sqrt{2}] \cup [-1, 1] \cup [\sqrt{2}, +\infty[$.
+    L'expression est : $f(g(x)) = \sqrt{g(x)(g(x)-1)}+1 = \sqrt{(x^2-1)(x^2-2)}+1$.
+
+    \item \textbf{Domaine et expression de $g \circ f$ :}
+    $g \circ f(x) = g(f(x))$. Il faut que $x \in \mathcal{D}_f$ et que $f(x) \in \mathcal{D}_g$.
+    La seconde condition est toujours vraie car $\mathcal{D}_g=\mathbb{R}$. Il suffit donc que $x \in \mathcal{D}_f$.
+    $\mathcal{D}_{g \circ f} = \mathcal{D}_f = ]-\infty, 0] \cup [1, +\infty[$.
+    L'expression est : $g(f(x)) = (f(x))^2-1 = (\sqrt{x(x-1)}+1)^2-1 = (x(x-1)) + 2\sqrt{x(x-1)} + 1 - 1 = x^2-x+2\sqrt{x(x-1)}$.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+À l'aide de la définition de la limite, démontrer que :
+\begin{enumerate}
+    \item $\lim\limits_{x\to+\infty}\dfrac{x}{x+1}=1$
+    \item $\lim\limits_{x\to 0}\dfrac{1}{x^2}=+\infty$
+    \item $\lim\limits_{x\to 1}(x^3-1)=0$
+\end{enumerate}
+{\footnotesize Indication pour 3: on pourra utiliser que $x^3-1=(x-1)(1+x+x^2)$ et que si $|x-1|\leq 1$ alors  $1 \le|1+x+x^2| \le7$}.
+
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item On veut montrer que $\forall \varepsilon > 0, \exists A > 0, \forall x \in \mathbb{R}, (x \ge A \implies |\frac{x}{x+1}-1| < \varepsilon)$.
+    Soit $\varepsilon > 0$. On manipule l'inégalité : $|\frac{x}{x+1}-1| = |\frac{-1}{x+1}| = \frac{1}{|x+1|}$.
+    Comme on s'intéresse à $x \to +\infty$, on peut supposer $x>0$, donc $|x+1|=x+1$.
+    On veut $\frac{1}{x+1} < \varepsilon \iff x+1 > \frac{1}{\varepsilon} \iff x > \frac{1}{\varepsilon}-1$.
+    \textbf{Rédaction :} Soit $\varepsilon>0$. Posons $A = \max(0, \frac{1}{\varepsilon}-1)$. Pour tout $x \ge A$, on a $x > \frac{1}{\varepsilon}-1$, ce qui implique $x+1 > 1/\varepsilon$, et donc $\frac{1}{x+1} < \varepsilon$. Comme $x>0$, $|\frac{x}{x+1}-1|=\frac{1}{x+1}$, donc l'inégalité est vérifiée.
+
+    \item On veut montrer que $\forall M > 0, \exists \delta > 0, \forall x \in \mathbb{R}^*, (0 < |x| < \delta \implies \frac{1}{x^2} > M)$.
+    Soit $M > 0$. On veut $\frac{1}{x^2} > M \iff x^2 < \frac{1}{M} \iff |x| < \frac{1}{\sqrt{M}}$.
+    \textbf{Rédaction :} Soit $M>0$. Posons $\delta = \frac{1}{\sqrt{M}}$. Pour tout $x$ tel que $0 < |x| < \delta$, on a $|x| < \frac{1}{\sqrt{M}}$. En élevant au carré (fonction croissante sur $\mathbb{R}_+$), on obtient $x^2 < \frac{1}{M}$. En passant à l'inverse (fonction décroissante sur $\mathbb{R}_+^*$), on a $\frac{1}{x^2} > M$. La définition est vérifiée.
+
+    \item On veut montrer que $\forall \varepsilon > 0, \exists \delta > 0, \forall x \in \mathbb{R}, (|x-1| < \delta \implies |x^3-1| < \varepsilon)$.
+    Soit $\varepsilon > 0$. On a $|x^3-1| = |(x-1)(x^2+x+1)| = |x-1||x^2+x+1|$.
+    On doit majorer le terme $|x^2+x+1|$ au voisinage de 1.
+    Choisissons une première contrainte sur $\delta$, par exemple $\delta \le 1$.
+    Si $|x-1| < 1$, alors $0 < x < 2$. Sur cet intervalle, $1 < x^2+x+1 < 7$.
+    On a donc $|x^3-1| < 7|x-1|$. Pour que ceci soit plus petit que $\varepsilon$, il suffit que $|x-1| < \varepsilon/7$.
+    \textbf{Rédaction :} Soit $\varepsilon>0$. Posons $\delta = \min(1, \varepsilon/7)$.
+    Pour tout $x$ tel que $|x-1|<\delta$, on a à la fois $|x-1|<1$ (donc $|x^2+x+1|<7$) et $|x-1|<\varepsilon/7$.
+    Alors $|x^3-1|=|x-1||x^2+x+1| < (\varepsilon/7) \cdot 7 = \varepsilon$. La définition est vérifiée.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+À l'aide de suites bien choisies, montrer que les fonctions $f_i$ suivantes n'ont pas de limites au point $a\in\overline{\mathbb{R}}$.
+\newcommand{\elabel}{$f_{\arabic*}(x)=$}
+\begin{enumerate}[label=\elabel]
+ \item $\cos(x)$ en $a=+\infty,$
+ \item $\cos(\frac1{x})$ en $a=0,$
+ \item $\sin(x^2)$ en $a=+\infty,$
+ \item $\sin(\frac1{\sqrt{x}})$ en $a=0$.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+On utilise le théorème de la caractérisation séquentielle de la limite (Corollaire 1 dans le cours) : si on trouve deux suites $(u_n)$ et $(v_n)$ qui tendent vers $a$, mais telles que $(f(u_n))$ et $(f(v_n))$ tendent vers des limites différentes, alors $f$ n'admet pas de limite en $a$.
+\begin{enumerate}
+    \item Soit $f_1(x)=\cos(x)$ en $a=+\infty$.
+    Posons $u_n = 2n\pi$ et $v_n = (2n+1)\pi$.
+    On a $\lim u_n = +\infty$ et $\lim v_n = +\infty$.
+    $f_1(u_n) = \cos(2n\pi)=1 \to 1$.
+    $f_1(v_n) = \cos((2n+1)\pi)=-1 \to -1$.
+    Les limites sont différentes, donc $\cos(x)$ n'a pas de limite en $+\infty$.
+    \item Soit $f_2(x)=\cos(1/x)$ en $a=0$.
+    Posons $u_n = \frac{1}{2n\pi}$ et $v_n=\frac{1}{(2n+1)\pi}$.
+    On a $\lim u_n = 0$ et $\lim v_n = 0$.
+    $f_2(u_n) = \cos(2n\pi)=1 \to 1$.
+    $f_2(v_n) = \cos((2n+1)\pi)=-1 \to -1$.
+    Les limites sont différentes, donc $\cos(1/x)$ n'a pas de limite en 0.
+    \item Soit $f_3(x)=\sin(x^2)$ en $a=+\infty$.
+    Posons $u_n = \sqrt{2n\pi}$ et $v_n=\sqrt{2n\pi + \pi/2}$.
+    On a $\lim u_n = +\infty$ et $\lim v_n = +\infty$.
+    $f_3(u_n) = \sin(2n\pi)=0 \to 0$.
+    $f_3(v_n) = \sin(2n\pi+\pi/2)=1 \to 1$.
+    Les limites sont différentes, donc $\sin(x^2)$ n'a pas de limite en $+\infty$.
+    \item Soit $f_4(x)=\sin(1/\sqrt{x})$ en $a=0$.
+    Posons $u_n = \frac{1}{(2n\pi)^2}$ et $v_n=\frac{1}{(2n\pi+\pi/2)^2}$.
+    On a $\lim u_n=0$ et $\lim v_n=0$.
+    $f_4(u_n) = \sin(2n\pi)=0 \to 0$.
+    $f_4(v_n) = \sin(2n\pi+\pi/2)=1 \to 1$.
+    Les limites sont différentes, donc $\sin(1/\sqrt{x})$ n'a pas de limite en 0.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}[Révisions]
+\begin{enumerate}
+    \item Montrer que pour tout $x>0$, on a $\ln(x)\leq \sqrt{x}$. En déduire que $\lim_{x\rightarrow +\infty}\frac{\ln(x)}{x}=0$.
+    \item En déduire que $\lim_{t\rightarrow 0^+}t \ln(t)=0$.
+    \item Montrer que $\lim_{y\rightarrow -\infty}y \, \exp(y)=0$.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item On étudie la fonction $g(x)=\sqrt{x}-\ln(x)$ sur $\mathbb{R}_+^*$.
+    $g'(x) = \frac{1}{2\sqrt{x}} - \frac{1}{x} = \frac{\sqrt{x}-2}{2x}$.
+    $g'(x)=0 \iff \sqrt{x}=2 \iff x=4$.
+    $g$ est décroissante sur $]0,4]$ et croissante sur $[4, +\infty[$. Elle admet un minimum en $x=4$.
+    $g(4) = \sqrt{4}-\ln(4) = 2-\ln(4) = \ln(e^2)-\ln(4) = \ln(e^2/4)$. Comme $e \approx 2.718$, $e^2 \approx 7.38$, donc $e^2/4 > 1$ et $\ln(e^2/4)>0$.
+    Le minimum de $g(x)$ est positif, donc $g(x) \ge g(4) > 0$ pour tout $x>0$. On a bien $\ln(x) < \sqrt{x}$.
+
+    Pour la limite : on a $0 < \ln(x) < \sqrt{x}$. En divisant par $x>0$, on obtient $0 < \frac{\ln(x)}{x} < \frac{\sqrt{x}}{x} = \frac{1}{\sqrt{x}}$.
+    Comme $\lim_{x\to\infty} \frac{1}{\sqrt{x}}=0$, par le théorème des gendarmes, $\lim_{x\to\infty} \frac{\ln(x)}{x}=0$.
+    \item On pose $t=1/x$. Quand $t \to 0^+$, $x \to +\infty$.
+    $\lim_{t\to 0^+} t\ln(t) = \lim_{x\to\infty} \frac{1}{x}\ln(\frac{1}{x}) = \lim_{x\to\infty} \frac{-\ln(x)}{x}$. D'après la question 1, cette limite est 0.
+    \item On pose $y=-x$. Quand $y \to -\infty$, $x \to +\infty$.
+    $\lim_{y\to-\infty} y e^y = \lim_{x\to\infty} (-x)e^{-x} = \lim_{x\to\infty} \frac{-x}{e^x}$.
+    Par croissance comparée, l'exponentielle l'emporte sur le polynôme, donc la limite est 0.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+Calculer lorsqu'elles existent les limites suivantes :
+\begin{multicols}{2}
+\begin{enumerate}[label=\alph*)]
+    \item $\lim_{x\rightarrow 0}\frac{x^2+2 |x|}{x}$
+    \item $\lim_{x\rightarrow +\infty}\frac{x^2+2 |x|}{x}$
+    \item $\lim_{x\rightarrow 2}\frac{x^2-4}{x^2-3 x+2}$
+    \item $\lim_{x\rightarrow 0}\frac{\sqrt{1+x}-\sqrt{1+x^2}}{x}$
+    \item $\lim_{x\to+\infty}\sqrt{x+5}-\sqrt{x-3}$
+    \item $\lim_{x\rightarrow \pi}\frac{\sin^2 x}{1+\cos x}$
+    \item $\lim_{x\rightarrow 1}\frac{x-1}{x^n-1}$ ($n\in\mathbb{N}^*$)
+    \item $\lim_{x\rightarrow +\infty}\sqrt{x+\sqrt{x+\sqrt{x}}}-\sqrt{x}$
+    \item $\lim_{x\rightarrow+\infty} \frac{\ln(1+e^x-e^{-x})}{x}$
+\end{enumerate}
+\end{multicols}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}[label=\alph*)]
+    \item Limites à gauche et à droite en 0 :
+    $\lim_{x\to 0^+} \frac{x^2+2x}{x} = \lim_{x\to 0^+} (x+2) = 2$.
+    $\lim_{x\to 0^-} \frac{x^2-2x}{x} = \lim_{x\to 0^-} (x-2) = -2$.
+    Les limites à gauche et à droite sont différentes, la fonction n'a pas de limite en 0.
+    \item Pour $x>0$, $\frac{x^2+2x}{x} = x+2$. La limite en $+\infty$ est $+\infty$.
+    \item Forme indéterminée 0/0. On factorise : $\frac{(x-2)(x+2)}{(x-2)(x-1)} = \frac{x+2}{x-1}$. La limite en 2 est $\frac{2+2}{2-1}=4$.
+    \item Quantité conjuguée : $\frac{(1+x)-(1+x^2)}{x(\sqrt{1+x}+\sqrt{1+x^2})} = \frac{x-x^2}{x(\dots)} = \frac{1-x}{\sqrt{1+x}+\sqrt{1+x^2}}$.
+    La limite en 0 est $\frac{1-0}{\sqrt{1}+\sqrt{1}}=\frac{1}{2}$.
+    \item Quantité conjuguée : $\frac{(x+5)-(x-3)}{\sqrt{x+5}+\sqrt{x-3}} = \frac{8}{\sqrt{x+5}+\sqrt{x-3}}$. Le dénominateur tend vers $+\infty$, la limite est 0.
+    \item On utilise $\sin^2 x = 1-\cos^2 x = (1-\cos x)(1+\cos x)$. Pour $x$ proche de $\pi$, $\cos x \ne -1$.
+    $\frac{(1-\cos x)(1+\cos x)}{1+\cos x} = 1-\cos x$. La limite en $\pi$ est $1-\cos(\pi)=1-(-1)=2$.
+    \item On reconnaît l'inverse du taux d'accroissement de la fonction $f(x)=x^n$ en $x=1$.
+    $\lim_{x\to 1} \frac{x^n-1}{x-1} = f'(1)$. Comme $f'(x)=nx^{n-1}$, $f'(1)=n$.
+    La limite est donc $1/n$.
+    \item Quantité conjuguée : $\frac{x+\sqrt{x+\sqrt{x}}-x}{\sqrt{x+\sqrt{x+\sqrt{x}}}+\sqrt{x}} = \frac{\sqrt{x+\sqrt{x}}}{\sqrt{x+\sqrt{x+\sqrt{x}}}+\sqrt{x}}$.
+    On factorise par $\sqrt{x}$ : $\frac{\sqrt{x}\sqrt{1+1/\sqrt{x}}}{\sqrt{x}(\sqrt{1+\sqrt{1/x+1/x^{3/2}}}+1)} = \frac{\sqrt{1+1/\sqrt{x}}}{\sqrt{1+\dots}+1}$.
+    La limite est $\frac{\sqrt{1}}{\sqrt{1}+1} = \frac{1}{2}$.
+    \item $\frac{\ln(e^x(e^{-x}+1-e^{-2x}))}{x} = \frac{x+\ln(1+e^{-x}-e^{-2x})}{x} = 1+\frac{\ln(1+e^{-x}-e^{-2x})}{x}$.
+    Le numérateur du second terme tend vers $\ln(1)=0$, le dénominateur vers $+\infty$. Le quotient tend vers 0. La limite est 1.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+\begin{enumerate}
+    \item Soit $f: \mathbb{R}\to\mathbb{R}$ une fonction périodique de période $T>0$. Montrer que pour tout $n\in\mathbb{N}$ et pour tout $x\in\mathbb{R}$, on a $f(x+nT)=f(x)$.
+    \item En déduire que toute fonction périodique et non constante n'admet pas de limite en $+\infty$.
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item On le montre par récurrence sur $n$.
+    Pour $n=1$, c'est la définition de la périodicité.
+    Supposons que $f(x+nT)=f(x)$ pour un $n \ge 1$. Alors $f(x+(n+1)T) = f((x+nT)+T)$. En posant $y=x+nT$, on a $f(y+T)=f(y)$ par périodicité. Donc $f(x+(n+1)T) = f(x+nT) = f(x)$ par hypothèse de récurrence. La propriété est vraie pour tout $n$.
+    \item Soit $f$ une fonction périodique de période $T>0$ et non constante.
+    Puisqu'elle n'est pas constante, il existe au moins deux points $a,b$ dans son domaine tels que $f(a) \ne f(b)$.
+    Considérons les deux suites $u_n = a+nT$ et $v_n = b+nT$.
+    On a $\lim u_n = +\infty$ et $\lim v_n = +\infty$.
+    D'après la question 1, $f(u_n) = f(a+nT) = f(a)$ pour tout $n$. Donc $\lim f(u_n) = f(a)$.
+    De même, $f(v_n)=f(b+nT)=f(b)$ pour tout $n$. Donc $\lim f(v_n) = f(b)$.
+    Puisque $f(a) \ne f(b)$, nous avons trouvé deux suites tendant vers $+\infty$ dont les images par $f$ convergent vers des limites différentes. Par la caractérisation séquentielle, $f$ n'admet pas de limite en $+\infty$.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+\begin{enumerate}
+    \item Montrer que si une fonction $f$, définie sur un intervalle ouvert $I\subset\mathbb{R}$, est continue en $x_0\in I$ alors la fonction $|f|$ est aussi continue en $x_0$.
+    \item Construire un exemple de fonction discontinue en $0$ dont la valeur absolue est continue sur $\mathbb{R}$.
+    \item Est-ce que la réciproque de la propriété énoncée à la question 1) est vraie ?
+\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}
+    \item On utilise la seconde inégalité triangulaire : pour tous réels $a,b$, on a $||a|-|b|| \le |a-b|$.
+    Soit $x_0 \in I$. On veut montrer que $\lim_{x\to x_0} |f(x)| = |f(x_0)|$.
+    Soit $\varepsilon > 0$. Comme $f$ est continue en $x_0$, il existe $\delta>0$ tel que si $|x-x_0|<\delta$, alors $|f(x)-f(x_0)| < \varepsilon$.
+    Pour ces mêmes $x$, on a :
+    \[ ||f(x)| - |f(x_0)|| \le |f(x)-f(x_0)| < \varepsilon. \]
+    Ceci est exactement la définition de la continuité de $|f|$ en $x_0$.
+    \item Soit la fonction $f$ définie par $f(x)=1$ si $x \ge 0$ et $f(x)=-1$ si $x < 0$.
+    Cette fonction est discontinue en 0 car $\lim_{x\to 0^+} f(x) = 1$ et $\lim_{x\to 0^-} f(x) = -1$.
+    Cependant, $|f(x)|=1$ pour tout $x \in \mathbb{R}$. C'est une fonction constante, donc continue partout, y compris en 0.
+    \item Non, la réciproque est fausse. L'exemple de la question 2 le prouve : $|f|$ est continue en 0 mais $f$ ne l'est pas.
+\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+Étudier l'ensemble de définition, la continuité et les prolongements par continuité possibles de $f$ dans les cas suivants :
+\begin{multicols}{2}
+    \begin{enumerate}[label=\alph*)]
+        \item (\di) $f(x)=(1+x)\ln(1+x)$
+        \item (\di) $f(x)=(1+x)^{1/x}$
+        \item (\di) $f(x)=\frac{1}{1+e^{1/x}}$
+        \item (\st) $f(x)=\left(\frac{1+e^x}{2}\right)^{1/x}$
+    \end{enumerate}
+\end{multicols}
+\end{exercice}
+
+\begin{solution}
+\begin{enumerate}[label=\alph*)]
+    \item $\mathcal{D}_f = ]-1, +\infty[$. Sur cet intervalle, $f$ est continue comme produit de fonctions continues.
+    On étudie la limite en $-1^+$. On pose $X=x+1$. Quand $x\to -1^+$, $X \to 0^+$.
+    $\lim_{x\to-1^+} f(x) = \lim_{X\to 0^+} X\ln(X) = 0$ par croissance comparée.
+    La limite est finie, donc $f$ est prolongeable par continuité en $-1$ en posant $f(-1)=0$.
+    \item $f(x)=\exp(\frac{1}{x}\ln(1+x))$. $\mathcal{D}_f = ]-1,0[\cup]0,+\infty[$. $f$ est continue sur son domaine.
+    \textbf{En 0 :} On reconnaît un taux d'accroissement : $\lim_{x\to 0} \frac{\ln(1+x)-\ln(1)}{x-0} = (\ln)'(1)=1$.
+    Donc $\lim_{x\to 0} \exp(\dots) = e^1 = e$. $f$ est prolongeable en 0 en posant $f(0)=e$.
+    \textbf{En -1 :} $\lim_{x\to-1^+} \ln(1+x)=-\infty$, donc $\lim_{x\to-1^+} \frac{\ln(1+x)}{x} = +\infty$. La limite de $f$ est $+\infty$. $f$ n'est pas prolongeable en -1.
+    \item $\mathcal{D}_f = \mathbb{R}^*$. $f$ est continue sur son domaine.
+    \textbf{En 0 :} $\lim_{x\to 0^+} 1/x = +\infty \implies \lim_{x\to 0^+} e^{1/x}=+\infty \implies \lim_{x\to 0^+} f(x)=0$.
+    $\lim_{x\to 0^-} 1/x = -\infty \implies \lim_{x\to 0^-} e^{1/x}=0 \implies \lim_{x\to 0^-} f(x)=1$.
+    Les limites à gauche et à droite sont différentes, $f$ n'est pas prolongeable en 0.
+    \item $f(x)=\exp(\frac{1}{x}\ln(\frac{1+e^x}{2}))$. $\mathcal{D}_f=\mathbb{R}^*$.
+    On étudie la limite de l'exposant en 0 en reconnaissant un taux d'accroissement pour $g(x)=\ln(\frac{1+e^x}{2})$.
+    $g(0)=\ln(1)=0$. $\lim_{x\to 0} \frac{g(x)-g(0)}{x-0} = g'(0)$.
+    $g'(x) = \frac{e^x/(1+e^x)}{2} \cdot \frac{2}{1+e^x} = \frac{e^x}{1+e^x}$. Donc $g'(0)=1/2$.
+    La limite de l'exposant est $1/2$. La limite de $f$ en 0 est $e^{1/2}=\sqrt{e}$. $f$ est prolongeable en 0 en posant $f(0)=\sqrt{e}$.
+\end{enumerate}
+\end{solution}
+
+\end{document}

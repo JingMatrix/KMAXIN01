@@ -1,0 +1,262 @@
+\documentclass[solutions]{exercices}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{tkz-tab}
+\usepackage{multicol}
+
+\begin{document}
+
+\makeheader{2025}{2026}
+\tdtitle{11}{Dérivabilité}
+
+\begin{exercice}[Révisions]
+	Donner les domaines de définition et de dérivabilité des fonctions suivantes et calculer leur dérivée.
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item[] $f_1(x)= \sqrt{1+x^2 \sin^2 x}$
+			\item[] $f_2(x) = \frac{\exp(1/x)+1}{\exp(1/x)-1}$
+			\item[] $f_3(x)= \ln\left(\frac{1+\sin x}{1-\sin x}\right)$
+			\item[] $f_4(x)=(x(x-2))^{1/3}$
+		\end{itemize}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	\begin{itemize}
+		\item \textbf{Pour $f_1(x)$:}
+		      \textbf{Domaine de définition :} L'expression $1+x^2\sin^2 x$ est toujours $\ge 1$, donc la racine est toujours définie. $\mathcal{D}_{f_1} = \mathbb{R}$.
+		      \textbf{Domaine de dérivabilité :} La fonction $u(x)=1+x^2\sin^2 x$ est dérivable sur $\mathbb{R}$. La fonction $\sqrt{u}$ est dérivable tant que $u(x) > 0$. Comme $u(x)\ge 1$, c'est toujours le cas. $\mathcal{D}_{f_1'} = \mathbb{R}$.
+		      \textbf{Dérivée :} $f_1'(x) = \frac{2x\sin^2 x + x^2(2\sin x \cos x)}{2\sqrt{1+x^2\sin^2 x}} = \frac{x\sin^2 x + x^2\sin x \cos x}{\sqrt{1+x^2\sin^2 x}}$.
+
+		\item \textbf{Pour $f_2(x)$:}
+		      \textbf{Domaine de définition :} Il faut $x \ne 0$ (pour $1/x$) et le dénominateur non nul. $\exp(1/x)-1=0 \iff \exp(1/x)=1 \iff 1/x=0$, ce qui est impossible. Donc $\mathcal{D}_{f_2} = \mathbb{R}^*$.
+		      \textbf{Domaine de dérivabilité :} La fonction est dérivable sur $\mathbb{R}^*$ comme composition et quotient de fonctions dérivables. $\mathcal{D}_{f_2'} = \mathbb{R}^*$.
+		      \textbf{Dérivée :} $f_2'(x) = \frac{(-\frac{1}{x^2}e^{1/x})(e^{1/x}-1) - (e^{1/x}+1)(-\frac{1}{x^2}e^{1/x})}{(e^{1/x}-1)^2} = \frac{-\frac{1}{x^2}e^{1/x}(-1-1)}{(e^{1/x}-1)^2} = \frac{2e^{1/x}}{x^2(e^{1/x}-1)^2}$.
+
+		\item \textbf{Pour $f_3(x)$:}
+		      \textbf{Domaine de définition :} Il faut que $\frac{1+\sin x}{1-\sin x} > 0$. Cela requiert $1-\sin x \ne 0$, donc $\sin x \ne 1$, soit $x \ne \pi/2 + 2k\pi$. Sous cette condition, le numérateur $1+\sin x \ge 0$ et le dénominateur $1-\sin x > 0$. Il faut aussi $1+\sin x \ne 0$, donc $\sin x \ne -1$, soit $x \ne -\pi/2+2k\pi$.
+		      $\mathcal{D}_{f_3} = \mathbb{R} \setminus \{\pi/2 + k\pi, k \in \mathbb{Z}\}$.
+		      \textbf{Domaine de dérivabilité :} Identique au domaine de définition.
+		      \textbf{Dérivée :} On a $f_3(x) = \ln(1+\sin x) - \ln(1-\sin x)$.
+		      $f_3'(x) = \frac{\cos x}{1+\sin x} - \frac{-\cos x}{1-\sin x} = \cos x \left(\frac{1}{1+\sin x} + \frac{1}{1-\sin x}\right) = \cos x \frac{2}{1-\sin^2 x} = \frac{2\cos x}{\cos^2 x} = \frac{2}{\cos x}$.
+
+		\item \textbf{Pour $f_4(x)$:}
+		      \textbf{Domaine de définition :} La racine cubique est définie pour tout réel. $\mathcal{D}_{f_4} = \mathbb{R}$.
+		      \textbf{Domaine de dérivabilité :} La fonction $u \mapsto u^{1/3}$ n'est pas dérivable en $u=0$. Il faut donc exclure les points où $x(x-2)=0$, c'est-à-dire $x=0$ et $x=2$. $\mathcal{D}_{f_4'} = \mathbb{R} \setminus \{0, 2\}$.
+		      \textbf{Dérivée :} Pour $x \in \mathcal{D}_{f_4'}$, $f_4'(x) = \frac{1}{3}(x^2-2x)^{-2/3}(2x-2) = \frac{2(x-1)}{3(x(x-2))^{2/3}}$.
+	\end{itemize}
+\end{solution}
+
+\begin{exercice}[\di]
+	Étudier la dérivabilité des fonctions suivantes définies sur $\mathbb{R}$.
+	\begin{multicols}{2}
+		\newcommand{\elabel}{$f_{\arabic*}(x)=$}
+		\begin{enumerate}[label=\elabel]
+			\item $x|x|$
+			\item $\frac{1}{1+|x|}$
+			\item $\frac{x}{1+|x|}$
+			\item $\begin{cases}\sin x \sin \frac{1}{x} & \text{si } x\ne 0 \\ 0 & \text{si } x=0 \end{cases}$
+			\item $\begin{cases}\dfrac{|x|\sqrt{x^2-2x+1}}{x-1} & \text{si } x\ne 1 \\ 0 & \text{si } x=1 \end{cases}$
+		\end{enumerate}
+	\end{multicols}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item Soit $f_1(x)=x|x|$. Sur $\mathbb{R}^*$, la fonction est dérivable comme produit de fonctions dérivables.
+		      En 0, on étudie le taux d'accroissement : $\frac{f_1(x)-f_1(0)}{x-0} = \frac{x|x|}{x} = |x|$.
+		      $\lim_{x\to 0} |x| = 0$. La limite existe et est finie, donc $f_1$ est dérivable en 0 et $f_1'(0)=0$.
+		\item Soit $f_2(x)=\frac{1}{1+|x|}$. Sur $\mathbb{R}^*$, elle est dérivable.
+		      Taux d'accroissement en 0 : $\frac{f_2(x)-f_2(0)}{x-0} = \frac{\frac{1}{1+|x|}-1}{x} = \frac{1-(1+|x|)}{x(1+|x|)} = \frac{-|x|}{x(1+|x|)}$.
+		      $\lim_{x\to 0^+} \frac{-x}{x(1+x)} = \lim_{x\to 0^+} \frac{-1}{1+x}=-1$.
+		      $\lim_{x\to 0^-} \frac{-(-x)}{x(1-x)} = \lim_{x\to 0^-} \frac{1}{1-x}=1$.
+		      Les limites à gauche et à droite sont différentes, $f_2$ n'est pas dérivable en 0.
+		\item Soit $f_3(x)=\frac{x}{1+|x|}$. Sur $\mathbb{R}^*$, elle est dérivable.
+		      Taux d'accroissement en 0 : $\frac{f_3(x)-f_3(0)}{x-0} = \frac{x/(1+|x|)}{x} = \frac{1}{1+|x|}$.
+		      $\lim_{x\to 0} \frac{1}{1+|x|} = 1$. $f_3$ est dérivable en 0 et $f_3'(0)=1$.
+		\item Soit $f_4(x)$. Sur $\mathbb{R}^*$, elle est dérivable.
+		      Taux d'accroissement en 0 : $\frac{f_4(x)-f_4(0)}{x-0} = \frac{\sin x \sin(1/x)}{x} = \frac{\sin x}{x} \sin(1/x)$.
+		      On sait que $\lim_{x\to 0} \frac{\sin x}{x} = 1$. Cependant, $\sin(1/x)$ n'a pas de limite en 0.
+		      Le produit n'a donc pas de limite. $f_4$ n'est pas dérivable en 0.
+		\item Soit $f_5(x)$. On simplifie : $\sqrt{x^2-2x+1}=\sqrt{(x-1)^2}=|x-1|$.
+		      Donc $f_5(x)=\frac{|x||x-1|}{x-1}$ pour $x\ne 1$.
+		      La fonction n'est pas continue en 1 : $\lim_{x\to 1^+} f_5(x) = \lim |x| \frac{x-1}{x-1} = 1$, mais $\lim_{x\to 1^-} f_5(x) = \lim |x|\frac{-(x-1)}{x-1}=-1$.
+		      Comme elle n'est pas continue en 1, elle n'y est pas dérivable.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\st]
+	Étudier la dérivabilité des fonctions suivantes au point $x=0$ :
+	\[ f_1(x)=\sqrt{x^{2n+1}+x^{2n}} \ \ (n\in\mathbb{N}^*) \quad\quad\quad
+		f_2(x)=\begin{cases}\dfrac{\sqrt{1+x}-\sqrt{1-x}}{x}& \text{si } x\ne 0, \\ 1&\text{si } x=0. \end{cases}
+	\]
+\end{exercice}
+
+\begin{solution}
+	\begin{itemize}
+		\item \textbf{Étude de $f_1(x) = \sqrt{x^{2n}(x+1)} = |x|^n \sqrt{x+1}$ pour $x \ge -1$.}
+		      On étudie le taux d'accroissement en 0 :
+		      \[ \frac{f_1(x)-f_1(0)}{x-0} = \frac{|x|^n \sqrt{x+1}}{x}. \]
+		      On distingue les cas selon la parité de $n$ implicitement via $|x|^n/x$.
+		      Si $x \to 0^+$, $x>0$, le taux est $\frac{x^n \sqrt{x+1}}{x} = x^{n-1}\sqrt{x+1}$.
+		      Si $x \to 0^-$, $x<0$, le taux est $\frac{(-x)^n \sqrt{x+1}}{x} = -(-1)^n x^{n-1}\sqrt{x+1}$.
+
+		      \textbf{Cas $n=1$ :}
+		      \begin{itemize}
+			      \item $\lim_{x\to 0^+} \sqrt{x+1} = 1$.
+			      \item $\lim_{x\to 0^-} -(-1)^1 \sqrt{x+1} = \lim_{x\to 0^-} \sqrt{x+1} = 1$.
+		      \end{itemize}
+		      Ah, il y a une subtilité. Si $n=1$, $|x|\sqrt{x+1}$. Le taux est $\frac{|x|\sqrt{x+1}}{x}$.
+		      $\lim_{x\to 0^+} \frac{x\sqrt{x+1}}{x} = 1$.
+		      $\lim_{x\to 0^-} \frac{-x\sqrt{x+1}}{x} = -1$.
+		      Les limites à gauche et à droite sont différentes. Pour $n=1$, $f_1$ n'est pas dérivable en 0.
+
+		      \textbf{Cas $n \ge 2$ :}
+		      Dans ce cas, $n-1 \ge 1$.
+		      \[
+			      \lim_{x\to 0^+} x^{n-1}\sqrt{x+1} = 0 \cdot 1 = 0.
+		      \]
+		      \[
+			      \lim_{x\to 0^-} -(-1)^n x^{n-1}\sqrt{x+1} = 0 \cdot 1 = 0.
+		      \]
+		      Les limites à gauche et à droite sont égales et nulles. Donc pour $n \ge 2$, $f_1$ est dérivable en 0 et $f_1'(0)=0$.
+		      (La correction du professeur semble avoir une erreur pour $n=1$).
+
+		\item \textbf{Étude de $f_2(x)$.}
+		      On doit d'abord vérifier que $f_2$ est continue en 0. On utilise la quantité conjuguée :
+		      \begin{align*}
+			      \lim_{x\to 0} \frac{\sqrt{1+x}-\sqrt{1-x}}{x} & = \lim_{x\to 0} \frac{(1+x)-(1-x)}{x(\sqrt{1+x}+\sqrt{1-x})} = \lim_{x\to 0} \frac{2x}{x(\dots)} \\ & = \lim_{x\to 0} \frac{2}{\sqrt{1+x}+\sqrt{1-x}} \\& = \frac{2}{1+1} = 1.
+		      \end{align*}
+		      Comme la limite est $f_2(0)=1$, la fonction est bien continue en 0.
+
+		      On étudie le taux d'accroissement de $f_2$ en 0 :
+		      \[ \frac{f_2(x)-f_2(0)}{x-0} = \frac{\frac{\sqrt{1+x}-\sqrt{1-x}}{x} - 1}{x} = \frac{\sqrt{1+x}-\sqrt{1-x} - x}{x^2}. \]
+		      C'est une forme indéterminée. On utilise un développement limité (DL1) en 0.
+		      \[
+			      \sqrt{1+u} = 1 + \frac{1}{2}u - \frac{1}{8}u^2 + o(u^2).
+		      \]
+		      Numérateur :
+		      \[ \left(1+\frac{x}{2}-\frac{x^2}{8}+o(x^2)\right) - \left(1-\frac{x}{2}-\frac{x^2}{8}+o(x^2)\right) - x = x - x + o(x^2) = o(x^2). \]
+              Donc $f_2$ est dérivable en 0 et $f_2'(0)=0$.
+	\end{itemize}
+\end{solution}
+
+\begin{exercice}[\di]
+	Soit $f : \mathbb{R}^* \to \mathbb{R}$ définie par $f(x)= x^2\sin \frac{1}{x}$.
+	\begin{enumerate}
+		\item Montrer que $f$ est prolongeable par continuité en $0$ ; on notera $\tilde{f}$ la fonction prolongée.
+		\item Montrer que $\tilde{f}$ est dérivable sur $\mathbb{R}$ mais que $\tilde{f}'$ n'est pas continue en $0$.
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item On étudie la limite de $f$ en 0. Pour $x\ne 0$, on a $-1 \le \sin(1/x) \le 1$.
+		      En multipliant par $x^2 \ge 0$, on obtient $-x^2 \le x^2\sin(1/x) \le x^2$.
+		      Par le théorème d'encadrement, comme $\lim_{x\to 0} x^2 = 0$, on a $\lim_{x\to 0} f(x) = 0$.
+		      La limite est finie, donc $f$ est prolongeable par continuité en 0. Le prolongement $\tilde{f}$ est :
+		      \[ \tilde{f}(x) = \begin{cases} x^2\sin(1/x) & \text{ si } x\ne 0 \\ 0 & \text{ si } x=0 \end{cases} \]
+		\item \textbf{Dérivabilité sur $\mathbb{R}^*$ :} Sur $\mathbb{R}^*$, $\tilde{f}$ est dérivable comme produit et composition de fonctions dérivables.
+		      Sa dérivée est $\tilde{f}'(x) = 2x\sin(1/x) + x^2(\cos(1/x)(-\frac{1}{x^2})) = 2x\sin(1/x) - \cos(1/x)$.
+		      \textbf{Dérivabilité en 0 :} On étudie le taux d'accroissement :
+		      \[ \frac{\tilde{f}(x)-\tilde{f}(0)}{x-0} = \frac{x^2\sin(1/x)}{x} = x\sin(1/x). \]
+		      Par un raisonnement d'encadrement similaire à la question 1, on montre que $\lim_{x\to 0} x\sin(1/x) = 0$.
+		      La limite du taux d'accroissement existe et est finie. Donc $\tilde{f}$ est dérivable en 0 et $\tilde{f}'(0)=0$.
+		      \textbf{Continuité de $\tilde{f}'$ en 0 :} On doit vérifier si $\lim_{x\to 0} \tilde{f}'(x) = \tilde{f}'(0)$.
+		      On a $\lim_{x\to 0} \tilde{f}'(x) = \lim_{x\to 0} (2x\sin(1/x) - \cos(1/x))$.
+		      Le premier terme, $2x\sin(1/x)$, tend vers 0.
+		      Le second terme, $\cos(1/x)$, n'a pas de limite en 0.
+		      Par conséquent, $\tilde{f}'(x)$ n'a pas de limite en 0.
+		      La dérivée $\tilde{f}'$ n'est donc pas continue en 0.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}[\di]
+	\begin{enumerate}
+		\item Déterminer $a,b$ de manière à ce que la fonction $f$ définie sur $\mathbb{R}_+$ par
+		      $f(x)=\sqrt{x}$ si $0\leqslant x \leqslant 1$ et $f(x) = ax^2+bx+1$ si $x>1$,
+		      soit dérivable sur $\mathbb{R}_+^*$.
+		\item Soit $f$ définie par $f(x)=e^x$ si $x<0$ et $f(x)=ax^2 + bx + c$ sinon.
+		      Déterminer $a, b, c$ pour que $f$ soit de classe $\mathcal{C}^2$ sur $\mathbb{R}$.
+		      Est ce possible que f soit de classe $\mathcal{C}^3$ ?
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item La fonction est dérivable sur $]0,1[$ et $]1, +\infty[$. Il faut assurer la dérivabilité en $x=1$.
+		      \textbf{Condition 1 : Continuité en 1.}
+		      $\lim_{x\to 1^-} f(x) = \lim_{x\to 1^-} \sqrt{x} = 1$.
+		      $\lim_{x\to 1^+} f(x) = \lim_{x\to 1^+} (ax^2+bx+1) = a+b+1$.
+		      Pour la continuité, il faut $a+b+1=1$, soit $a+b=0$.
+		      \textbf{Condition 2 : Dérivabilité en 1.} On étudie les dérivées à gauche et à droite.
+		      Pour $x<1$, $f'(x) = \frac{1}{2\sqrt{x}}$. Donc $\lim_{x\to 1^-} f'(x) = 1/2$.
+		      Pour $x>1$, $f'(x) = 2ax+b$. Donc $\lim_{x\to 1^+} f'(x) = 2a+b$.
+		      Pour que $f$ soit dérivable en 1, il faut que les limites des dérivées coïncident (théorème de la limite de la dérivée). On doit donc avoir $2a+b=1/2$.
+		      On résout le système : $\begin{cases} a+b=0 \\ 2a+b=1/2 \end{cases}$.
+		      La soustraction $(L_2)-(L_1)$ donne $a=1/2$. On en déduit $b=-1/2$.
+		\item Pour que $f$ soit $\mathcal{C}^2$, il faut que $f$, $f'$ et $f''$ soient continues sur $\mathbb{R}$. On étudie les raccords en 0.
+
+		      \textbf{Continuité de $f$ en 0 :} $\lim_{x\to 0^-} e^x = 1$. $\lim_{x\to 0^+} (ax^2+bx+c) = c$. Il faut $c=1$.
+
+		      \textbf{Continuité de $f'$ en 0 :} Pour $x<0$, $f'(x)=e^x$. Pour $x>0$, $f'(x)=2ax+b$.
+		      $\lim_{x\to 0^-} f'(x)=e^0=1$. $\lim_{x\to 0^+} f'(x)=b$. Il faut $b=1$.
+		      À ce stade, $f'(0)=1$.
+
+		      \textbf{Continuité de $f''$ en 0 :} Pour $x<0$, $f''(x)=e^x$. Pour $x>0$, $f''(x)=2a$.
+		      $\lim_{x\to 0^-} f''(x)=e^0=1$. $\lim_{x\to 0^+} f''(x)=2a$. Il faut $2a=1$, soit $a=1/2$.
+		      Les valeurs sont donc $a=1/2, b=1, c=1$.
+		      $f$ ne peut pas être $\mathcal{C}^3$ car pour $x<0$, $f'''(x)=e^x \to 1$ en 0, alors que pour $x>0$, $f'''(x)=0$.
+
+		      \textbf{Possibilité d'être de classe $\mathcal{C}^3$ :} Pour que la fonction $f$ soit de classe $\mathcal{C}^3$, il faut que sa dérivée seconde, $f''$, soit elle-même dérivable sur $\mathbb{R}$ et que sa dérivée $f'''$ soit continue. Nous étudions la dérivabilité de $f''$ au point de raccordement $x=0$.
+		      Avec les valeurs $a=1/2, b=1, c=1$ qui assurent que $f$ est $\mathcal{C}^2$, nous avons trouvé l'expression de la dérivée seconde :
+		      \[ f''(x) = \begin{cases} e^x & \text{si } x < 0 \\ 1 & \text{si } x \ge 0 \end{cases} \]
+		      Nous savons que $f''(0)=1$. Pour vérifier si $f''$ est dérivable en 0, nous devons calculer les limites à gauche et à droite de son taux d'accroissement.
+
+		      \textbf{Dérivée à gauche de $f''$ en 0 :}
+		      \[ \lim_{x\to 0^-} \frac{f''(x)-f''(0)}{x-0} = \lim_{x\to 0^-} \frac{e^x - 1}{x} \]
+		      On reconnaît ici la définition du nombre dérivé de la fonction exponentielle en 0. Cette limite vaut $e^0=1$.
+
+		      \textbf{Dérivée à droite de $f''$ en 0 :}
+		      \[ \lim_{x\to 0^+} \frac{f''(x)-f''(0)}{x-0} = \lim_{x\to 0^+} \frac{1 - 1}{x} = \lim_{x\to 0^+} 0 = 0. \]
+		      Les nombres dérivés à gauche (1) et à droite (0) de $f''$ en 0 sont différents. Par conséquent, la fonction $f''$ n'est pas dérivable en 0.
+              Puisque $f''$ n'est pas dérivable en 0, la dérivée troisième $f'''(0)$ n'existe pas. Il n'est donc \textbf{pas possible} que la fonction $f$ soit de classe $\mathcal{C}^3$ sur $\mathbb{R}$.
+	\end{enumerate}
+\end{solution}
+
+\begin{exercice}
+	Pour chacune des fonctions de classe suivantes calculer formellement ses dérivées successives.
+	\begin{enumerate}
+		\item $f_1(x)=\frac{1}{1-x}$
+		\item $f_2(x)=e^x(2x^2+3x+1)$
+		\item $f_3(x)=x^2(1+x)^n$
+		\item (\st) $f_4(x)= \cos^3(x)$
+	\end{enumerate}
+\end{exercice}
+
+\begin{solution}
+	\begin{enumerate}
+		\item On calcule les premières dérivées : $f_1'(x) = \frac{1}{(1-x)^2}$, $f_1''(x) = \frac{2}{(1-x)^3}$, $f_1'''(x) = \frac{6}{(1-x)^4}$.
+		      On conjecture que $f_1^{(k)}(x) = \frac{k!}{(1-x)^{k+1}}$. On peut le prouver par récurrence.
+		\item On utilise la formule de Leibniz pour la dérivée $k$-ième d'un produit : $(uv)^{(k)} = \sum_{j=0}^k \binom{k}{j} u^{(j)}v^{(k-j)}$.
+		      Soit $u(x)=e^x$ et $v(x)=2x^2+3x+1$.
+		      $u^{(j)}(x)=e^x$ pour tout $j$. $v'(x)=4x+3$, $v''(x)=4$, et $v^{(j)}(x)=0$ pour $j \ge 3$.
+		      La somme de Leibniz n'a que 3 termes non nuls :
+		      $f_2^{(k)}(x) = \binom{k}{0}e^x v(x) + \binom{k}{1}e^x v'(x) + \binom{k}{2}e^x v''(x)$.
+		      $f_2^{(k)}(x) = e^x [ (2x^2+3x+1) + k(4x+3) + \frac{k(k-1)}{2}(4) ]$.
+		      $f_2^{(k)}(x) = e^x [ 2x^2 + (4k+3)x + (2k^2+k+1) ]$.
+		\item De même avec la formule de Leibniz. Soit $u(x)=(1+x)^n$ et $v(x)=x^2$.
+		      $u^{(j)}(x) = n(n-1)\dots(n-j+1)(1+x)^{n-j}$. $v'(x)=2x$, $v''(x)=2$, $v^{(j)}=0$ pour $j\ge 3$.
+		      $f_3^{(k)}(x) = \binom{k}{0}u^{(k)}v + \binom{k}{1}u^{(k-1)}v' + \binom{k}{2}u^{(k-2)}v''$.
+		      En remplaçant, on obtient une expression qui dépend de $k$ par rapport à $n$.
+		\item On linéarise d'abord $\cos^3(x)$. On sait que $\cos(3x)=4\cos^3(x)-3\cos(x)$, donc $\cos^3(x)=\frac{1}{4}(\cos(3x)+3\cos(x))$.
+		      La dérivation devient simple. On utilise le fait que $(\cos(ax))^{(k)} = a^k \cos(ax+k\pi/2)$.
+		      $f_4^{(k)}(x) = \frac{1}{4} [ 3^k\cos(3x+k\pi/2) + 3\cos(x+k\pi/2) ]$.
+	\end{enumerate}
+\end{solution}
+
+\end{document}
